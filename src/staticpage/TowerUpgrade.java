@@ -2,26 +2,28 @@ package staticpage;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import main.Game;
 import objects.Tower;
 import utils.AudioPlayer;
-import utils.Handler;
+import utils.FontManager;
 import utils.STATES;
 import utils.Stats;
 
 
 public class TowerUpgrade extends MouseAdapter{
 	
-	private Handler handler;
+	Font curFont, newFont;
+	private FontManager fontManager;
+	
 	private boolean freeze = true;
 	
 	
-	public TowerUpgrade(Handler handler) {
-		this.handler = handler;
+	public TowerUpgrade(FontManager fontManager) {
+		this.fontManager = fontManager;
 	}
 	
 	
@@ -84,30 +86,35 @@ public class TowerUpgrade extends MouseAdapter{
 	}
 	
 	
-	public void render(Graphics g) {
-		g.setColor(Color.white);
-		g.setFont(new Font("comicsan", 0, 48));
-		g.drawString("Tower Upgrade", Game.WIDTH/2-200, 50);
+	public void render(Graphics2D g2d) {
+		// set font
+		g2d.setColor(Color.white);
+		g2d.setFont(fontManager.getMaruMonica());
+		curFont = g2d.getFont();
+		newFont = curFont.deriveFont(Font.BOLD, 22F);
+		g2d.setFont(newFont);
+		
+		// title
+		g2d.drawString("Tower Upgrade", Game.WIDTH/2-200, 50);
 		
 		//box 1
-		g.setFont(new Font("comicsan", 0, 12));
-		g.drawString("Attack Point +1", 423, 130);
-		g.drawString("Current: " + (int)Tower.towerAtk, 435, 150);
-		g.drawRect(Game.WIDTH/2-110, 100, 150, 80);
+		g2d.drawString("Attack Point +1", 423, 130);
+		g2d.drawString("Current: " + (int)Tower.towerAtk, 435, 150);
+		g2d.drawRect(Game.WIDTH/2-110, 100, 150, 80);
 		
 		//box 2
-		g.drawString("Critical Percentage +5%", 400, 230);
-		g.drawString("Current: " + (int)Tower.towerCritical, 435, 250);
-		g.drawRect(Game.WIDTH/2-110, 200, 150, 80);
+		g2d.drawString("Critical Percentage +5%", 400, 230);
+		g2d.drawString("Current: " + (int)Tower.towerCritical, 435, 250);
+		g2d.drawRect(Game.WIDTH/2-110, 200, 150, 80);
 				
 		//box 3
-		g.drawString("Accuracy +4%", 428, 330);
-		g.drawString("Current: " + (int)Tower.towerAcc, 435, 350);
-		g.drawRect(Game.WIDTH/2-110, 300, 150, 80);
+		g2d.drawString("Accuracy +4%", 428, 330);
+		g2d.drawString("Current: " + (int)Tower.towerAcc, 435, 350);
+		g2d.drawRect(Game.WIDTH/2-110, 300, 150, 80);
 		
 		//back
-		g.drawString("Back", 457, 480);
-		g.drawRect(425, 450, 100, 50);
+		g2d.drawString("Back", 457, 480);
+		g2d.drawRect(425, 450, 100, 50);
 			
 	}
 }

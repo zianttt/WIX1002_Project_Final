@@ -5,15 +5,20 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import main.Game;
+import utils.FontManager;
 import utils.STATES;
 
 public class Transition {
+	
+	Font curFont, newFont;
+	private FontManager fontManager;
 	
 	private static int timer = 450;
 	private static int color = 0;
 	private static int fontColor = 0;
 	
 	public static void toBattle(Graphics2D g2d) {
+		
 		
 		if(timer >= 0) {
 			g2d.setColor(new Color(color, color, color));
@@ -23,7 +28,6 @@ public class Transition {
 			}
 			fontColor = 255-color;
 			g2d.setColor(new Color(fontColor, fontColor, fontColor));
-			g2d.setFont(new Font("comicsan", 35, 35));
 			g2d.drawString("To Battle...", Game.WIDTH/2 - 100, Game.HEIGHT/2 - 30);
 			timer--;
 		}
@@ -35,6 +39,8 @@ public class Transition {
 	}
 	
 	public static void toShop(Graphics2D g2d) {
+		
+
 		if(timer >= 0) {
 			g2d.setColor(new Color(color, color, color));
 			g2d.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
@@ -98,6 +104,7 @@ public class Transition {
 	}
 	
 	public static void toStatus(Graphics2D g2d) {
+		
 		
 		if(timer >= 0) {
 			g2d.setColor(new Color(color, color, color));

@@ -6,7 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="media"/>
 	<classpathentry kind="lib" path="C:/Users/ziant/OneDrive/Documents/jarFile/Libs/Libs/jars/jinput.jar"/>
 	<classpathentry kind="lib" path="C:/Users/ziant/OneDrive/Documents/jarFile/Libs/Libs/jars/jogg-0.0.7.jar"/>
 	<classpathentry kind="lib" path="C:/Users/ziant/OneDrive/Documents/jarFile/Libs/Libs/jars/jorbis-0.0.15.jar"/>

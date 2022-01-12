@@ -8,15 +8,16 @@ import java.awt.event.MouseEvent;
 
 import main.Game;
 import utils.AudioPlayer;
+import utils.FontManager;
 import utils.STATES;
 
 public class Menu extends MouseAdapter {
 	
 	Font curFont, newFont;
-	private Game game;
+	private FontManager fontManager;
 	
-	public Menu(Game game) {
-		this.game = game;
+	public Menu(FontManager fontManager) {
+		this.fontManager = fontManager;
 	}
 	
 	public void mousePressed(MouseEvent e) {
@@ -60,12 +61,8 @@ public class Menu extends MouseAdapter {
 	public void render(Graphics2D g2d) {
 		
 		g2d.setColor(Color.black);
-		g2d.setFont(game.fontManager.getMaruMonica());
-		//g2d.setFont(new Font("comicsan", 0, 48));
+		g2d.setFont(fontManager.getMaruMonica());
 		curFont = g2d.getFont();
-		newFont = curFont.deriveFont(Font.BOLD, 50F);
-		g2d.setFont(newFont);
-		//g2d.drawString("Till The End", Game.WIDTH/2-130, 90);
 		
 		//box 1
 		newFont = curFont.deriveFont(Font.BOLD, 22F);

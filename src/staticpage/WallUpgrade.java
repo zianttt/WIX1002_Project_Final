@@ -9,19 +9,20 @@ import java.awt.event.MouseEvent;
 import main.Game;
 import objects.Wall;
 import utils.AudioPlayer;
-import utils.Handler;
+import utils.FontManager;
 import utils.STATES;
 import utils.Stats;
 
 
 public class WallUpgrade extends MouseAdapter{
 	
-	private Handler handler;
+	Font curFont, newFont;
+	private FontManager fontManager;
 	private boolean freeze = true;
 	
 	
-	public WallUpgrade(Handler handler) {
-		this.handler = handler;
+	public WallUpgrade(FontManager fontManager) {
+		this.fontManager = fontManager;
 	}
 	
 	
@@ -73,12 +74,22 @@ public class WallUpgrade extends MouseAdapter{
 	
 	
 	public void render(Graphics2D g2d) {
+		
+		
+		// set font
 		g2d.setColor(Color.white);
-		g2d.setFont(new Font("comicsan", 0, 48));
+		g2d.setFont(fontManager.getMaruMonica());
+		curFont = g2d.getFont();
+		newFont = curFont.deriveFont(Font.BOLD, 22F);
+		g2d.setFont(newFont);
+		
+		
+		
 		g2d.drawString("Wall Upgrade", Game.WIDTH/2-180, 50);
 		
+		
+		
 		//box 1
-		g2d.setFont(new Font("comicsan", 0, 12));
 		g2d.drawString("Health Point +75%", 416, 130);
 		g2d.drawString("Current: " +(int) Wall.wallHp, 429, 150);
 		g2d.drawRect(Game.WIDTH/2-110, 100, 150, 80);

@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 public class FontManager {
 	
-	Font maruMonica, curFont, newFont;
+	Font maruMonica;
 	
 	public FontManager() {
 		// create new font

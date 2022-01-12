@@ -14,8 +14,8 @@ import objects.EventsGenerator;
 
 public class Stats {
 	
-	Game game;
-	Font maruMonica, curFont, newFont;
+	private FontManager fontManager;
+	Font curFont, newFont;
 	Random r = new Random();
 	
 	// game
@@ -26,16 +26,8 @@ public class Stats {
 	public static String[] seasons = {"Spring", "Summer", "Autumn", "Winter"};
 	public static int miniGameLimit = 2;
 	
-	public Stats(Game game) {
-		this.game = game;
-		
-		// create new font
-		try {
-			InputStream is = getClass().getResourceAsStream("/fonts/x12y16pxMaruMonica.ttf");
-			maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
-		} catch (FontFormatException | IOException e) {
-			e.printStackTrace();
-		}
+	public Stats(FontManager fontManager) {
+		this.fontManager = fontManager;
 		
 	}
 	
@@ -67,9 +59,9 @@ public class Stats {
 	public void render(Graphics2D g2d){
 		
 		g2d.setColor(Color.white);
-		g2d.setFont(maruMonica);
+		g2d.setFont(fontManager.getMaruMonica());
 		curFont = g2d.getFont();
-		newFont = curFont.deriveFont(Font.BOLD, 25F);
+		newFont = curFont.deriveFont(Font.BOLD, 22F);
 		g2d.setFont(newFont);
 		
 		g2d.drawString("Year: " + year, 10, 25);

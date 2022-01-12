@@ -8,22 +8,20 @@ import java.awt.event.MouseEvent;
 
 import main.Game;
 import utils.AudioPlayer;
-import utils.Handler;
+import utils.FontManager;
 import utils.STATES;
-import utils.Stats;
 
 
 public class Shop extends MouseAdapter{
 	
-	private Handler handler;
-	private Stats stats;
+
+	Font curFont, newFont;
+	private FontManager fontManager;
 	private boolean backToMain = false;
 	
 	
-	public Shop(Handler handler, Stats stats) {
-		this.handler = handler;
-		this.stats = stats;
-
+	public Shop(FontManager fontManager) {
+		this.fontManager = fontManager;
 	}
 	
 	
@@ -76,13 +74,18 @@ public class Shop extends MouseAdapter{
 		}
 	}
 	
+	
 	public void render(Graphics2D g2d) {
+		// set font
 		g2d.setColor(Color.white);
-		g2d.setFont(new Font("comicsan", 0, 48));
+		g2d.setFont(fontManager.getMaruMonica());
+		curFont = g2d.getFont();
+		newFont = curFont.deriveFont(Font.BOLD, 22F);
+		g2d.setFont(newFont);
+		
 		g2d.drawString("SHOP", Game.WIDTH/2-100, 50);
 		
 		//box 1
-		g2d.setFont(new Font("comicsan", 0, 12));
 		g2d.drawString("Tower", 290, 243);
 		g2d.drawRect(Game.WIDTH/2-240, 200, 100, 80);
 		

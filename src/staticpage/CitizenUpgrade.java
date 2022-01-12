@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import main.Game;
 import objects.Citizen;
 import utils.AudioPlayer;
+import utils.FontManager;
 import utils.Handler;
 import utils.STATES;
 import utils.Stats;
@@ -16,12 +17,13 @@ import utils.Stats;
 
 public class CitizenUpgrade extends MouseAdapter{
 	
-	private Handler handler;
+	private FontManager fontManager;
+	private Font curFont, newFont;
 	private boolean freeze = true;
 	
 	
-	public CitizenUpgrade(Handler handler) {
-		this.handler = handler;
+	public CitizenUpgrade(FontManager fontManager) {
+		this.fontManager = fontManager;
 	}
 	
 	
@@ -122,13 +124,22 @@ public class CitizenUpgrade extends MouseAdapter{
 	
 	
 	public void render(Graphics2D g2d) {
+		
+		// set font
 		g2d.setColor(Color.white);
-		g2d.setFont(new Font("comicsan", 0, 48));
+		g2d.setFont(fontManager.getMaruMonica());
+		curFont = g2d.getFont();
+		newFont = curFont.deriveFont(Font.BOLD, 22F);
+		g2d.setFont(newFont);
+		
+		// title
 		g2d.drawString("Citizen Upgrade", Game.WIDTH/2-200, 50);
 		
+		// change font size
+		newFont = curFont.deriveFont(Font.BOLD, 11F);
+		g2d.setFont(newFont);
 		
 		//box 1
-		g2d.setFont(new Font("comicsan", 0, 12));
 		g2d.drawString("Emotional -50", 336, 130);
 		g2d.drawString("Current: " + Citizen.emo, 345, 150);
 		g2d.drawRect(300, 100, 150, 80);

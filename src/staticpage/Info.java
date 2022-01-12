@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 
 import main.Game;
 import utils.AudioPlayer;
+import utils.FontManager;
 import utils.STATES;
 
 public class Info extends MouseAdapter{
@@ -21,6 +22,14 @@ public class Info extends MouseAdapter{
 	private String[] minigameInfoText = {"1. Control the player to avoid contacting the enemies",
 										 "2. Press space to shoot bullet to kill the enemies",
 										 "3. Scores will turn into gold after minigame"};
+	
+	Font curFont, newFont;
+	private FontManager fontManager;
+	
+	public Info(FontManager fontManager) {
+		this.fontManager = fontManager;
+	}
+	
 	
 	public void mousePressed(MouseEvent e) {
 		
@@ -70,13 +79,18 @@ public class Info extends MouseAdapter{
 	
 	public void render(Graphics2D g2d) {
 		
+		// set font
+		g2d.setColor(Color.black);
+		g2d.setFont(fontManager.getMaruMonica());
+		curFont = g2d.getFont();
+		newFont = curFont.deriveFont(Font.BOLD, 22F);
+		g2d.setFont(newFont);
+		
+		
 		if(Game.gameState == STATES.Info) {
-			g2d.setColor(Color.black);
-			g2d.setFont(new Font("comicsan", 0, 48));
 			g2d.drawString("Info Page", Game.WIDTH/2-100, 50);
 			
 			//general info
-			g2d.setFont(new Font("comicsan", 0, 12));
 			g2d.drawString("General Info", 315, 243);
 			g2d.drawRect(Game.WIDTH/2-200, 200, 100, 80);
 			
@@ -86,11 +100,8 @@ public class Info extends MouseAdapter{
 		}
 		
 		if(Game.gameState == STATES.GeneralInfo) {
-			g2d.setColor(Color.black);
-			g2d.setFont(new Font("comicsan", 0, 48));
 			g2d.drawString("General Info", Game.WIDTH/2-100, 50);
 			
-			g2d.setFont(new Font("comicsan", 0, 12));
 			g2d.drawString(generalInfoText[0], 290, 100);
 			g2d.drawString(generalInfoText[1], 290, 150);
 			g2d.drawString(generalInfoText[2], 290, 200);
@@ -100,11 +111,8 @@ public class Info extends MouseAdapter{
 		}
 		
 		if(Game.gameState == STATES.MiniGameInfo) {
-			g2d.setColor(Color.white);
-			g2d.setFont(new Font("comicsan", 0, 48));
 			g2d.drawString("General Info", Game.WIDTH/2-100, 50);
 			
-			g2d.setFont(new Font("comicsan", 0, 12));
 			g2d.drawString(minigameInfoText[0], 290, 100);
 			g2d.drawString(minigameInfoText[1], 290, 150);
 			g2d.drawString(minigameInfoText[2], 290, 200);

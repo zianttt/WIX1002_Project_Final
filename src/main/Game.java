@@ -129,7 +129,6 @@ public class Game extends Canvas implements Runnable{
 	
 	
 	//
-	private BufferedImage map2 = null;
 	private BufferedImage map = null;
 	// 
 	
@@ -154,20 +153,22 @@ public class Game extends Canvas implements Runnable{
 		handler = new Handler();
 		battleHandler = new Handler();
 		miniHandler = new Handler();
+		
+		fontManager = new FontManager();
 		hud = new HUD();
 		spawner = new Spawner(miniHandler, hud, this);
 		camera = new Camera(0, 0);
-		stats = new Stats(this);
-		textbox = new TextBox();
-		shop = new Shop(handler, stats);
-		menu = new Menu(this);
-		info = new Info();
+		stats = new Stats(fontManager);
+		textbox = new TextBox(fontManager);
+		shop = new Shop(fontManager);
+		menu = new Menu(fontManager);
+		info = new Info(fontManager);
 		statusC = new StatusCheck();
-		gameOver = new GameOver(handler, hud);
-		towerUp = new TowerUpgrade(handler);
-		wallUp = new WallUpgrade(handler);
-		citizenUp = new CitizenUpgrade(handler);
-		fontManager = new FontManager();
+		gameOver = new GameOver(handler, hud, fontManager);
+		towerUp = new TowerUpgrade(fontManager);
+		wallUp = new WallUpgrade(fontManager);
+		citizenUp = new CitizenUpgrade(fontManager);
+
 		this.addKeyListener(new KeyInput(handler));
 		this.addKeyListener(new KeyInput(miniHandler));
 		this.addMouseListener(shop);
@@ -183,10 +184,10 @@ public class Game extends Canvas implements Runnable{
 		
 		//loader2 = new BufferedImageLoader();
 		loader = new BufferedImageLoader();
-		tileManager = new TileManager(this, loader2, 1);
-		bgTileManager =  new TileManager(this, loader2, 2);
-		//map2 = loader2.loadImage("/maps/mapImp14.png");
-		map = loader.loadImage("/maps/map72.png");
+		tileManager = new TileManager(this, loader, 1);
+		bgTileManager =  new TileManager(this, loader, 2);
+		//map = loader.loadImage("/maps/mapImp14.png");
+		map = loader.loadImage("/maps/map72x72.png");
 		characters = loader.loadImage("/pics/character1.png");
 		css = new SpriteSheet(characters);
 		dragons = loader.loadImage("/pics/dragonss.png");
@@ -203,7 +204,7 @@ public class Game extends Canvas implements Runnable{
 		mainmenu_img = loader.loadImage("/pics/mainmenu.png");
 		battlemap_img = loader.loadImage("/pics/battleMap.png");
 		staticpage_img = loader.loadImage("/pics/staticmap.png");
-		loadMap(map2);
+		loadMap(map);
 		
 		
 		
@@ -414,7 +415,7 @@ public class Game extends Canvas implements Runnable{
 		else if(gameState == STATES.TowerUp) {
 			//bgTileManager.render(g2d);
 			g2d.drawImage(bgrd_img, 0, 0, WIDTH, HEIGHT, null);
-			towerUp.render(g);
+			towerUp.render(g2d);
 		}
 		else if(gameState == STATES.WallUp) {
 			//bgTileManager.render(g2d);
@@ -450,7 +451,7 @@ public class Game extends Canvas implements Runnable{
 			g2d.drawImage(mainmenu_img, 0, 0, WIDTH, HEIGHT, null);
 			//bgTileManager.render(g2d);
 			if(fromGameOver) {
-				loadMap(map2);
+				loadMap(map);
 				fromGameOver = false;
 			}
 			menu.render(g2d);
@@ -486,7 +487,8 @@ public class Game extends Canvas implements Runnable{
 		
 		
 		// player status
-		if(gameState != STATES.Battle && gameState != STATES.Menu && gameState != STATES.Minigame && gameState != STATES.MinigameOver) {
+		if(gameState == STATES.Play || gameState == STATES.Shop || gameState == STATES.CitizneUp &&
+				gameState == STATES.TowerUp || gameState == STATES.WallUp || gameState == STATES.Status) {
 			stats.render(g2d);
 		}
 		

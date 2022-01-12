@@ -19,9 +19,9 @@ public class Camera {
 		
 		
 		if(x <= 0) x = 0;
-		if(x >= 2086) x = 2086;
+		if(x >= 1318) x = 1318;
 		if(y <= 0) y = 0;
-		if(y >= 2546) y = 2546;
+		if(y >= 1781) y = 1781;
 		
 	}
 

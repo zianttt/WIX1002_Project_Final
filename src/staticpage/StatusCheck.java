@@ -11,11 +11,14 @@ import objects.Citizen;
 import objects.Tower;
 import objects.Wall;
 import utils.AudioPlayer;
+import utils.FontManager;
 import utils.STATES;
 import utils.Stats;
 
 public class StatusCheck extends MouseAdapter{
 	
+	Font curFont, newFont;
+	private FontManager fontManager;
 	private boolean backToMain = false;
 	
 	public StatusCheck() {
@@ -50,8 +53,14 @@ public class StatusCheck extends MouseAdapter{
 	
 	public void render(Graphics2D g2d) {
 		
+		// set font
 		g2d.setColor(Color.white);
-		g2d.setFont(new Font("comicsan", 0, 48));
+		g2d.setFont(fontManager.getMaruMonica());
+		curFont = g2d.getFont();
+		newFont = curFont.deriveFont(Font.BOLD, 22F);
+		g2d.setFont(newFont);
+		
+		
 		g2d.drawString("Status", Game.WIDTH/2-100, 50);
 		
 		

@@ -6,8 +6,12 @@ import java.awt.Graphics2D;
 
 import main.Game;
 import objects.EventsGenerator;
+import utils.FontManager;
 
 public class TextBox {
+	
+	Font curFont, newFont;
+	private FontManager fontManager;
 	
 	private String[] eventTexts = {"Reinforcement : Tower ATK + 1", "Visitors : Gold + 100", "Festival : Berserk Diligent Fearless + 50",
 	"Drought : Wall HP - 50", "Outing : Berserk Diligent Fearless + 50", "Heatstroke : Emo Nervous Lazy + 50",
@@ -18,13 +22,24 @@ public class TextBox {
 	
 	private String tempText;
 	
+	
+	public TextBox(FontManager fontManager) {
+		this.fontManager = fontManager;
+	}
+	
 	public void render(Graphics2D g2d) {
 		
+		// set font
 		g2d.setColor(Color.black);
+		g2d.setFont(fontManager.getMaruMonica());
+		curFont = g2d.getFont();
+		newFont = curFont.deriveFont(Font.BOLD, 22F);
+		g2d.setFont(newFont);
+		
 		g2d.fillRoundRect(Game.WIDTH/2 - 250, 30, 500, 200, 35, 35);
 		
 		g2d.setColor(Color.white);
-		g2d.setFont(new Font("comicsan", 20, 20));
+		
 		if(EventsGenerator.eventError) {
 			tempText = eventErrorTexts;
 		}
