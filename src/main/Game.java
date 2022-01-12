@@ -163,7 +163,7 @@ public class Game extends Canvas implements Runnable{
 		shop = new Shop(fontManager);
 		menu = new Menu(fontManager);
 		info = new Info(fontManager);
-		statusC = new StatusCheck();
+		statusC = new StatusCheck(fontManager);
 		gameOver = new GameOver(handler, hud, fontManager);
 		towerUp = new TowerUpgrade(fontManager);
 		wallUp = new WallUpgrade(fontManager);

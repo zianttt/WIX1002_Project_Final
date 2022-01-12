@@ -21,8 +21,8 @@ public class StatusCheck extends MouseAdapter{
 	private FontManager fontManager;
 	private boolean backToMain = false;
 	
-	public StatusCheck() {
-		
+	public StatusCheck(FontManager fontManager) {
+		this.fontManager = fontManager;
 	}
 	
 	public void mousePressed(MouseEvent e) {
