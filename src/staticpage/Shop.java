@@ -14,6 +14,8 @@ import utils.STATES;
 
 public class Shop extends MouseAdapter{
 	
+	private int color;
+	private boolean revert = true;
 
 	Font curFont, newFont;
 	private FontManager fontManager;
@@ -58,7 +60,7 @@ public class Shop extends MouseAdapter{
 			}
 			
 			// back
-			if(mx >= 425 && mx <= 525) {
+			if(mx >= 435 && mx <= 535) {
 				if(my >= 450 && my <= 500) {
 					backToMain = true;
 				}
@@ -68,6 +70,15 @@ public class Shop extends MouseAdapter{
 	
 	
 	public void tick() {
+		
+		if(!revert) {
+			color--;
+			if(color == 0) revert = true;
+		}else {
+			color++;
+			if(color == 255) revert = false;
+		}
+		
 		if(backToMain) {
 			Game.gameState = STATES.ToMain;
 			backToMain = false;
@@ -77,29 +88,37 @@ public class Shop extends MouseAdapter{
 	
 	public void render(Graphics2D g2d) {
 		// set font
-		g2d.setColor(Color.white);
+		g2d.setColor(new Color(155, 155, color));
 		g2d.setFont(fontManager.getMaruMonica());
 		curFont = g2d.getFont();
-		newFont = curFont.deriveFont(Font.BOLD, 22F);
+		newFont = curFont.deriveFont(Font.BOLD, 55F);
 		g2d.setFont(newFont);
 		
-		g2d.drawString("SHOP", Game.WIDTH/2-100, 50);
+		g2d.drawString("SHOP", Game.WIDTH/2-75, 75);
 		
-		//box 1
-		g2d.drawString("Tower", 290, 243);
-		g2d.drawRect(Game.WIDTH/2-240, 200, 100, 80);
 		
-		//box 2
-		g2d.drawString("Wall", 455, 243);
-		g2d.drawRect(Game.WIDTH/2-80, 200, 100, 80);
+		newFont = curFont.deriveFont(Font.BOLD, 22F);
+		g2d.setFont(newFont);
+		g2d.setColor(new Color(155, 155, 245));
+		
+		// tower
+		g2d.drawString("Tower", 285, 245);
+		g2d.drawRoundRect(Game.WIDTH/2-240, 200, 100, 80, 30, 30);
+		
+		// wall
+		g2d.drawString("Wall", 450, 245);
+		g2d.drawRoundRect(Game.WIDTH/2-80, 200, 100, 80, 30, 30);
 				
-		//box 3
-		g2d.drawString("Citizens", 607, 243);
-		g2d.drawRect(Game.WIDTH/2+80, 200, 100, 80);
+		// citizen
+		g2d.drawString("Citizens", 598, 245);
+		g2d.drawRoundRect(Game.WIDTH/2+80, 200, 100, 80, 30, 30);
 		
 		//back
-		g2d.drawString("Back", 457, 480);
-		g2d.drawRect(425, 450, 100, 50);
+		g2d.setColor(Color.white);
+		newFont = curFont.deriveFont(Font.BOLD, 20F);
+		g2d.setFont(newFont);
+		g2d.drawString("Back", 464, 482);
+		g2d.drawRoundRect(435, 450, 100, 50, 15, 15);
 		
 	}
 	

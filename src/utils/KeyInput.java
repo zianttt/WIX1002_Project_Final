@@ -18,6 +18,10 @@ public class KeyInput extends KeyAdapter{
 	
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
+		
+		if(key == KeyEvent.VK_SPACE) {
+			handler.setAction(true);
+		}
 	
 		for(int i=0; i < handler.object.size(); i++) {
 			
@@ -29,15 +33,13 @@ public class KeyInput extends KeyAdapter{
 				if(key == KeyEvent.VK_A) handler.setLeft(true);
 				if(key == KeyEvent.VK_D) handler.setRight(true);
 				
-				if(key == KeyEvent.VK_SPACE) handler.setAction(true);
-				
 				if(tempObject.getId() == ID.Player){
 					if(key == KeyEvent.VK_ENTER) {
 						Game.paused = !Game.paused;
 					}
 					
 					if(key == KeyEvent.VK_ESCAPE) {
-						Game.gameState = STATES.Menu;
+						Game.gameState = STATES.Menu;  
 					}
 				}
 					

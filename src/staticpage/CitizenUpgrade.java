@@ -17,6 +17,9 @@ import utils.Stats;
 
 public class CitizenUpgrade extends MouseAdapter{
 	
+	private int color;
+	private boolean revert = true;
+	
 	private FontManager fontManager;
 	private Font curFont, newFont;
 	private boolean freeze = true;
@@ -42,8 +45,8 @@ public class CitizenUpgrade extends MouseAdapter{
 				
 				if(Stats.gold >= 50) {
 					// box 1 emotional
-					if(mx >= 300 && mx <= 450) {
-						if(my >= 100 && my <= 180) {
+					if(mx >= 315 && mx <= 465) {
+						if(my >= 100 && my <= 190) {
 							if(Citizen.emo > 0) {
 								if(Citizen.emo-50 <= 0) Citizen.emo = 0;
 								else Citizen.emo -= 50;
@@ -53,8 +56,8 @@ public class CitizenUpgrade extends MouseAdapter{
 					}
 					
 					//box 2 nervous
-					if(mx >= 300 && mx <= 450) {
-						if(my >= 200 && my <= 280) {
+					if(mx >= 315 && mx <= 465) {
+						if(my >= 200 && my <= 290) {
 							if(Citizen.nervous > 0) {
 								if(Citizen.nervous-50 <= 0) Citizen.nervous = 0;
 								else Citizen.nervous -= 50;
@@ -64,8 +67,8 @@ public class CitizenUpgrade extends MouseAdapter{
 					}
 					
 					// box 3 lazy
-					if(mx >= 300 && mx <= 450) {
-						if(my >= 300 && my <= 380) {
+					if(mx >= 315 && mx <= 465) {
+						if(my >= 300 && my <= 390) {
 							if(Citizen.lazy > 0) {
 								if(Citizen.lazy-50 <= 0) Citizen.lazy = 0;
 								else Citizen.lazy -= 50;
@@ -75,8 +78,8 @@ public class CitizenUpgrade extends MouseAdapter{
 					}
 					
 					//box 4 berserk
-					if(mx >= 500 && mx <= 650) {
-						if(my >= 100 && my <= 180) {
+					if(mx >= 515 && mx <= 665) {
+						if(my >= 100 && my <= 190) {
 							if(Citizen.berserk < 100) {
 								if(Citizen.berserk+50 >= 100) Citizen.berserk = 100;
 								else Citizen.berserk += 50;
@@ -87,8 +90,8 @@ public class CitizenUpgrade extends MouseAdapter{
 					}
 					
 					//box 5 diligent
-					if(mx >= 500 && mx <= 650) {
-						if(my >= 200 && my <= 280) {
+					if(mx >= 515 && mx <= 665) {
+						if(my >= 200 && my <= 290) {
 							if(Citizen.diligent < 100) {
 								if(Citizen.diligent+50 >= 100) Citizen.diligent = 100;
 								else Citizen.diligent += 50;
@@ -99,8 +102,8 @@ public class CitizenUpgrade extends MouseAdapter{
 					}
 					
 					//box 6 fearless
-					if(mx >= 500 && mx <= 650) {
-						if(my >= 300 && my <= 380) {
+					if(mx >= 515 && mx <= 665) {
+						if(my >= 300 && my <= 390) {
 							if(Citizen.fearless < 100) {
 								if(Citizen.fearless+50 >= 100) Citizen.fearless = 100;
 								else Citizen.fearless += 50;
@@ -112,7 +115,7 @@ public class CitizenUpgrade extends MouseAdapter{
 				}
 				
 				// back
-				if(mx >= 425 && mx <= 525) {
+				if(mx >= 435 && mx <= 535) {
 					if(my >= 450 && my <= 500) {
 						freeze = true;
 						Game.gameState = STATES.Shop;
@@ -125,53 +128,76 @@ public class CitizenUpgrade extends MouseAdapter{
 	
 	public void render(Graphics2D g2d) {
 		
+		if(!revert) {
+			color--;
+			if(color == 0) revert = true;
+		}else {
+			color++;
+			if(color == 255) revert = false;
+		}
+		
+		
 		// set font
-		g2d.setColor(Color.white);
+		g2d.setColor(new Color(155, 155, color));
 		g2d.setFont(fontManager.getMaruMonica());
 		curFont = g2d.getFont();
-		newFont = curFont.deriveFont(Font.BOLD, 22F);
+		newFont = curFont.deriveFont(Font.BOLD, 55F);
 		g2d.setFont(newFont);
 		
 		// title
-		g2d.drawString("Citizen Upgrade", Game.WIDTH/2-200, 50);
+		g2d.drawString("Citizen Upgrade", Game.WIDTH/2-175, 50);
+		
+		
+		newFont = curFont.deriveFont(Font.BOLD, 17F);
+		g2d.setFont(newFont);
+		g2d.setColor(Color.white);
+		
+		g2d.drawString("Cost: " + 50 + "G", 359, 180);
+		g2d.drawString("Cost: " + 50 + "G", 359, 280);
+		g2d.drawString("Cost: " + 50 + "G", 359, 380);
+		g2d.drawString("Cost: " + 50 + "G", 558, 180);
+		g2d.drawString("Cost: " + 50 + "G", 558, 280);
+		g2d.drawString("Cost: " + 50 + "G", 558, 380);
 		
 		// change font size
-		newFont = curFont.deriveFont(Font.BOLD, 11F);
+		g2d.setColor(Color.black);
+		newFont = curFont.deriveFont(Font.BOLD, 20F);
 		g2d.setFont(newFont);
 		
 		//box 1
 		g2d.drawString("Emotional -50", 336, 130);
-		g2d.drawString("Current: " + Citizen.emo, 345, 150);
-		g2d.drawRect(300, 100, 150, 80);
+		g2d.drawString("Current: " + Citizen.emo, 347, 155);
+		g2d.drawRoundRect(315, 100, 150, 90, 25, 25);
 		
 		//box 2
 		g2d.drawString("Nervous -50", 340, 230);
-		g2d.drawString("Current: " + Citizen.nervous, 341, 250);
-		g2d.drawRect(300, 200, 150, 80);
+		g2d.drawString("Current: " + Citizen.nervous, 347, 255);
+		g2d.drawRoundRect(315, 200, 150, 90, 25, 25);
 				
 		//box 3
 		g2d.drawString("Lazy -50", 351, 330);
-		g2d.drawString("Current: " + Citizen.lazy, 345, 350);
-		g2d.drawRect(300, 300, 150, 80);
+		g2d.drawString("Current: " + Citizen.lazy, 347, 355);
+		g2d.drawRoundRect(315, 300, 150, 90, 25, 25);
 		
 		//box 4
 		g2d.drawString("Berserk -50", 542, 130);
-		g2d.drawString("Current: " + Citizen.berserk, 543, 150);
-		g2d.drawRect(500, 100, 150, 80);
+		g2d.drawString("Current: " + Citizen.berserk, 546, 155);
+		g2d.drawRoundRect(515, 100, 150, 90, 25, 25);
 		
 		//box 5
 		g2d.drawString("Diligent +50", 541, 230);
-		g2d.drawString("Current: " + Citizen.diligent, 543, 250);
-		g2d.drawRect(500, 200, 150, 80);
+		g2d.drawString("Current: " + Citizen.diligent, 546, 255);
+		g2d.drawRoundRect(515, 200, 150, 90, 25, 25);
 		
 		//box 6
-		g2d.drawString("Fearless +50", 538, 330);
-		g2d.drawString("Current: " + Citizen.fearless, 542, 350);
-		g2d.drawRect(500, 300, 150, 80);
+		g2d.drawString("Fearless +50", 540, 330);
+		g2d.drawString("Current: " + Citizen.fearless, 546, 355);
+		g2d.drawRoundRect(515, 300, 150, 90, 25, 25);
 		
 		//back
-		g2d.drawString("Back", 457, 480);
-		g2d.drawRect(425, 450, 100, 50);
+		g2d.setColor(Color.white);
+		g2d.drawString("Back", 464, 482);
+		g2d.drawRoundRect(435, 450, 100, 50, 15, 15);
 			
 	}
 }

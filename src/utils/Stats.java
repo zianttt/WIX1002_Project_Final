@@ -67,6 +67,7 @@ public class Stats {
 		g2d.drawString("Year: " + year, 10, 25);
 		g2d.drawString("Season: " + seasons[cur_season], 10, 55);
 		g2d.drawString("Gold: " + gold, 10, 85);	
+		g2d.drawString("Tax: " + tax, 10, 115);
 	
 	}
 

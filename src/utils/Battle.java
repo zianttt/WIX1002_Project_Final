@@ -17,14 +17,17 @@ import objects.WallAtk;
 
 public class Battle {
 	
+	Font curFont, newFont;
+	
 	private Game game;
 	private Handler battleHandler;
 	private Dragon dragon;
 	private Wall wall;
 	private SpriteSheet ss;
 	private Tower tower;
+	private FontManager fontManager;
 	
-	Font maruMonica, curFont, newFont;
+	
 	Random r = new Random();
 	
 	// battlefield
@@ -38,23 +41,15 @@ public class Battle {
 	private int infoTimer = 250;
 	private String outputMsg;
 	
-	public Battle(Game game, Handler battleHandler, SpriteSheet ss, Dragon dragon, Wall wall, Tower tower) {
+	public Battle(Game game, Handler battleHandler, SpriteSheet ss, Dragon dragon, Wall wall, Tower tower, FontManager fontManager) {
 		this.game = game;
 		this.battleHandler = battleHandler;
 		this.ss = ss;
 		this.dragon = dragon;
 		this.wall = wall;
-		this.tower = tower;
-		
-		outputMsg = "";
-		
-		// create new font
-		try {
-			InputStream is = getClass().getResourceAsStream("/x12y16pxMaruMonica.ttf");
-			maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
-		} catch (FontFormatException | IOException e) {
-			e.printStackTrace();
-		}
+		this.tower = tower;	
+		this.fontManager = fontManager;
+		this.outputMsg = "";
 		
 	}
 	
@@ -134,8 +129,9 @@ public class Battle {
 	
 	public void render(Graphics2D g2d) {
 		
-		g2d.setColor(Color.white);
-		g2d.setFont(maruMonica);
+		// set font
+		g2d.setColor(new Color(255, 255, 255));
+		g2d.setFont(fontManager.getMaruMonica());
 		curFont = g2d.getFont();
 		newFont = curFont.deriveFont(Font.BOLD, 25F);
 		g2d.setFont(newFont);

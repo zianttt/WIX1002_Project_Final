@@ -17,6 +17,9 @@ import utils.Stats;
 
 public class StatusCheck extends MouseAdapter{
 	
+	private int color;
+	private boolean revert = true;
+	
 	Font curFont, newFont;
 	private FontManager fontManager;
 	private boolean backToMain = false;
@@ -36,7 +39,7 @@ public class StatusCheck extends MouseAdapter{
 			}
 			
 			// back
-			if(mx >= 425 && mx <= 525) {
+			if(mx >= 435 && mx <= 535) {
 				if(my >= 450 && my <= 500) {
 					backToMain = true;
 				}
@@ -45,6 +48,15 @@ public class StatusCheck extends MouseAdapter{
 	}
 	
 	public void tick() {
+		
+		if(!revert) {
+			color--;
+			if(color == 0) revert = true;
+		}else {
+			color++;
+			if(color == 255) revert = false;
+		}
+		
 		if(backToMain) {
 			Game.gameState = STATES.ToMain;
 			backToMain = false;
@@ -54,40 +66,48 @@ public class StatusCheck extends MouseAdapter{
 	public void render(Graphics2D g2d) {
 		
 		// set font
-		g2d.setColor(Color.white);
+		g2d.setColor(new Color(155, color, 155));
 		g2d.setFont(fontManager.getMaruMonica());
 		curFont = g2d.getFont();
-		newFont = curFont.deriveFont(Font.BOLD, 22F);
+		newFont = curFont.deriveFont(Font.BOLD, 55F);
 		g2d.setFont(newFont);
 		
 		
-		g2d.drawString("Status", Game.WIDTH/2-100, 50);
+		g2d.drawString("Status", Game.WIDTH/2-85, 50);
+		
+		g2d.setColor(new Color(color, 155, 100));
+		g2d.drawRoundRect(140, 80, 320, 250, 25, 25);
+		g2d.drawRoundRect(510, 80, 320, 250, 25, 25);
+		
+		// change font size
+		g2d.setColor(new Color(149, 53, 83));
+		newFont = curFont.deriveFont(Font.BOLD, 20F);
+		g2d.setFont(newFont);
 		
 		
 		//box 1
-		g2d.drawRect(130, 100, 320, 250);
-		g2d.setFont(new Font("comicsan", 0, 18));
-		g2d.drawString("Tower Critical Chance: " + (int)Tower.towerCritical, 140, 130);	
-		g2d.drawString("Tower Attack Point: " + (int)Tower.towerAtk, 140, 170);
-		g2d.drawString("Tower Accuracy: " + (int)Tower.towerAcc, 140, 210);	
-		g2d.drawString("Wall Health: " + (int)Wall.wallHp, 140, 250);	
-		g2d.drawString("Wall Block Chance: " + (int)Wall.wallBlock, 140, 290);	
-		g2d.drawString("Tax rate: " + Stats.tax, 140, 330);	
+		
+		g2d.drawString("Tower Critical Chance: " + (int)Tower.towerCritical, 150, 110);	
+		g2d.drawString("Tower Attack Point: " + (int)Tower.towerAtk, 150, 150);
+		g2d.drawString("Tower Accuracy: " + (int)Tower.towerAcc, 150, 190);	
+		g2d.drawString("Wall Health: " + (int)Wall.wallHp, 150, 230);	
+		g2d.drawString("Wall Block Chance: " + (int)Wall.wallBlock, 150, 270);	
 		
 		
 		//box 4
-		g2d.drawRect(500, 100, 320, 250);
-		g2d.drawString("Emotional: " + Citizen.berserk, 510, 130);
-		g2d.drawString("Nervous: " + Citizen.nervous, 510, 170);
-		g2d.drawString("Lazy: " + Citizen.lazy, 510, 210);
-		g2d.drawString("Berserk: " + Citizen.berserk, 510, 250);
-		g2d.drawString("Diligent: " + Citizen.diligent, 510, 290);
-		g2d.drawString("Fearless: " + Citizen.fearless, 510, 330);
+		
+		g2d.drawString("Emotional: " + Citizen.berserk, 530, 110);
+		g2d.drawString("Nervous: " + Citizen.nervous, 530, 150);
+		g2d.drawString("Lazy: " + Citizen.lazy, 530, 190);
+		g2d.drawString("Berserk: " + Citizen.berserk, 530, 230);
+		g2d.drawString("Diligent: " + Citizen.diligent, 530, 270);
+		g2d.drawString("Fearless: " + Citizen.fearless, 530, 310);
 		
 		
 		//back
-		g2d.drawString("Back", 452, 480);
-		g2d.drawRect(425, 450, 100, 50);
+		g2d.setColor(Color.white);
+		g2d.drawString("Back", 464, 482);
+		g2d.drawRoundRect(435, 450, 100, 50, 15, 15);
 		
 	}
 }

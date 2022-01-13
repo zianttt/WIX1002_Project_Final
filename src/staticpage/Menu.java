@@ -13,6 +13,9 @@ import utils.STATES;
 
 public class Menu extends MouseAdapter {
 	
+	private int color;
+	private boolean revert = true;
+	
 	Font curFont, newFont;
 	private FontManager fontManager;
 	
@@ -34,14 +37,14 @@ public class Menu extends MouseAdapter {
 			// Play button
 			if(mx >= Game.WIDTH/2-240 && mx <= Game.WIDTH/2 - 140) {
 				if(my >= 377 && my <= 457) {
-					Game.gameState = STATES.Play;
+					Game.gameState = STATES.Info;
 				}
 			}
 			
 			// info
 			if(mx >= Game.WIDTH/2-80 && mx <= Game.WIDTH/2 + 20) {
 				if(my >= 377 && my <= 457) {
-					Game.gameState = STATES.Info;
+					Game.gameState = STATES.Play;
 				}
 			}
 			
@@ -56,28 +59,33 @@ public class Menu extends MouseAdapter {
 	
 	public void tick() {
 		
+		if(!revert) {
+			color--;
+			if(color == 0) revert = true;
+		}else {
+			color++;
+			if(color == 255) revert = false;
+		}
+		
 	}
 	
 	public void render(Graphics2D g2d) {
 		
-		g2d.setColor(Color.black);
 		g2d.setFont(fontManager.getMaruMonica());
 		curFont = g2d.getFont();
-		
-		//box 1
 		newFont = curFont.deriveFont(Font.BOLD, 22F);
 		g2d.setFont(newFont);
-		g2d.drawString("Start", 290, 420);
-		g2d.drawRoundRect(Game.WIDTH/2-240, 377, 100, 80, 20, 20);
 		
-		//box 2
-		g2d.drawString("Info", 455, 420);
+		// start
+		g2d.setColor(new Color(color, color, 0));
 		g2d.drawRoundRect(Game.WIDTH/2-80, 377, 100, 80, 20, 20);
-				
-		//box 3
-		g2d.drawString("Quit", 615, 420);
-		g2d.drawRoundRect(Game.WIDTH/2+80, 377, 100, 80, 20, 20);
+		g2d.drawString("Start", 448, 422);
 		
+		// info and quit
+		g2d.setColor(Color.black);
+		g2d.drawRoundRect(Game.WIDTH/2-240, 377, 100, 80, 20, 20);
+		g2d.drawRoundRect(Game.WIDTH/2+80, 377, 100, 80, 20, 20);
+		g2d.drawString("Info", 292, 422);
+		g2d.drawString("Quit", 613, 422);
 	}
-
 }

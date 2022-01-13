@@ -293,7 +293,7 @@ public class Game extends Canvas implements Runnable{
 				battleHandler.addObject(new Wall(600, 0, ID.Wall, battleHandler, this, drawss));
 				Dragon dragon = new Dragon((Game.WIDTH/2)-70, Game.HEIGHT + 100, ID.Dragon, dragonss, battleHandler, wall, loader);
 				battleHandler.addObject(dragon);
-				battle = new Battle(this, battleHandler, drawss, dragon, wall, tower);
+				battle = new Battle(this, battleHandler, drawss, dragon, wall, tower, fontManager);
 				battle.reset();
 			}
 			
@@ -487,7 +487,7 @@ public class Game extends Canvas implements Runnable{
 		
 		
 		// player status
-		if(gameState == STATES.Play || gameState == STATES.Shop || gameState == STATES.CitizneUp &&
+		if(gameState == STATES.Play || gameState == STATES.Shop || gameState == STATES.CitizneUp ||
 				gameState == STATES.TowerUp || gameState == STATES.WallUp || gameState == STATES.Status) {
 			stats.render(g2d);
 		}

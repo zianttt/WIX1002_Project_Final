@@ -16,6 +16,9 @@ import utils.Stats;
 
 public class WallUpgrade extends MouseAdapter{
 	
+	private int color;
+	private boolean revert = true;
+	
 	Font curFont, newFont;
 	private FontManager fontManager;
 	private boolean freeze = true;
@@ -42,16 +45,16 @@ public class WallUpgrade extends MouseAdapter{
 				
 				if(Stats.gold >= 100) {
 					// box 1
-					if(mx >= Game.WIDTH/2-110 && mx <= Game.WIDTH/2 + 40) {
-						if(my >= 100 && my <= 180) {
+					if(mx >= Game.WIDTH/2-102 && mx <= Game.WIDTH/2 + 68) {
+						if(my >= 100 && my <= 190) {
 							Wall.wallHp += 75;
 							Stats.gold -= 100;
 						}
 					}
 					
 					//box 2
-					if(mx >= Game.WIDTH/2-110 && mx <= Game.WIDTH/2 + 40) {
-						if(my >= 200 && my <= 280) {
+					if(mx >= Game.WIDTH/2-102 && mx <= Game.WIDTH/2 + 68) {
+						if(my >= 200 && my <= 290) {
 							if(Wall.wallBlock+5 <= 50) {
 								Wall.wallBlock += 5;
 								Stats.gold -= 100;
@@ -62,7 +65,7 @@ public class WallUpgrade extends MouseAdapter{
 			
 				
 				// back
-				if(mx >= 425 && mx <= 525) {
+				if(mx >= 435 && mx <= 535) {
 					if(my >= 450 && my <= 500) {
 						freeze = true;
 						Game.gameState = STATES.Shop;
@@ -75,33 +78,52 @@ public class WallUpgrade extends MouseAdapter{
 	
 	public void render(Graphics2D g2d) {
 		
+		if(!revert) {
+			color--;
+			if(color == 0) revert = true;
+		}else {
+			color++;
+			if(color == 255) revert = false;
+		}
+		
 		
 		// set font
-		g2d.setColor(Color.white);
+		g2d.setColor(new Color(155, color, 155));
 		g2d.setFont(fontManager.getMaruMonica());
 		curFont = g2d.getFont();
-		newFont = curFont.deriveFont(Font.BOLD, 22F);
+		newFont = curFont.deriveFont(Font.BOLD, 55F);
 		g2d.setFont(newFont);
 		
 		
 		
-		g2d.drawString("Wall Upgrade", Game.WIDTH/2-180, 50);
+		g2d.drawString("Wall Upgrade", Game.WIDTH/2-155, 50);
 		
 		
+		newFont = curFont.deriveFont(Font.BOLD, 17F);
+		g2d.setFont(newFont);
+		g2d.setColor(Color.white);
+		
+		g2d.drawString("Cost: " + 100 + "G", 447, 180);
+		g2d.drawString("Cost: " + 100 + "G", 447, 280);
+		
+		newFont = curFont.deriveFont(Font.BOLD, 20F);
+		g2d.setFont(newFont);
+		g2d.setColor(new Color(155, 155, 240));
 		
 		//box 1
-		g2d.drawString("Health Point +75%", 416, 130);
-		g2d.drawString("Current: " +(int) Wall.wallHp, 429, 150);
-		g2d.drawRect(Game.WIDTH/2-110, 100, 150, 80);
+		g2d.drawString("Health Point +75%", 417, 130);
+		g2d.drawString("Current: " +(int) Wall.wallHp, 434, 155);
+		g2d.drawRoundRect(Game.WIDTH/2-102, 100, 170, 90, 25, 25);
 		
 		//box 2
-		g2d.drawString("Block Percentage +5%", 405, 230);
-		g2d.drawString("Current: " + (int)Wall.wallBlock, 433, 250);
-		g2d.drawRect(Game.WIDTH/2-110, 200, 150, 80);
+		g2d.drawString("Block Chance +5%", 415, 230);
+		g2d.drawString("Current: " + (int)Wall.wallBlock, 439, 255);
+		g2d.drawRoundRect(Game.WIDTH/2-102, 200, 170, 90, 25, 25);
 		
 		//back
-		g2d.drawString("Back", 457, 480);
-		g2d.drawRect(425, 450, 100, 50);
+		g2d.setColor(Color.white);
+		g2d.drawString("Back", 464, 482);
+		g2d.drawRoundRect(435, 450, 100, 50, 15, 15);
 			
 	}
 }

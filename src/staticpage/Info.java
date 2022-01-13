@@ -13,15 +13,21 @@ import utils.STATES;
 
 public class Info extends MouseAdapter{
 	
-	private String[] generalInfoText = {"1. Press W S A D to move the player UP DOWN LEFT RIGHT",
-										"2. Go to the wall door to battle with the dragon",
-										"3. Upgrade wall, tower and citizen stats in shop",
-										"4. Check status in citizen hall",
-										"5. Ask event generator for something to happen..."}; 
+	private int color;
+	private boolean revert = true;
 	
-	private String[] minigameInfoText = {"1. Control the player to avoid contacting the enemies",
-										 "2. Press space to shoot bullet to kill the enemies",
-										 "3. Scores will turn into gold after minigame"};
+	
+	private String[] generalInfoText = {"1. W S A D to move UP DOWN LEFT RIGHT",
+										"2. Fight the dragon!",
+										"3. Upgrade equipments in shop",
+										"4. Check status in citizen hall",
+										"5. Make a wish to the magic lamp...",
+										"6. Walk around and discover treasures!"
+										}; 
+	
+	private String[] minigameInfoText = {"1. Avoid the dragon's flames",
+										 "2. Survive longer to earn more golds",
+										 };
 	
 	Font curFont, newFont;
 	private FontManager fontManager;
@@ -45,14 +51,14 @@ public class Info extends MouseAdapter{
 			if(Game.gameState == STATES.Info) {
 				
 				// general info
-				if(mx >= Game.WIDTH/2-200 && mx <= Game.WIDTH/2 - 100) {
+				if(mx >= Game.WIDTH/2-150 && mx <= Game.WIDTH/2 - 30) {
 					if(my >= 200 && my <= 280) {
 						Game.gameState = STATES.GeneralInfo;
 					}
 				}
 				
 				// minigame info
-				if(mx >= Game.WIDTH/2+80 && mx <= Game.WIDTH/2 + 180) {
+				if(mx >= Game.WIDTH/2+30 && mx <= Game.WIDTH/2 + 150) {
 					if(my >= 200 && my <= 280) {
 						Game.gameState = STATES.MiniGameInfo;
 					}
@@ -60,8 +66,8 @@ public class Info extends MouseAdapter{
 			}
 			
 			// back
-			if(mx >= 425 && mx <= 525) {
-				if(my >= 450 && my <= 500) {
+			if(mx >= 455 && mx <= 555) {
+				if(my >= 367 && my <= 417) {
 					if(Game.gameState != STATES.Info) {
 						Game.gameState = STATES.Info;
 					}
@@ -75,52 +81,81 @@ public class Info extends MouseAdapter{
 	
 	public void tick() {
 		
+		if(!revert) {
+			color--;
+			if(color == 0) revert = true;
+		}else {
+			color++;
+			if(color == 255) revert = false;
+		}
+		
 	}
 	
 	public void render(Graphics2D g2d) {
-		
+	
 		// set font
-		g2d.setColor(Color.black);
+		g2d.setColor(new Color(color, 155, 155));
 		g2d.setFont(fontManager.getMaruMonica());
 		curFont = g2d.getFont();
-		newFont = curFont.deriveFont(Font.BOLD, 22F);
+		newFont = curFont.deriveFont(Font.BOLD, 35F);
 		g2d.setFont(newFont);
 		
 		
 		if(Game.gameState == STATES.Info) {
-			g2d.drawString("Info Page", Game.WIDTH/2-100, 50);
+			
+			g2d.setColor(Color.black);
+			g2d.drawString("Info Page", Game.WIDTH/2-57, 150);
+			
+			newFont = curFont.deriveFont(Font.BOLD, 20F);
+			g2d.setFont(newFont);
+			
+			
+			
+			g2d.drawString("General", 377, 245);
+			g2d.drawString("Minigame", 550, 245);
 			
 			//general info
-			g2d.drawString("General Info", 315, 243);
-			g2d.drawRect(Game.WIDTH/2-200, 200, 100, 80);
-			
 			// minigame info
-			g2d.drawString("Minigame Info", 592, 243);
-			g2d.drawRect(Game.WIDTH/2+80, 200, 100, 80);
+			g2d.setColor(new Color(color, 0, 155));
+			g2d.drawRoundRect(Game.WIDTH/2-150, 200, 120, 80, 25, 25);
+			g2d.drawRoundRect(Game.WIDTH/2+30, 200, 120, 80, 25, 25);
+			
+			
+			
+			
 		}
 		
 		if(Game.gameState == STATES.GeneralInfo) {
-			g2d.drawString("General Info", Game.WIDTH/2-100, 50);
 			
-			g2d.drawString(generalInfoText[0], 290, 100);
-			g2d.drawString(generalInfoText[1], 290, 150);
-			g2d.drawString(generalInfoText[2], 290, 200);
-			g2d.drawString(generalInfoText[3], 290, 250);
-			g2d.drawString(generalInfoText[4], 290, 300);
+			g2d.setColor(Color.black);
+			g2d.drawString("General Info", Game.WIDTH/2-75, 150);
+			
+			newFont = curFont.deriveFont(Font.BOLD, 20F);
+			g2d.setFont(newFont);
+			
+			g2d.drawString(generalInfoText[0], 345, 210);
+			g2d.drawString(generalInfoText[1], 345, 235);
+			g2d.drawString(generalInfoText[2], 345, 260);
+			g2d.drawString(generalInfoText[3], 345, 285);
+			g2d.drawString(generalInfoText[4], 345, 310);
+			g2d.drawString(generalInfoText[5], 345, 335);
 			
 		}
 		
 		if(Game.gameState == STATES.MiniGameInfo) {
-			g2d.drawString("General Info", Game.WIDTH/2-100, 50);
+			g2d.setColor(Color.black);
+			g2d.drawString("Minigame", Game.WIDTH/2-65, 150);
 			
-			g2d.drawString(minigameInfoText[0], 290, 100);
-			g2d.drawString(minigameInfoText[1], 290, 150);
-			g2d.drawString(minigameInfoText[2], 290, 200);
+			newFont = curFont.deriveFont(Font.BOLD, 20F);
+			g2d.setFont(newFont);
+			
+			g2d.drawString(minigameInfoText[0], 355, 205);
+			g2d.drawString(minigameInfoText[1], 355, 250);
 		}
 
 		//back
-		g2d.drawString("Back", 457, 480);
-		g2d.drawRect(425, 450, 100, 50);
+		g2d.setColor(Color.black);
+		g2d.drawRoundRect(455, 367, 100, 50, 15, 15);
+		g2d.drawString("Back", 484, 400);
 	}
-
 }
