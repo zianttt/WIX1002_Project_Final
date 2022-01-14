@@ -1,6 +1,5 @@
 package objects;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
@@ -29,7 +28,7 @@ public class Tower extends GameObject{
 		super(x, y, id, tss);
 		this.handler = handler;
 		
-		tower_img = tss.grabImage(16, 16, 16, 16);
+		tower_img = tss.grabImage(32, 0, 32, 64);
 	}
 	
 	public String attack() {
@@ -91,16 +90,13 @@ public class Tower extends GameObject{
 	}
 
 	@Override
-	public void render(Graphics2D g2d) {
-		g2d.setColor(new Color(0, 0, 255));
-		g2d.fillRect(x, y, 32, 32);
-		
-		//g2d.drawImage(tower_img, x, y, null);
+	public void render(Graphics2D g2d) {	
+		g2d.drawImage(tower_img, x, y, 48, 80, null);
 	}
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, 45, 55);
+		return new Rectangle(x, y, 48, 80);
 	}
 
 }

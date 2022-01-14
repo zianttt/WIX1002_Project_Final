@@ -42,15 +42,6 @@ public class Dragon extends GameObject {
 		dragonFire2 = ss.grabImage(180, 180, 180, 180);
 		dragonFire3 = ss.grabImage(360, 180, 180, 180);
 		
-		/*
-		dragon1 = loader.loadImage("/dragon11.png");
-		dragon2 = loader.loadImage("/dragon22.png");
-		dragon3 = loader.loadImage("/dragon33.png");
-		dragonFire1  = loader.loadImage("/dragon1fire.png");
-		dragonFire2 = loader.loadImage("/dragon2fire.png");
-		dragonFire3 = loader.loadImage("/dragon3fire.png");
-		*/
-		
 		velX = 0;
 		velY = -3;
 	}
@@ -90,7 +81,7 @@ public class Dragon extends GameObject {
 			tempAtk = 0;
 		}
 		
-		System.out.println("Dragon attacks: " + tempAtk);
+		//System.out.println("Dragon attacks: " + tempAtk);
 		return msg;
 	}
 	

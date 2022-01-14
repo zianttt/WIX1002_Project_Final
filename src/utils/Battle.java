@@ -24,7 +24,7 @@ public class Battle {
 	private Dragon dragon;
 	private Wall wall;
 	private SpriteSheet ss;
-	private Tower tower;
+	private Tower[] tower;
 	private FontManager fontManager;
 	
 	
@@ -41,7 +41,7 @@ public class Battle {
 	private int infoTimer = 250;
 	private String outputMsg;
 	
-	public Battle(Game game, Handler battleHandler, SpriteSheet ss, Dragon dragon, Wall wall, Tower tower, FontManager fontManager) {
+	public Battle(Game game, Handler battleHandler, SpriteSheet ss, Dragon dragon, Wall wall, Tower[] tower, FontManager fontManager) {
 		this.game = game;
 		this.battleHandler = battleHandler;
 		this.ss = ss;
@@ -66,7 +66,7 @@ public class Battle {
 			if(Wall.wallHp <= 0) Game.win = 0;
 			if(Dragon.hp <= 0) Game.win = 1;
 			
-			tower.reset();
+			tower[0].reset();
 			wall.reset();
 			dragon.reset();
 			Stats.reset();
@@ -82,7 +82,7 @@ public class Battle {
 				if(timer3 >= 350) {
 					spawn = r.nextInt(15);
 					if(spawn == 0) {
-						battleHandler.addObject(new Flame(dragon.getX()+80, dragon.getY()+40, ID.Dragon, battleHandler, ss));
+						battleHandler.addObject(new Flame(dragon.getX()+80, dragon.getY()+35, ID.Dragon, battleHandler, ss));
 						if(!dragonPlaying) {
 							AudioPlayer.dragonMusic.play();
 							dragonPlaying = true;
@@ -96,16 +96,19 @@ public class Battle {
 				else if(timer3 >= 0 && timer3 < 250) {
 					AudioPlayer.dragonMusic.stop();
 					dragonPlaying = false;
-					spawn = r.nextInt(15);
+					spawn = r.nextInt(45);
 					if(spawn == 0) {
-						battleHandler.addObject(new WallAtk(tower.getX()+8, tower.getY()+32, ID.Dragon, battleHandler, ss));
+						for(Tower t: tower) {
+							battleHandler.addObject(new WallAtk(t.getX()+15, t.getY()+32, ID.Dragon, battleHandler, ss));
+						}
+						
 						AudioPlayer.shurikenSound.play();
 						AudioPlayer.spearSound.play();
 
 					}
 				}
 				else if(timer3 == -10) {
-					outputMsg = tower.attack();
+					outputMsg = tower[0].attack();
 					checkGameOver();
 				}
 				else if(timer3 < -200) {
@@ -138,12 +141,12 @@ public class Battle {
 		
 		if(Game.gameState == STATES.Battle) {
 			// dragon stats
-			g2d.drawString("Drogon", 10, 25);
-			g2d.drawString("Level: " + Dragon.level, 10, 60);
-			g2d.drawString("Health Point: " + (int)Dragon.hp, 10, 90);
-			g2d.drawString("Attack Point: " + (int)Dragon.atk, 10, 120);
-			g2d.drawString("Critical Chance: " + (int)Dragon.critical + "%", 10, 150);
-			g2d.drawString("Accuracy: " + (int)Dragon.acc + "%", 10, 180);
+			g2d.drawString("Drogon", 10, 200);
+			g2d.drawString("Level: " + Dragon.level, 10, 230);
+			g2d.drawString("Health Point: " + (int)Dragon.hp, 10, 260);
+			g2d.drawString("Attack Point: " + (int)Dragon.atk, 10, 290);
+			g2d.drawString("Critical Chance: " + (int)Dragon.critical + "%", 10, 320);
+			g2d.drawString("Accuracy: " + (int)Dragon.acc + "%", 10, 350);
 			
 			// player stats
 			g2d.drawString("Wall's HealthPoint: " + (int)Wall.wallHp, Game.WIDTH - 250, Game.HEIGHT - 100);

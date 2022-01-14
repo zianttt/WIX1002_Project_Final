@@ -118,6 +118,8 @@ public class Game extends Canvas implements Runnable{
 	private SpriteSheet drawss;
 	private BufferedImage buildings = null;
 	private SpriteSheet bss;
+	private BufferedImage items = null;
+	private SpriteSheet item_ss; 
 
 	
 	// background sprites
@@ -198,6 +200,8 @@ public class Game extends Canvas implements Runnable{
 		drawss = new SpriteSheet(sceneDraw);	
 		buildings = loader.loadImage("/pics/buildings.png");
 		bss = new SpriteSheet(buildings);
+		items = loader.loadImage("/pics/items.png");
+		item_ss = new SpriteSheet(items);
 		
 
 		bgrd_img = loader.loadImage("/pics/test1.jpg");
@@ -285,15 +289,29 @@ public class Game extends Canvas implements Runnable{
 			}
 			
 			if(gameState == STATES.ToBattle) {
-
+				
+				
 				Wall wall = new Wall(400, 0, ID.Wall, battleHandler, this, drawss);		
 				battleHandler.addObject(wall);
-				Tower tower = new Tower(500, 0, ID.Block, drawss, battleHandler);
-				battleHandler.addObject(tower);
-				battleHandler.addObject(new Wall(600, 0, ID.Wall, battleHandler, this, drawss));
-				Dragon dragon = new Dragon((Game.WIDTH/2)-70, Game.HEIGHT + 100, ID.Dragon, dragonss, battleHandler, wall, loader);
+				
+				for(int yy=0; yy <= 128; yy+=32) {
+					for(int xx=0; xx < WIDTH; xx+=32) {
+						battleHandler.addObject(new Wall(xx, yy, ID.Wall, battleHandler, this, drawss));
+					}
+				}
+				
+				
+				Tower[] towers = new Tower[5];
+				
+				for(int xx=94, ind=0; xx < WIDTH; xx+=192, ind++) {
+					Tower t = new Tower(xx, 32, ID.Block, item_ss, battleHandler);
+					towers[ind] = t;
+					battleHandler.addObject(t);
+				}
+				
+				Dragon dragon = new Dragon((Game.WIDTH/2)-85, Game.HEIGHT + 100, ID.Dragon, dragonss, battleHandler, wall, loader);
 				battleHandler.addObject(dragon);
-				battle = new Battle(this, battleHandler, drawss, dragon, wall, tower, fontManager);
+				battle = new Battle(this, battleHandler, drawss, dragon, wall, towers, fontManager);
 				battle.reset();
 			}
 			
@@ -528,7 +546,7 @@ public class Game extends Canvas implements Runnable{
 				}	
 				
 				else if(red == 0 && green == 0 && blue == 255) {
-					handler.addObject(new Tower(xx*32, yy*32, ID.Block, drawss, handler));
+					handler.addObject(new Tower(xx*32, yy*32, ID.Block, item_ss, handler));
 				}
 				
 				
@@ -561,7 +579,7 @@ public class Game extends Canvas implements Runnable{
 				}
 				
 				else if(red == 128 && green == 128 && blue == 128) {
-					eGen = new EventsGenerator(xx*32, yy*32, ID.EventGen, sss);
+					eGen = new EventsGenerator(xx*32, yy*32, ID.EventGen, item_ss);
 					handler.addObject(eGen);
 				}
 				

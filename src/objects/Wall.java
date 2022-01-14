@@ -37,7 +37,7 @@ public class Wall extends GameObject{
 		boolean block = false;
 		if(r.nextInt(100) < wallBlock) {
 			atk = 0;
-			block = false;
+			block = true;
 			System.out.println("Wall blocks!");
 		}
 

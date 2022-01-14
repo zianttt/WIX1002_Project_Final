@@ -1,8 +1,8 @@
 package objects;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import utils.ID;
@@ -18,8 +18,12 @@ public class EventsGenerator extends GameObject{
 	public static int eventTextSelect;
 	public static boolean eventError = false;
 	
+	private BufferedImage eGen_img;
+	
 	public EventsGenerator(int x, int y, ID id, SpriteSheet ss) {
 		super(x, y, id, ss);
+		
+		eGen_img = ss.grabImage(0, 32, 32, 32);
 		
 	}
 	
@@ -156,13 +160,12 @@ public class EventsGenerator extends GameObject{
 
 	@Override
 	public void render(Graphics2D g2d) {	
-		g2d.setColor(new Color(128, 128, 128));
-		g2d.fillRect(x, y, 32, 32);
+		g2d.drawImage(eGen_img, x, y, 48, 48, null);
 	}
 
 	@Override
 	public Rectangle getBounds() {	
-		return new Rectangle(x, y, 32, 32);
+		return new Rectangle(x, y, 48, 48);
 	}
 
 }
