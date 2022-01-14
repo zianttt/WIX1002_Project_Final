@@ -1,6 +1,5 @@
 package objects;
 
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -153,8 +152,7 @@ public class Player extends GameObject{
 					}
 				}
 			}
-
-			
+	
 			if(Game.gameState == STATES.Play) {
 				if((temp.getId() == ID.Block || temp.getId() == ID.Wall) && !Game.justInOut) {
 					
@@ -169,7 +167,10 @@ public class Player extends GameObject{
 					if(getBounds().intersects(temp.getBounds())) {
 						x += velX * -1;
 						y += velY * -1;
+						
 						Game.gameState = STATES.ToShop;
+						y += 10;
+						direction = "down";
 					}
 				}
 				
@@ -177,7 +178,10 @@ public class Player extends GameObject{
 					if(getBounds().intersects(temp.getBounds())) {
 						x += velX * -1;
 						y += velY * -1;
+						
 						Game.gameState = STATES.ToMiniGame;
+						x += 10;
+						direction = "right";
 						Stats.miniGameLimit--;
 					}
 				}
@@ -186,7 +190,10 @@ public class Player extends GameObject{
 					if(getBounds().intersects(temp.getBounds())) {
 						x += velX * -1;
 						y += velY * -1;
+						
 						Game.gameState = STATES.ToStatus;
+						x -= 10;
+						direction = "up";
 					}
 				}
 				
@@ -194,32 +201,37 @@ public class Player extends GameObject{
 					if(getBounds().intersects(temp.getBounds())) {
 						x += velX * -1;
 						y += velY * -1;
+						
 						Game.gameState = STATES.ToBattle;
+						x -= 10;
+						direction = "up";
 						AudioPlayer.mainMusic.stop();
 						AudioPlayer.battleMusic.loop();
 					}
 				}
-				
-				if(temp.getId() == ID.WallDoor && !Game.justInOut) {
-					if(getBounds().intersects(temp.getBounds())) {
-						x += velX * -1;
-						y += velY * -1;
-						Game.gameState = STATES.ToMiniGame;
-						AudioPlayer.mainMusic.stop();
-					}
-				}
-				
+
 				if(temp.getId() == ID.EventGen) {
 					if(getBounds().intersects(temp.getBounds())) {
 						Game.gameState = STATES.EventText;
 						x += velX * -1;
 						y += velY * -1;
-						
+						x += 10;
+						direction = "right";
 						if(EventsGenerator.maxEvents > 0) {
 							eGen.generateEvent(Stats.seasons[Stats.cur_season]);
 						}else {
 							eGen.generateEventError();				
 						}
+					}
+				}
+				
+				if(temp.getId() == ID.Chest) {
+					if(getBounds().intersects(temp.getBounds())) {
+						x += velX * -1;
+						y += velY * -1;
+						y += 1;
+						direction = "down";
+						Game.gameState = STATES.ChestText;
 					}
 				}
 			}	

@@ -24,6 +24,7 @@ public enum STATES {
 	ToShop(),
 	ToMiniGame(),
 	ToMain(),
+	ChestText(),
 	EventText();
 	
 }

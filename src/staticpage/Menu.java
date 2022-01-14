@@ -34,17 +34,22 @@ public class Menu extends MouseAdapter {
 				AudioPlayer.clickSound.play();
 			}
 			
-			// Play button
+			// Info button
 			if(mx >= Game.WIDTH/2-240 && mx <= Game.WIDTH/2 - 140) {
 				if(my >= 377 && my <= 457) {
 					Game.gameState = STATES.Info;
 				}
 			}
 			
-			// info
+			// Play
 			if(mx >= Game.WIDTH/2-80 && mx <= Game.WIDTH/2 + 20) {
 				if(my >= 377 && my <= 457) {
-					Game.gameState = STATES.Play;
+					if(Game.menuTo == 0) {
+						Game.gameState = STATES.Play;
+					}
+					else if(Game.menuTo == 1) {
+						Game.gameState = STATES.Minigame;
+					}
 				}
 			}
 			

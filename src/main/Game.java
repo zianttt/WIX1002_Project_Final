@@ -10,6 +10,7 @@ import java.util.Random;
 
 import objects.BasicEnemy;
 import objects.Building;
+import objects.Chest;
 import objects.Door;
 import objects.Dragon;
 import objects.EventsGenerator;
@@ -112,8 +113,8 @@ public class Game extends Canvas implements Runnable{
 	private SpriteSheet css;
 	private BufferedImage dragons = null;
 	private SpriteSheet dragonss;
-	private BufferedImage scenes = null;
-	private SpriteSheet sss;
+	//private BufferedImage scenes = null;
+	//private SpriteSheet sss;
 	private BufferedImage sceneDraw = null;
 	private SpriteSheet drawss;
 	private BufferedImage buildings = null;
@@ -127,6 +128,7 @@ public class Game extends Canvas implements Runnable{
 	private BufferedImage mainmenu_img = null;
 	private BufferedImage battlemap_img = null;
 	private BufferedImage staticpage_img = null;
+	private BufferedImage dragonBattle_img = null;
 
 	
 	
@@ -146,11 +148,13 @@ public class Game extends Canvas implements Runnable{
 	public static boolean fromGameOver = false;
 	public static boolean menuToggle = false;
 	private int dragonImcoming = 240;
+	public static int menuTo = 0;
 	
 	public Game() {
 		
 		new Window("Till The End", WIDTH, HEIGHT, this);
 		
+		loader = new BufferedImageLoader();
 		
 		handler = new Handler();
 		battleHandler = new Handler();
@@ -161,7 +165,7 @@ public class Game extends Canvas implements Runnable{
 		spawner = new Spawner(miniHandler, hud, this);
 		camera = new Camera(0, 0);
 		stats = new Stats(fontManager);
-		textbox = new TextBox(fontManager);
+		textbox = new TextBox(fontManager, loader);
 		shop = new Shop(fontManager);
 		menu = new Menu(fontManager);
 		info = new Info(fontManager);
@@ -185,17 +189,17 @@ public class Game extends Canvas implements Runnable{
 		AudioPlayer.mainMusic.loop();
 		
 		//loader2 = new BufferedImageLoader();
-		loader = new BufferedImageLoader();
+		
 		tileManager = new TileManager(this, loader, 1);
 		bgTileManager =  new TileManager(this, loader, 2);
 		//map = loader.loadImage("/maps/mapImp14.png");
-		map = loader.loadImage("/maps/map72x72.png");
+		map = loader.loadImage("/maps/map72Ver1.png");
 		characters = loader.loadImage("/pics/character1.png");
 		css = new SpriteSheet(characters);
 		dragons = loader.loadImage("/pics/dragonss.png");
 		dragonss = new SpriteSheet(dragons);
-		scenes = loader.loadImage("/pics/scenes.png");
-		sss = new SpriteSheet(scenes);	
+		//scenes = loader.loadImage("/pics/scenes.png");
+		//sss = new SpriteSheet(scenes);	
 		sceneDraw = loader.loadImage("/pics/bgTileImg.png");
 		drawss = new SpriteSheet(sceneDraw);	
 		buildings = loader.loadImage("/pics/buildings.png");
@@ -208,6 +212,7 @@ public class Game extends Canvas implements Runnable{
 		mainmenu_img = loader.loadImage("/pics/mainmenu.png");
 		battlemap_img = loader.loadImage("/pics/battleMap.png");
 		staticpage_img = loader.loadImage("/pics/staticmap.png");
+		dragonBattle_img = loader.loadImage("/pics/dragonBattle.png");
 		loadMap(map);
 		
 		
@@ -289,8 +294,7 @@ public class Game extends Canvas implements Runnable{
 			}
 			
 			if(gameState == STATES.ToBattle) {
-				
-				
+
 				Wall wall = new Wall(400, 0, ID.Wall, battleHandler, this, drawss);		
 				battleHandler.addObject(wall);
 				
@@ -299,7 +303,6 @@ public class Game extends Canvas implements Runnable{
 						battleHandler.addObject(new Wall(xx, yy, ID.Wall, battleHandler, this, drawss));
 					}
 				}
-				
 				
 				Tower[] towers = new Tower[5];
 				
@@ -316,6 +319,7 @@ public class Game extends Canvas implements Runnable{
 			}
 			
 			if(gameState == STATES.ToMiniGame) {
+				menuTo = 1;
 				Player mini = new Player(WIDTH/2, HEIGHT/2, ID.MiniPlayer, miniHandler, css, eGen, loader, this);
 				miniHandler.addObject(mini);
 				miniHandler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, css, miniHandler));
@@ -329,9 +333,9 @@ public class Game extends Canvas implements Runnable{
 			
 			if(gameState == STATES.ToMain) {
 				battleHandler.clearBattleField();
-				justInOut = true;
+				player.setX(player.getX() - 10);
 				Player.direction = "up";
-				player.setY(player.getY() - 10);
+				//justInOut = true;
 			}
 			
 			if(gameState == STATES.GameOver) {
@@ -344,9 +348,9 @@ public class Game extends Canvas implements Runnable{
 		if(gameState == STATES.Shop) {		
 			shop.tick();
 			if(gameState == STATES.ToMain) {
-				justInOut = true;
+				//justInOut = true;		
+				player.setY(player.getY() + 10);
 				Player.direction = "down";
-				player.setY(player.getY() + 15);		
 			}
 		}
 		
@@ -354,9 +358,9 @@ public class Game extends Canvas implements Runnable{
 		if(gameState == STATES.Status) {		
 			statusC.tick();
 			if(gameState == STATES.ToMain) {
-				justInOut = true;
+				//justInOut = true;	
+				player.setY(player.getY() - 10);
 				Player.direction = "up";
-				player.setY(player.getY() - 15);		
 			}
 		}
 		
@@ -383,12 +387,13 @@ public class Game extends Canvas implements Runnable{
 			miniHandler.tick();
 			
 			if(HUD.HEALTH <= 0) {
+				menuTo = 0;
 				hud.setGoldEarned(hud.getScore() / 100);
 				Stats.gold += hud.getGoldEarned();
 				gameState = STATES.MinigameOver;
-				Player.direction = "right";
-				player.setX(player.getX() + 15);
 				miniHandler.clearBattleField();
+				player.setX(player.getX() + 10);
+				Player.direction = "down";
 			}
 		}
 		
@@ -412,7 +417,7 @@ public class Game extends Canvas implements Runnable{
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
-		if(gameState == STATES.Play || gameState == STATES.EventText) {
+		if(gameState == STATES.Play || gameState == STATES.EventText || gameState == STATES.ChestText) {
 			
 			g2d.translate(-camera.getX(), -camera.getY());
 
@@ -449,16 +454,24 @@ public class Game extends Canvas implements Runnable{
 			Transition.toBattle(g2d);
 		}
 		else if(gameState == STATES.Battle) {
-			bgTileManager.render(g2d);
+			g2d.drawImage(dragonBattle_img, 0, 0, WIDTH, HEIGHT, null);
+			//bgTileManager.render(g2d);
 			battleHandler.render(g2d);
 			battle.render(g2d);	
 		}
-		else if(gameState == STATES.EventText) {
+		else if(gameState == STATES.EventText || gameState == STATES.ChestText) {
 			textbox.render(g2d);
 			if(handler.isAction()) {
+				if(gameState == STATES.EventText) {
+					player.setX(player.getX() + 10);
+					Player.direction = "right";
+				}
+				else if(gameState == STATES.ChestText) {
+					textbox.setMemeNum((textbox.getMemeNum()+1) % textbox.getMeme_size());
+					player.setY(player.getY() + 5);
+					Player.direction = "down";
+				}
 				gameState = STATES.Play;
-				player.setX(player.getX() + 10);
-				Player.direction = "right";
 			}
 		}
 		else if(gameState == STATES.GameOver) {
@@ -589,6 +602,10 @@ public class Game extends Canvas implements Runnable{
 				
 				else if(red == 150 && green == 150 && blue == 150) {
 					handler.addObject(new Door(xx*32, yy*32, ID.StatusDoor, drawss));
+				}
+				
+				else if(red == 128 && green == 0 && blue == 128) {
+					handler.addObject(new Chest(xx*32, yy*32, ID.Chest, item_ss));
 				}
 			}
 		}

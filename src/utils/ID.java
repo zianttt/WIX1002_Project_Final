@@ -12,6 +12,7 @@ public enum ID {
 	Citizen(),
 	Dragon(),
 	EventGen(),
+	Chest(),
 	Trail(),
 	Tower(),
 	Wall(),
