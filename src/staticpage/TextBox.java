@@ -23,7 +23,10 @@ public class TextBox {
 	"Blizzard : Wall Hp - 50", "Alavanche : Emo Nervous Lazy + 50", "Hunger : Tower Acc - 20", "Tour Group Visit : Gold + 100"};
 
  	
-	private String[] errorTexts = {"Maximum amount of events exceeded...", "It is empty..."};
+	private String[] errorTexts = {"Maximum amount of events exceeded..."};
+	
+	private String[] reminderTexts = {"Please make 2 wishes to the magic lamp before battle...",
+										"It's time to fight the dragon!"};
 	
 	private String tempText;
 	
@@ -31,6 +34,7 @@ public class TextBox {
 	private static BufferedImage[] meme_img = new BufferedImage[3];
 	private int memeNum = 0;
 	public final int meme_size = 3;
+	public static int reminder = 0; 
 
 	public TextBox(FontManager fontManager, BufferedImageLoader loader) {
 		this.fontManager = fontManager;
@@ -49,7 +53,7 @@ public class TextBox {
 	public void render(Graphics2D g2d) {
 		
 		
-		if(Game.gameState == STATES.EventText) {
+		if(Game.gameState == STATES.EventText || Game.gameState == STATES.Reminder) {
 			
 			// set font
 			g2d.setColor(new Color(0, 0, 0, 220));
@@ -65,14 +69,21 @@ public class TextBox {
 			
 			g2d.setColor(Color.white);
 			
-			if(EventsGenerator.eventError) {
-				tempText = errorTexts[0];
+			if(Game.gameState == STATES.EventText) {
+				if(EventsGenerator.eventError) {
+					tempText = errorTexts[0];
+				}
+				else {
+					tempText = getEventText(EventsGenerator.eventTextSelect);
+				}
+				g2d.drawString(tempText, Game.WIDTH/2 - 175, 115);
 			}
 			else {
-				tempText = getEventText(EventsGenerator.eventTextSelect);
+				g2d.drawString(reminderTexts[reminder], Game.WIDTH/2 - 175, 115);
 			}
+
+		
 			
-			g2d.drawString(tempText, Game.WIDTH/2 - 175, 115);
 			g2d.drawString("Press space to go back", Game.WIDTH/2 - 175, 155);
 		}
 		
@@ -85,7 +96,7 @@ public class TextBox {
 			g2d.drawRoundRect(Game.WIDTH/2 - 252, 32, 500, 300, 35, 35);
 			
 			g2d.drawImage(meme_img[memeNum], Game.WIDTH/2 - 150, 29, 300, 306, null);
-		}	
+		}		
 	}
 
 	private String getEventText(int index) {

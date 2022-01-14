@@ -23,9 +23,12 @@ public class WallUpgrade extends MouseAdapter{
 	private FontManager fontManager;
 	private boolean freeze = true;
 	
+	private Stats stats;
 	
-	public WallUpgrade(FontManager fontManager) {
+	
+	public WallUpgrade(FontManager fontManager, Stats stats) {
 		this.fontManager = fontManager;
+		this.stats = stats;
 	}
 	
 	
@@ -43,12 +46,12 @@ public class WallUpgrade extends MouseAdapter{
 				}
 				
 				
-				if(Stats.gold >= 100) {
+				if(stats.gold >= 100) {
 					// box 1
 					if(mx >= Game.WIDTH/2-102 && mx <= Game.WIDTH/2 + 68) {
 						if(my >= 100 && my <= 190) {
 							Wall.wallHp += 75;
-							Stats.gold -= 100;
+							stats.gold -= 100;
 						}
 					}
 					
@@ -57,7 +60,7 @@ public class WallUpgrade extends MouseAdapter{
 						if(my >= 200 && my <= 290) {
 							if(Wall.wallBlock+5 <= 50) {
 								Wall.wallBlock += 5;
-								Stats.gold -= 100;
+								stats.gold -= 100;
 							}				
 						}
 					}		

@@ -20,13 +20,16 @@ public class CitizenUpgrade extends MouseAdapter{
 	private int color;
 	private boolean revert = true;
 	
+	private Stats stats;
+	
 	private FontManager fontManager;
 	private Font curFont, newFont;
 	private boolean freeze = true;
 	
 	
-	public CitizenUpgrade(FontManager fontManager) {
+	public CitizenUpgrade(FontManager fontManager, Stats stats) {
 		this.fontManager = fontManager;
+		this.stats = stats;
 	}
 	
 	
@@ -43,14 +46,13 @@ public class CitizenUpgrade extends MouseAdapter{
 					AudioPlayer.clickSound.play();
 				}
 				
-				if(Stats.gold >= 50) {
+				if(stats.gold >= 50) {
 					// box 1 emotional
 					if(mx >= 315 && mx <= 465) {
 						if(my >= 100 && my <= 190) {
 							if(Citizen.emo > 0) {
-								if(Citizen.emo-50 <= 0) Citizen.emo = 0;
-								else Citizen.emo -= 50;
-								Stats.gold -= 50;
+								Citizen.emo -= 50;
+								stats.gold -= 50;
 							}				
 						}
 					}
@@ -59,9 +61,8 @@ public class CitizenUpgrade extends MouseAdapter{
 					if(mx >= 315 && mx <= 465) {
 						if(my >= 200 && my <= 290) {
 							if(Citizen.nervous > 0) {
-								if(Citizen.nervous-50 <= 0) Citizen.nervous = 0;
-								else Citizen.nervous -= 50;
-								Stats.gold -= 50;	
+								Citizen.nervous -= 50;
+								stats.gold -= 50;	
 							}
 						}
 					}
@@ -70,9 +71,8 @@ public class CitizenUpgrade extends MouseAdapter{
 					if(mx >= 315 && mx <= 465) {
 						if(my >= 300 && my <= 390) {
 							if(Citizen.lazy > 0) {
-								if(Citizen.lazy-50 <= 0) Citizen.lazy = 0;
-								else Citizen.lazy -= 50;
-								Stats.gold -= 50;
+								Citizen.lazy -= 50;
+								stats.gold -= 50;
 							}
 						}
 					}
@@ -81,10 +81,9 @@ public class CitizenUpgrade extends MouseAdapter{
 					if(mx >= 515 && mx <= 665) {
 						if(my >= 100 && my <= 190) {
 							if(Citizen.berserk < 100) {
-								if(Citizen.berserk+50 >= 100) Citizen.berserk = 100;
-								else Citizen.berserk += 50;
+								Citizen.berserk += 50;
 								Citizen.statusCheck();
-								Stats.gold -= 50;
+								stats.gold -= 50;
 							}
 						}
 					}
@@ -93,10 +92,9 @@ public class CitizenUpgrade extends MouseAdapter{
 					if(mx >= 515 && mx <= 665) {
 						if(my >= 200 && my <= 290) {
 							if(Citizen.diligent < 100) {
-								if(Citizen.diligent+50 >= 100) Citizen.diligent = 100;
-								else Citizen.diligent += 50;
+								Citizen.diligent += 50;
 								Citizen.statusCheck();
-								Stats.gold -= 50;		
+								stats.gold -= 50;		
 							}
 						}
 					}
@@ -105,10 +103,9 @@ public class CitizenUpgrade extends MouseAdapter{
 					if(mx >= 515 && mx <= 665) {
 						if(my >= 300 && my <= 390) {
 							if(Citizen.fearless < 100) {
-								if(Citizen.fearless+50 >= 100) Citizen.fearless = 100;
-								else Citizen.fearless += 50;
+								Citizen.fearless += 50;
 								Citizen.statusCheck();
-								Stats.gold -= 50;
+								stats.gold -= 50;
 							}
 						}
 					}
@@ -180,7 +177,7 @@ public class CitizenUpgrade extends MouseAdapter{
 		g2d.drawRoundRect(315, 300, 150, 90, 25, 25);
 		
 		//box 4
-		g2d.drawString("Berserk -50", 542, 130);
+		g2d.drawString("Berserk +50", 542, 130);
 		g2d.drawString("Current: " + Citizen.berserk, 546, 155);
 		g2d.drawRoundRect(515, 100, 150, 90, 25, 25);
 		

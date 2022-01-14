@@ -2,10 +2,7 @@ package utils;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics2D;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Random;
 
 import main.Game;
@@ -27,6 +24,8 @@ public class Battle {
 	private Tower[] tower;
 	private FontManager fontManager;
 	
+	private Stats stats;
+	
 	
 	Random r = new Random();
 	
@@ -41,7 +40,7 @@ public class Battle {
 	private int infoTimer = 250;
 	private String outputMsg;
 	
-	public Battle(Game game, Handler battleHandler, SpriteSheet ss, Dragon dragon, Wall wall, Tower[] tower, FontManager fontManager) {
+	public Battle(Game game, Handler battleHandler, SpriteSheet ss, Dragon dragon, Wall wall, Tower[] tower, FontManager fontManager, Stats stats) {
 		this.game = game;
 		this.battleHandler = battleHandler;
 		this.ss = ss;
@@ -49,6 +48,7 @@ public class Battle {
 		this.wall = wall;
 		this.tower = tower;	
 		this.fontManager = fontManager;
+		this.stats = stats;
 		this.outputMsg = "";
 		
 	}
@@ -69,7 +69,7 @@ public class Battle {
 			tower[0].reset();
 			wall.reset();
 			dragon.reset();
-			Stats.reset();
+			stats.reset();
 			
 			Game.gameState = STATES.GameOver;
 		}
@@ -114,9 +114,9 @@ public class Battle {
 				else if(timer3 < -200) {
 					timer3 = 600;
 					round++;
-					if(round >= 3) {
+					if(round >= 1) {
 						dragon.levelUp();
-						Stats.newSeason();
+						stats.newSeason();
 						Game.gameState = STATES.ToMain;
 						AudioPlayer.battleMusic.stop();
 						AudioPlayer.mainMusic.loop();

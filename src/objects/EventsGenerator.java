@@ -20,8 +20,11 @@ public class EventsGenerator extends GameObject{
 	
 	private BufferedImage eGen_img;
 	
-	public EventsGenerator(int x, int y, ID id, SpriteSheet ss) {
+	private Stats stats;
+	
+	public EventsGenerator(int x, int y, ID id, SpriteSheet ss, Stats stats) {
 		super(x, y, id, ss);
+		this.stats = stats;
 		
 		eGen_img = ss.grabImage(0, 32, 32, 32);
 		
@@ -34,7 +37,7 @@ public class EventsGenerator extends GameObject{
 	public void generateEvent(String season) {
 		
 		// winter got 4 event choices
-		if(Stats.cur_season == 3) eventNum = r.nextInt(4);
+		if(stats.cur_season == 3) eventNum = r.nextInt(4);
 		else eventNum = r.nextInt(3);
 		
 		if(season.equals("Spring")) {
@@ -77,7 +80,7 @@ public class EventsGenerator extends GameObject{
 	}
 	
 	private void visitors() {
-		Stats.gold += 100;
+		stats.gold += 100;
 		System.out.println("Gold + 100");
 	}
 
@@ -123,7 +126,7 @@ public class EventsGenerator extends GameObject{
 	}
 	
 	private void harvest() {
-		Stats.gold += 100;
+		stats.gold += 100;
 		System.out.println("Gold + 100");
 	}
 	
@@ -148,7 +151,7 @@ public class EventsGenerator extends GameObject{
 	}
 	
 	private void tourGroup() {
-		Stats.gold += 100;
+		stats.gold += 100;
 		System.out.println("Gold + 100");
 	}
 

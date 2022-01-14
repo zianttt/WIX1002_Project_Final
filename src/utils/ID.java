@@ -7,7 +7,6 @@ public enum ID {
 	FastEnemy(),
 	SmartEnemy(),
 	
-	
 	Player(),
 	Citizen(),
 	Dragon(),

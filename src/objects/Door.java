@@ -2,6 +2,7 @@ package objects;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Color;
 
 import utils.ID;
 import utils.SpriteSheet;
@@ -19,7 +20,7 @@ public class Door extends GameObject{
 
 	@Override
 	public void render(Graphics2D g2d) {
-		/*
+		
 		if(this.id == ID.ShopDoor) {
 			g2d.setColor(new Color(255, 255, 255));
 			g2d.fillRect(x, y, 32, 32);
@@ -36,7 +37,7 @@ public class Door extends GameObject{
 			g2d.setColor(new Color(200, 200, 200));
 			g2d.fillRect(x, y, 32, 32);
 		}
-		*/
+		
 		
 	}
 

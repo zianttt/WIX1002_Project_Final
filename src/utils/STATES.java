@@ -25,6 +25,7 @@ public enum STATES {
 	ToMiniGame(),
 	ToMain(),
 	ChestText(),
+	Reminder(),
 	EventText();
 	
 }

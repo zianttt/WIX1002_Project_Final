@@ -19,14 +19,17 @@ public class TowerUpgrade extends MouseAdapter{
 	Font curFont, newFont;
 	private FontManager fontManager;
 	
+	private Stats stats;
+	
 	private int color;
 	private boolean revert = true;
 	
 	private boolean freeze = true;
 	
 	
-	public TowerUpgrade(FontManager fontManager) {
+	public TowerUpgrade(FontManager fontManager, Stats stats) {
 		this.fontManager = fontManager;
+		this.stats = stats;
 	}
 	
 	
@@ -45,12 +48,12 @@ public class TowerUpgrade extends MouseAdapter{
 				
 				
 				
-				if(Stats.gold >= 100) {
+				if(stats.gold >= 100) {
 					// attack point
 					if(mx >= Game.WIDTH/2-102 && mx <= Game.WIDTH/2 + 68) {
 						if(my >= 100 && my <= 190) {
 							Tower.towerAtk++;
-							Stats.gold -= 100;
+							stats.gold -= 100;
 						}
 					}
 					
@@ -59,7 +62,7 @@ public class TowerUpgrade extends MouseAdapter{
 						if(my >= 200 && my <= 290) {
 							if(Tower.towerCritical+5 <= 50) {
 								Tower.towerCritical += 5;
-								Stats.gold -= 100;
+								stats.gold -= 100;
 							}		
 						}
 					}
@@ -69,7 +72,7 @@ public class TowerUpgrade extends MouseAdapter{
 						if(my >= 300 && my <= 390) {
 							if(Tower.towerAcc+4 <= 100) {
 								Tower.towerAcc += 4;
-								Stats.gold -= 100;
+								stats.gold -= 100;
 							}
 						}
 					}

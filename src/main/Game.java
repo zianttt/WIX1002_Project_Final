@@ -143,11 +143,10 @@ public class Game extends Canvas implements Runnable{
 	public static boolean paused = false; 
 	public static STATES gameState = STATES.Menu;
 	public static STATES previousState = null;
-	public static boolean justInOut = false;
+	//public static boolean justInOut = false;
 	public static int win = 2;
 	public static boolean fromGameOver = false;
 	public static boolean menuToggle = false;
-	private int dragonImcoming = 240;
 	public static int menuTo = 0;
 	
 	public Game() {
@@ -171,9 +170,9 @@ public class Game extends Canvas implements Runnable{
 		info = new Info(fontManager);
 		statusC = new StatusCheck(fontManager);
 		gameOver = new GameOver(handler, hud, fontManager);
-		towerUp = new TowerUpgrade(fontManager);
-		wallUp = new WallUpgrade(fontManager);
-		citizenUp = new CitizenUpgrade(fontManager);
+		towerUp = new TowerUpgrade(fontManager, stats);
+		wallUp = new WallUpgrade(fontManager, stats);
+		citizenUp = new CitizenUpgrade(fontManager, stats);
 
 		this.addKeyListener(new KeyInput(handler));
 		this.addKeyListener(new KeyInput(miniHandler));
@@ -215,8 +214,7 @@ public class Game extends Canvas implements Runnable{
 		dragonBattle_img = loader.loadImage("/pics/dragonBattle.png");
 		loadMap(map);
 		
-		
-		
+		stats.reset();
 		
 		
 		start();
@@ -286,18 +284,11 @@ public class Game extends Canvas implements Runnable{
 			}	
 			handler.tick();	
 			
-			if(Stats.miniGameLimit == 0) {
-				dragonImcoming--;
-				if(dragonImcoming <= 0) {
-					gameState = STATES.ToBattle;
-				}
-			}
 			
 			if(gameState == STATES.ToBattle) {
 
 				Wall wall = new Wall(400, 0, ID.Wall, battleHandler, this, drawss);		
 				battleHandler.addObject(wall);
-				
 				for(int yy=0; yy <= 128; yy+=32) {
 					for(int xx=0; xx < WIDTH; xx+=32) {
 						battleHandler.addObject(new Wall(xx, yy, ID.Wall, battleHandler, this, drawss));
@@ -305,7 +296,6 @@ public class Game extends Canvas implements Runnable{
 				}
 				
 				Tower[] towers = new Tower[5];
-				
 				for(int xx=94, ind=0; xx < WIDTH; xx+=192, ind++) {
 					Tower t = new Tower(xx, 32, ID.Block, item_ss, battleHandler);
 					towers[ind] = t;
@@ -314,13 +304,13 @@ public class Game extends Canvas implements Runnable{
 				
 				Dragon dragon = new Dragon((Game.WIDTH/2)-85, Game.HEIGHT + 100, ID.Dragon, dragonss, battleHandler, wall, loader);
 				battleHandler.addObject(dragon);
-				battle = new Battle(this, battleHandler, drawss, dragon, wall, towers, fontManager);
+				battle = new Battle(this, battleHandler, drawss, dragon, wall, towers, fontManager, stats);
 				battle.reset();
 			}
 			
 			if(gameState == STATES.ToMiniGame) {
 				menuTo = 1;
-				Player mini = new Player(WIDTH/2, HEIGHT/2, ID.MiniPlayer, miniHandler, css, eGen, loader, this);
+				Player mini = new Player(WIDTH/2, HEIGHT/2, ID.MiniPlayer, miniHandler, css, eGen, loader, this, stats);
 				miniHandler.addObject(mini);
 				miniHandler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, css, miniHandler));
 			}
@@ -333,9 +323,8 @@ public class Game extends Canvas implements Runnable{
 			
 			if(gameState == STATES.ToMain) {
 				battleHandler.clearBattleField();
-				player.setX(player.getX() - 10);
+				player.setY(player.getY() - 10);
 				Player.direction = "up";
-				//justInOut = true;
 			}
 			
 			if(gameState == STATES.GameOver) {
@@ -347,8 +336,7 @@ public class Game extends Canvas implements Runnable{
 		// shop 
 		if(gameState == STATES.Shop) {		
 			shop.tick();
-			if(gameState == STATES.ToMain) {
-				//justInOut = true;		
+			if(gameState == STATES.ToMain) {	
 				player.setY(player.getY() + 10);
 				Player.direction = "down";
 			}
@@ -389,11 +377,11 @@ public class Game extends Canvas implements Runnable{
 			if(HUD.HEALTH <= 0) {
 				menuTo = 0;
 				hud.setGoldEarned(hud.getScore() / 100);
-				Stats.gold += hud.getGoldEarned();
+				stats.gold += hud.getGoldEarned();
 				gameState = STATES.MinigameOver;
 				miniHandler.clearBattleField();
 				player.setX(player.getX() + 10);
-				Player.direction = "down";
+				Player.direction = "right";
 			}
 		}
 		
@@ -417,7 +405,7 @@ public class Game extends Canvas implements Runnable{
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
-		if(gameState == STATES.Play || gameState == STATES.EventText || gameState == STATES.ChestText) {
+		if(gameState == STATES.Play || gameState == STATES.EventText || gameState == STATES.ChestText || gameState == STATES.Reminder) {
 			
 			g2d.translate(-camera.getX(), -camera.getY());
 
@@ -459,7 +447,7 @@ public class Game extends Canvas implements Runnable{
 			battleHandler.render(g2d);
 			battle.render(g2d);	
 		}
-		else if(gameState == STATES.EventText || gameState == STATES.ChestText) {
+		else if(gameState == STATES.EventText || gameState == STATES.ChestText || gameState == STATES.Reminder) {
 			textbox.render(g2d);
 			if(handler.isAction()) {
 				if(gameState == STATES.EventText) {
@@ -470,6 +458,16 @@ public class Game extends Canvas implements Runnable{
 					textbox.setMemeNum((textbox.getMemeNum()+1) % textbox.getMeme_size());
 					player.setY(player.getY() + 5);
 					Player.direction = "down";
+				}
+				else if(gameState == STATES.Reminder) {
+					if(TextBox.reminder == 0) {
+						player.setY(player.getY() - 10);
+						Player.direction = "up";
+					}else {
+						player.setX(player.getX() + 10);
+						Player.direction = "right";
+					}
+					
 				}
 				gameState = STATES.Play;
 			}
@@ -541,7 +539,7 @@ public class Game extends Canvas implements Runnable{
 				int blue = (pixel) & 0xff;
 				
 				if(red == 150 && green == 75 && blue == 0) {
-					player = new Player(xx*32, yy*32, ID.Player, handler, css, eGen, loader, this);
+					player = new Player(xx*32, yy*32, ID.Player, handler, css, eGen, loader, this, stats);
 					handler.addObject(player);	
 				}
 				
@@ -592,7 +590,7 @@ public class Game extends Canvas implements Runnable{
 				}
 				
 				else if(red == 128 && green == 128 && blue == 128) {
-					eGen = new EventsGenerator(xx*32, yy*32, ID.EventGen, item_ss);
+					eGen = new EventsGenerator(xx*32, yy*32, ID.EventGen, item_ss, stats);
 					handler.addObject(eGen);
 				}
 				

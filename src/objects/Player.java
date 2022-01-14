@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import main.Game;
+import staticpage.TextBox;
 import utils.HUD;
 import utils.AudioPlayer;
 import utils.BufferedImageLoader;
@@ -18,10 +19,10 @@ import utils.Stats;
 public class Player extends GameObject{
 	
 	private Handler handler;
-	private int freeze = 15;
 	
 	private Game game;
 	private EventsGenerator eGen;
+	private Stats stats;
 	
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
 	public static String direction;
@@ -29,12 +30,13 @@ public class Player extends GameObject{
 	private int spriteCount = 0;
 	private int spriteNum = 1;
 	
-	public Player(int x, int y, ID id, Handler handler, SpriteSheet ss, EventsGenerator eGen, BufferedImageLoader loader, Game game) {
+	public Player(int x, int y, ID id, Handler handler, SpriteSheet ss, EventsGenerator eGen, BufferedImageLoader loader, Game game, Stats stats) {
 		super(x, y, id, ss);
 		this.handler = handler;
 		this.eGen = eGen;
 		this.loader = loader;
 		this.game = game;
+		this.stats = stats;
 		
 		
 		down1 = ss.grabImage(77, 9, 36, 52);
@@ -74,48 +76,32 @@ public class Player extends GameObject{
 			if(handler.isUp()) {
 				direction = "up";
 				velY = -5;
-				if(Game.justInOut) {
-					freeze--;
-					if(freeze < 0) {
-						Game.justInOut = false;
-					}
-				}
 			}
 			else if(!handler.isDown()) velY = 0;
 			
 			if(handler.isDown()) {
 				direction = "down";
 				velY = 5;
-				if(Game.justInOut) {
-					freeze--;
-					if(freeze < 0) {
-						Game.justInOut = false;
-					}
-				}
 			}
 			else if(!handler.isUp()) velY = 0;
 			
 			if(handler.isRight()) {
 				direction = "right";
 				velX = 5;
-				if(Game.justInOut) {
-					freeze--;
-					if(freeze < 0) {
-						Game.justInOut = false;
-					}
-				}
 			}
 			else if(!handler.isLeft()) velX = 0;
 			
 			if(handler.isLeft()) {
 				direction = "left";
 				velX = -5;
+				/*
 				if(Game.justInOut) {
 					freeze--;
 					if(freeze < 0) {
 						Game.justInOut = false;
 					}
 				}
+				*/
 			}
 			else if(!handler.isRight()) velX = 0;
 			
@@ -154,7 +140,7 @@ public class Player extends GameObject{
 			}
 	
 			if(Game.gameState == STATES.Play) {
-				if((temp.getId() == ID.Block || temp.getId() == ID.Wall) && !Game.justInOut) {
+				if((temp.getId() == ID.Block || temp.getId() == ID.Wall)) {
 					
 					if(getBounds().intersects(temp.getBounds())) {
 						x += velX * -1;
@@ -163,50 +149,53 @@ public class Player extends GameObject{
 					
 				}
 				
-				if(temp.getId() == ID.ShopDoor && !Game.justInOut) {
+				if(temp.getId() == ID.ShopDoor) {
 					if(getBounds().intersects(temp.getBounds())) {
 						x += velX * -1;
 						y += velY * -1;
 						
 						Game.gameState = STATES.ToShop;
-						y += 10;
-						direction = "down";
 					}
 				}
 				
-				if(temp.getId() == ID.MiniGameDoor && !Game.justInOut) {
+				if(temp.getId() == ID.MiniGameDoor) {
 					if(getBounds().intersects(temp.getBounds())) {
 						x += velX * -1;
 						y += velY * -1;
 						
-						Game.gameState = STATES.ToMiniGame;
-						x += 10;
-						direction = "right";
-						Stats.miniGameLimit--;
+						if(stats.miniGameLimit == 0) {
+							TextBox.reminder = 1;
+							Game.gameState = STATES.Reminder;
+						}
+						else {
+							Game.gameState = STATES.ToMiniGame;
+							stats.miniGameLimit--;
+						}		
 					}
 				}
 				
-				if(temp.getId() == ID.StatusDoor && !Game.justInOut) {
+				if(temp.getId() == ID.StatusDoor) {
 					if(getBounds().intersects(temp.getBounds())) {
 						x += velX * -1;
 						y += velY * -1;
 						
 						Game.gameState = STATES.ToStatus;
-						x -= 10;
-						direction = "up";
 					}
 				}
 				
-				if(temp.getId() == ID.WallDoor && !Game.justInOut) {
+				if(temp.getId() == ID.WallDoor) {
 					if(getBounds().intersects(temp.getBounds())) {
 						x += velX * -1;
 						y += velY * -1;
 						
-						Game.gameState = STATES.ToBattle;
-						x -= 10;
-						direction = "up";
-						AudioPlayer.mainMusic.stop();
-						AudioPlayer.battleMusic.loop();
+						if(EventsGenerator.maxEvents > 0) {
+							TextBox.reminder = 0;
+							Game.gameState = STATES.Reminder;
+						}else {
+							Game.gameState = STATES.ToBattle;
+							AudioPlayer.mainMusic.stop();
+							AudioPlayer.battleMusic.loop();
+						}	
 					}
 				}
 
@@ -215,10 +204,8 @@ public class Player extends GameObject{
 						Game.gameState = STATES.EventText;
 						x += velX * -1;
 						y += velY * -1;
-						x += 10;
-						direction = "right";
 						if(EventsGenerator.maxEvents > 0) {
-							eGen.generateEvent(Stats.seasons[Stats.cur_season]);
+							eGen.generateEvent(stats.seasons[stats.cur_season]);
 						}else {
 							eGen.generateEventError();				
 						}
@@ -229,8 +216,6 @@ public class Player extends GameObject{
 					if(getBounds().intersects(temp.getBounds())) {
 						x += velX * -1;
 						y += velY * -1;
-						y += 1;
-						direction = "down";
 						Game.gameState = STATES.ChestText;
 					}
 				}
@@ -285,7 +270,7 @@ public class Player extends GameObject{
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, 36, 52);
+		return new Rectangle(x, y, 32, 50);
 	}
 
 }

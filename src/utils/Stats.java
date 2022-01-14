@@ -19,36 +19,38 @@ public class Stats {
 	Random r = new Random();
 	
 	// game
-	public static int gold = 10000000;
-	public static int tax = 200;
-	public static int year = 1;
-	public static int cur_season = 0;
-	public static String[] seasons = {"Spring", "Summer", "Autumn", "Winter"};
-	public static int miniGameLimit = 2;
+	public int gold = 10000000;
+	public int[] taxs = {200, 250, 300, 350, 400};
+	private int cur_tax = 0;
+	public int year = 1;
+	public int cur_season = 0;
+	public String[] seasons = {"Spring", "Summer", "Autumn", "Winter"};
+	public int miniGameLimit = 2;
 	
 	public Stats(FontManager fontManager) {
-		this.fontManager = fontManager;
-		
+		this.fontManager = fontManager;	
 	}
 	
-	public static void newSeason() {
+	public void newSeason() {
 		if(cur_season < 3) cur_season++;
 		else {
 			cur_season = 0;
 			year++;	
 		}
-		gold+=tax;
-		tax += 50;
+		int temp = r.nextInt(4);
+		cur_tax = taxs[temp];
+		gold+=cur_tax;
 		miniGameLimit = 2;
 		EventsGenerator.maxEvents = 2;
 	}
 	
-	public static void reset() {
+	public void reset() {
 		gold = 10000000;
-		tax = 200;
 		year = 1;
 		cur_season = 0;
 		miniGameLimit = 2;
+		int temp = r.nextInt(4);
+		cur_tax = taxs[temp];
 		EventsGenerator.maxEvents = 2;
 	}
 	
@@ -67,7 +69,7 @@ public class Stats {
 		g2d.drawString("Year: " + year, 10, 25);
 		g2d.drawString("Season: " + seasons[cur_season], 10, 55);
 		g2d.drawString("Gold: " + gold, 10, 85);	
-		g2d.drawString("Tax: " + tax, 10, 115);
+		g2d.drawString("Tax: " + cur_tax, 10, 115);
 	
 	}
 
