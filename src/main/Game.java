@@ -155,7 +155,7 @@ public class Game extends Canvas implements Runnable{
 		AudioPlayer.mainMusic.loop();
 		
 		tileManager = new TileManager(this, loader);
-		map = loader.loadImage("/maps/map72Ver8.png");
+		map = loader.loadImage("/maps/map72Ver9.png");
 		characters = loader.loadImage("/pics/character1.png");
 		css = new SpriteSheet(characters);
 		dragons = loader.loadImage("/pics/dragonss.png");
@@ -416,7 +416,12 @@ public class Game extends Canvas implements Runnable{
 					Player.direction = "right";
 				}
 				else if(gameState == STATES.ChestText) {
-					textbox.setMemeNum((textbox.getMemeNum()+1) % textbox.getMeme_size());
+					if(textbox.chestType == 0) {
+						textbox.setMemeNum((textbox.getMemeNum()+1) % textbox.getMeme_size());
+					}
+					else if(textbox.chestType == 1) {
+						textbox.setInfoInd((textbox.getInfoInd()+1) % textbox.getInfoTextSize());
+					}
 					player.setY(player.getY() + 5);
 					Player.direction = "down";
 				}
@@ -504,7 +509,8 @@ public class Game extends Canvas implements Runnable{
 		
 		// player status
 		if(gameState == STATES.Play || gameState == STATES.Shop || gameState == STATES.CitizneUp ||
-				gameState == STATES.TowerUp || gameState == STATES.WallUp || gameState == STATES.Status) {
+				gameState == STATES.TowerUp || gameState == STATES.WallUp || gameState == STATES.Status ||
+				gameState == STATES.ChestText) {
 			stats.render(g2d);
 		}
 		
@@ -589,8 +595,14 @@ public class Game extends Canvas implements Runnable{
 					handler.addObject(new Door(xx*32, yy*32, ID.StatusDoor, drawss));
 				}
 				
-				else if(red == 128 && green == 0 && blue == 128) {
-					handler.addObject(new Chest(xx*32, yy*32, ID.Chest, item_ss));
+				else if(red == 128 && green == 0) {
+					if(blue == 128) {
+						handler.addObject(new Chest(xx*32, yy*32, ID.Chest, item_ss, 0));
+					}
+					else if(blue == 100) {
+						handler.addObject(new Chest(xx*32, yy*32, ID.Chest, item_ss, 1));
+					}
+					
 				}
 				
 				else if(red == 150 && green == 50) {

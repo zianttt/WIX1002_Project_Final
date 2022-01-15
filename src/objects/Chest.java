@@ -14,8 +14,9 @@ public class Chest extends GameObject{
 	
 	private BufferedImage chest_img = null;
 
-	public Chest(int x, int y, ID id, SpriteSheet ss) {
+	public Chest(int x, int y, ID id, SpriteSheet ss, int type) {
 		super(x, y, id, ss);
+		this.type = type;
 		
 		chest_img = ss.grabImage(0, 0, 32, 32);
 	}

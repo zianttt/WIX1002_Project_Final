@@ -216,6 +216,7 @@ public class Player extends GameObject{
 					if(getBounds().intersects(temp.getBounds())) {
 						x += velX * -1;
 						y += velY * -1;
+						textbox.chestType = temp.getType();
 						Game.gameState = STATES.ChestText;
 					}
 				}

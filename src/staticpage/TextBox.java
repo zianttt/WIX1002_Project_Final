@@ -28,12 +28,21 @@ public class TextBox {
 	private String[] reminderTexts = {"Make 2 wishes to the magic lamp before battle...",
 										"It's time to fight the dragon!"};
 	
-	private String[] infoTexts = {"Emotional(100) - Decrease Tower AttackPoint by 1",
-									"Nervous(100) - Decrease Tower Accuracy by 5",
-									"Lazy(100) - Decrease Wall HP by 100",
-									"Berserk(100) - Increase Tower AttackPoint by 1",
-									"Diligent(100) - Increase Wall HP by 75",
-									"Fearless(100) - Increase Tower Critical Chance by 5"};
+	private String[] infoTexts = {"Emotional - Decrease Tower AttackPoint by 1\nwhen reaches 100",
+									"Nervous - Decrease Tower Accuracy by 5\nwhen reaches 100",
+									"Lazy - Decrease Wall HP by 100\nwhen reaches 100",
+									"Berserk - Increase Tower AttackPoint by 1\nwhen reaches 100",
+									"Diligent - Increase Wall HP by 75\nwhen reaches 100",
+									"Fearless - Increase Tower Critical Chance by 5\nwhen reaches 100",
+									"Go to the magic lamp to wish for some events\nto happen each season",
+									"Some of the dragon's flames are trapped\nin the minigame dojo...",
+									"Tower's critical chance percentage is\ncapped at 50 %",
+									"The dragon levels up after each battle and \nready to fight until you killed it",
+									"Tax will be collected randomly at the start\nof each season"
+									};
+	private int infoInd = 0;
+	public int chestType = 0;
+	private int infoTextSize = 11;
 	
 	private String[] names = {"Shop", "Status Hall", "Minigame", "Magic Lamp", "Town door"};
 	public int namesInd = 0;
@@ -43,7 +52,7 @@ public class TextBox {
 	private BufferedImageLoader loader;
 	private static BufferedImage[] meme_img = new BufferedImage[10];
 	private int memeNum = 0;
-	public final int meme_size = 10;
+	private final int meme_size = 10;
 	public int reminder = 0; 
 
 	public TextBox(FontManager fontManager, BufferedImageLoader loader) {
@@ -69,13 +78,13 @@ public class TextBox {
 	
 	public void render(Graphics2D g2d) {
 		
+		g2d.setFont(fontManager.getMaruMonica());
+		curFont = g2d.getFont();
 		
 		if(Game.gameState == STATES.EventText || Game.gameState == STATES.Reminder || Game.gameState == STATES.InfoBoard) {
 			
 			// set font
 			g2d.setColor(new Color(0, 0, 0, 220));
-			g2d.setFont(fontManager.getMaruMonica());
-			curFont = g2d.getFont();
 			newFont = curFont.deriveFont(Font.BOLD, 22F);
 			g2d.setFont(newFont);
 			
@@ -111,13 +120,33 @@ public class TextBox {
 		
 		if(Game.gameState == STATES.ChestText) {
 			
+			
 			g2d.setColor(new Color(0, 0, 0, 220));
 			g2d.fillRoundRect(Game.WIDTH/2 - 250, 30, 500, 300, 35, 35);
 			g2d.setColor(new Color(255, 255, 255));
 			g2d.setStroke(new BasicStroke(5));
 			g2d.drawRoundRect(Game.WIDTH/2 - 252, 32, 500, 300, 35, 35);
 			
-			g2d.drawImage(meme_img[memeNum], Game.WIDTH/2 - 150, 29, 300, 306, null);
+			if(chestType == 0) {
+				g2d.drawImage(meme_img[memeNum], Game.WIDTH/2 - 150, 29, 300, 306, null);
+			}
+			else if(chestType == 1) {
+				newFont = curFont.deriveFont(Font.BOLD, 33F);
+				g2d.setFont(newFont);
+				g2d.setColor(new Color(128, 53, 125));
+				g2d.drawString("Tips", Game.WIDTH/2 - 200, 100);
+				
+				g2d.setColor(new Color(255, 255, 255));
+				newFont = curFont.deriveFont(Font.BOLD, 22F);
+				g2d.setFont(newFont);
+				int h = 155;
+				for(String temp: infoTexts[infoInd].split("\n")) {
+					g2d.drawString(temp, Game.WIDTH/2 - 200, h);
+					h+=35;
+				}
+				g2d.drawString("Press space to go back", Game.WIDTH/2 - 200, 255);
+			}
+			
 		}	
 		
 		
@@ -137,6 +166,18 @@ public class TextBox {
 	
 	public int getMeme_size() {
 		return meme_size;
+	}
+
+	public int getInfoInd() {
+		return infoInd;
+	}
+
+	public void setInfoInd(int infoInd) {
+		this.infoInd = infoInd;
+	}
+
+	public int getInfoTextSize() {
+		return infoTextSize;
 	}
 	
 	
