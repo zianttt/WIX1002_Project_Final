@@ -25,15 +25,15 @@ public class TextBox {
  	
 	private String[] errorTexts = {"Maximum amount of events exceeded..."};
 	
-	private String[] reminderTexts = {"Please make 2 wishes to the magic lamp before battle...",
+	private String[] reminderTexts = {"Make 2 wishes to the magic lamp before battle...",
 										"It's time to fight the dragon!"};
 	
 	private String tempText;
 	
 	private BufferedImageLoader loader;
-	private static BufferedImage[] meme_img = new BufferedImage[3];
+	private static BufferedImage[] meme_img = new BufferedImage[10];
 	private int memeNum = 0;
-	public final int meme_size = 3;
+	public final int meme_size = 10;
 	public static int reminder = 0; 
 
 	public TextBox(FontManager fontManager, BufferedImageLoader loader) {
@@ -48,6 +48,13 @@ public class TextBox {
 		meme_img[0] = loader.loadImage("/memes/m1.jpg");
 		meme_img[1] = loader.loadImage("/memes/m2.jpg");
 		meme_img[2] = loader.loadImage("/memes/m3.jpg");
+		meme_img[3] = loader.loadImage("/memes/m4.jpg");
+		meme_img[4] = loader.loadImage("/memes/m5.jpg");
+		meme_img[5] = loader.loadImage("/memes/m6.jpg");
+		meme_img[6] = loader.loadImage("/memes/m7.jpg");
+		meme_img[7] = loader.loadImage("/memes/m8.jpg");
+		meme_img[8] = loader.loadImage("/memes/m9.png");
+		meme_img[9] = loader.loadImage("/memes/m10.png");
 	}
 	
 	public void render(Graphics2D g2d) {
@@ -79,12 +86,12 @@ public class TextBox {
 				g2d.drawString(tempText, Game.WIDTH/2 - 175, 115);
 			}
 			else {
-				g2d.drawString(reminderTexts[reminder], Game.WIDTH/2 - 175, 115);
+				g2d.drawString(reminderTexts[reminder], Game.WIDTH/2 - 185, 115);
 			}
 
 		
 			
-			g2d.drawString("Press space to go back", Game.WIDTH/2 - 175, 155);
+			g2d.drawString("Press space to go back", Game.WIDTH/2 - 185, 155);
 		}
 		
 		if(Game.gameState == STATES.ChestText) {

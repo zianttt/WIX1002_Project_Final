@@ -29,12 +29,12 @@ public class Chest extends GameObject{
 
 	@Override
 	public void render(Graphics2D g2d) {
-		g2d.drawImage(chest_img, x , y, 38, 38, null);
+		g2d.drawImage(chest_img, x , y, 64, 54, null);
 	}
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, 38, 38);
+		return new Rectangle(x, y, 64, 54);
 	}
 
 }

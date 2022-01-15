@@ -6,11 +6,11 @@ import java.awt.image.BufferedImage;
 
 import main.Game;
 import staticpage.TextBox;
-import utils.HUD;
 import utils.AudioPlayer;
 import utils.BufferedImageLoader;
 import utils.Handler;
 import utils.ID;
+import utils.MiniDisplay;
 import utils.STATES;
 import utils.SpriteSheet;
 import utils.Stats;
@@ -26,15 +26,13 @@ public class Player extends GameObject{
 	
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
 	public static String direction;
-	private BufferedImageLoader loader;
 	private int spriteCount = 0;
 	private int spriteNum = 1;
 	
-	public Player(int x, int y, ID id, Handler handler, SpriteSheet ss, EventsGenerator eGen, BufferedImageLoader loader, Game game, Stats stats) {
+	public Player(int x, int y, ID id, Handler handler, SpriteSheet ss, EventsGenerator eGen, Game game, Stats stats) {
 		super(x, y, id, ss);
 		this.handler = handler;
 		this.eGen = eGen;
-		this.loader = loader;
 		this.game = game;
 		this.stats = stats;
 		
@@ -134,7 +132,7 @@ public class Player extends GameObject{
 			if(Game.gameState == STATES.Minigame) {
 				if (temp.getId() == ID.BasicEnemy || temp.getId() == ID.FastEnemy || temp.getId() == ID.SmartEnemy) {
 					if (getBounds().intersects(temp.getBounds())) {
-						HUD.HEALTH -= 2;
+						MiniDisplay.HEALTH -= 2;
 					}
 				}
 			}

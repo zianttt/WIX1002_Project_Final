@@ -9,13 +9,14 @@ import utils.ID;
 import utils.SpriteSheet;
 import main.Game;
 
-
-
-public class BasicEnemy extends GameObject {
+public class Enemy extends GameObject {
+	
+	private int color;
+	private boolean revert = true;
 	
 	private Handler handler;
 	
-	public BasicEnemy(int x, int y, ID id, SpriteSheet ss, Handler handler) {
+	public Enemy(int x, int y, ID id, SpriteSheet ss, Handler handler) {
 		super(x, y, id, ss);
 		
 		this.handler = handler;
@@ -27,26 +28,35 @@ public class BasicEnemy extends GameObject {
 
 	@Override
 	public void tick() {
+		
+		if(!revert) {
+			color--;
+			if(color == 0) revert = true;
+		}else {
+			color++;
+			if(color == 255) revert = false;
+		}
+		
 		x += velX;
 		y += velY;
 		
 		if(y <= 0 || y >= Game.HEIGHT - 60) velY *= -1;
 		if(x <= 0 || x >= Game.WIDTH - 32) velX *= -1;
 		
-		handler.addObject(new Trail((int)x, (int)y, ID.Trail, Color.red, 16, 16, 0.02f, handler, ss));
+		handler.addObject(new Trail(x, y, ID.Trail, new Color(255, color, color), 16, 16, 0.02f, handler, ss));
 		
 	}
 
 	@Override
 	public void render(Graphics2D g2d) {
-		g2d.setColor(Color.red);
-		g2d.fillRect((int)x, (int)y, 16, 16);
+		g2d.setColor(new Color(255, color, 50));
+		g2d.fillRect(x, y, 16, 16);
 		
 	}
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle((int)x, (int)y, 16, 16);
+		return new Rectangle(x, y, 16, 16);
 	}
 
 }

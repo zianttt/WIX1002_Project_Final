@@ -13,7 +13,6 @@ import objects.Wall;
 import utils.AudioPlayer;
 import utils.FontManager;
 import utils.STATES;
-import utils.Stats;
 
 public class StatusCheck extends MouseAdapter{
 	

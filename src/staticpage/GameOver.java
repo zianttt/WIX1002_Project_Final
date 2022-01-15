@@ -7,22 +7,22 @@ import java.awt.Graphics2D;
 import main.Game;
 import utils.AudioPlayer;
 import utils.FontManager;
-import utils.HUD;
 import utils.Handler;
+import utils.MiniDisplay;
 import utils.STATES;
 
 public class GameOver {
 	
 	private Handler handler;
-	private HUD hud;
+	private MiniDisplay miniDis;
 	Font curFont, newFont;
 	private FontManager fontManager;
 	
 	private static String[] gameOverTexts = {"You lost...", "You won!"};
 	
-	public GameOver(Handler handler, HUD hud, FontManager fontManager) {
+	public GameOver(Handler handler, MiniDisplay miniDis, FontManager fontManager) {
 		this.handler = handler;
-		this.hud = hud;
+		this.miniDis = miniDis;
 		this.fontManager = fontManager;
 	}
 	
@@ -52,7 +52,7 @@ public class GameOver {
 			newFont = curFont.deriveFont(Font.BOLD, 30F);
 			g2d.setFont(newFont);
 			g2d.setColor(new Color(255, 255, 255));
-			g2d.drawString("You earned " + hud.getGoldEarned() + " gold for your country!", Game.WIDTH / 2 -200, Game.HEIGHT / 2);
+			g2d.drawString("You earned " + miniDis.getGoldEarned() + " gold for your country!", Game.WIDTH / 2 -200, Game.HEIGHT / 2);
 			g2d.drawString("Press Space To Go Back To Main Map", Game.WIDTH / 2 -210, Game.HEIGHT / 2 + 50);
 		}
 		
@@ -67,7 +67,7 @@ public class GameOver {
 				AudioPlayer.mainMusic.loop();
 			}
 			if(Game.gameState == STATES.MinigameOver) {
-				hud.reset();
+				miniDis.reset();
 				Game.gameState = STATES.ToMain;
 			}
 		}

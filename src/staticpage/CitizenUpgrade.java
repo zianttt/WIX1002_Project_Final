@@ -10,7 +10,6 @@ import main.Game;
 import objects.Citizen;
 import utils.AudioPlayer;
 import utils.FontManager;
-import utils.Handler;
 import utils.STATES;
 import utils.Stats;
 

@@ -51,6 +51,7 @@ public class Stats {
 		miniGameLimit = 2;
 		int temp = r.nextInt(4);
 		cur_tax = taxs[temp];
+		gold += cur_tax;
 		EventsGenerator.maxEvents = 2;
 	}
 	

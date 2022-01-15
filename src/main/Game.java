@@ -8,44 +8,10 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import objects.BasicEnemy;
-import objects.Building;
-import objects.Chest;
-import objects.Door;
-import objects.Dragon;
-import objects.EventsGenerator;
-import objects.Fence;
-import objects.Mountain;
-import objects.Player;
-import objects.Tower;
-import objects.Tree;
-import objects.Wall;
-import objects.Water;
-import staticpage.CitizenUpgrade;
-import staticpage.GameOver;
-import staticpage.Info;
-import staticpage.Menu;
-import staticpage.Shop;
-import staticpage.StatusCheck;
-import staticpage.TextBox;
-import staticpage.TowerUpgrade;
-import staticpage.Transition;
-import staticpage.WallUpgrade;
+import objects.*;
+import staticpage.*;
 import tiles.TileManager;
-import utils.AudioPlayer;
-import utils.Battle;
-import utils.BufferedImageLoader;
-import utils.Camera;
-import utils.FontManager;
-import utils.HUD;
-import utils.Handler;
-import utils.ID;
-import utils.KeyInput;
-import utils.STATES;
-import utils.Spawner;
-import utils.SpriteSheet;
-import utils.Stats;
-import utils.Window;
+import utils.*;
 
 public class Game extends Canvas implements Runnable{
 
@@ -75,7 +41,7 @@ public class Game extends Canvas implements Runnable{
 	private Handler handler;
 	private Handler battleHandler;
 	private Handler miniHandler;
-	private HUD hud;
+	private MiniDisplay miniDis;
 	private Spawner spawner;
 	public Player player;
 	private EventsGenerator eGen;
@@ -85,7 +51,6 @@ public class Game extends Canvas implements Runnable{
 	
 	// graphics
 	TileManager tileManager;
-	TileManager bgTileManager;
 	public FontManager fontManager;
 	
 	
@@ -105,6 +70,7 @@ public class Game extends Canvas implements Runnable{
 	private WallUpgrade wallUp;
 	private CitizenUpgrade citizenUp;
 	private TextBox textbox;
+	private Transition transition;
 	
 	BufferedImageLoader loader2;
 	BufferedImageLoader loader;
@@ -160,8 +126,9 @@ public class Game extends Canvas implements Runnable{
 		miniHandler = new Handler();
 		
 		fontManager = new FontManager();
-		hud = new HUD();
-		spawner = new Spawner(miniHandler, hud, this);
+		transition = new Transition(fontManager);
+		miniDis = new MiniDisplay(fontManager);
+		spawner = new Spawner(miniHandler, miniDis);
 		camera = new Camera(0, 0);
 		stats = new Stats(fontManager);
 		textbox = new TextBox(fontManager, loader);
@@ -169,7 +136,7 @@ public class Game extends Canvas implements Runnable{
 		menu = new Menu(fontManager);
 		info = new Info(fontManager);
 		statusC = new StatusCheck(fontManager);
-		gameOver = new GameOver(handler, hud, fontManager);
+		gameOver = new GameOver(handler, miniDis, fontManager);
 		towerUp = new TowerUpgrade(fontManager, stats);
 		wallUp = new WallUpgrade(fontManager, stats);
 		citizenUp = new CitizenUpgrade(fontManager, stats);
@@ -187,12 +154,8 @@ public class Game extends Canvas implements Runnable{
 		AudioPlayer.load();
 		AudioPlayer.mainMusic.loop();
 		
-		//loader2 = new BufferedImageLoader();
-		
-		tileManager = new TileManager(this, loader, 1);
-		bgTileManager =  new TileManager(this, loader, 2);
-		//map = loader.loadImage("/maps/mapImp14.png");
-		map = loader.loadImage("/maps/map72Ver1.png");
+		tileManager = new TileManager(this, loader);
+		map = loader.loadImage("/maps/map72Ver4.png");
 		characters = loader.loadImage("/pics/character1.png");
 		css = new SpriteSheet(characters);
 		dragons = loader.loadImage("/pics/dragonss.png");
@@ -287,11 +250,11 @@ public class Game extends Canvas implements Runnable{
 			
 			if(gameState == STATES.ToBattle) {
 
-				Wall wall = new Wall(400, 0, ID.Wall, battleHandler, this, drawss);		
+				Wall wall = new Wall(400, 0, ID.Wall, drawss);		
 				battleHandler.addObject(wall);
 				for(int yy=0; yy <= 128; yy+=32) {
 					for(int xx=0; xx < WIDTH; xx+=32) {
-						battleHandler.addObject(new Wall(xx, yy, ID.Wall, battleHandler, this, drawss));
+						battleHandler.addObject(new Wall(xx, yy, ID.Wall, drawss));
 					}
 				}
 				
@@ -307,12 +270,12 @@ public class Game extends Canvas implements Runnable{
 				battle = new Battle(this, battleHandler, drawss, dragon, wall, towers, fontManager, stats);
 				battle.reset();
 			}
-			
+		
 			if(gameState == STATES.ToMiniGame) {
 				menuTo = 1;
-				Player mini = new Player(WIDTH/2, HEIGHT/2, ID.MiniPlayer, miniHandler, css, eGen, loader, this, stats);
+				Player mini = new Player(WIDTH/2, HEIGHT/2, ID.MiniPlayer, miniHandler, css, eGen, this, stats);
 				miniHandler.addObject(mini);
-				miniHandler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, css, miniHandler));
+				miniHandler.addObject(new Enemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, css, miniHandler));
 			}
 		}
 		
@@ -370,14 +333,14 @@ public class Game extends Canvas implements Runnable{
 		
 		
 		if(gameState == STATES.Minigame) {
-			hud.tick();
+			miniDis.tick();
 			spawner.tick();
 			miniHandler.tick();
 			
-			if(HUD.HEALTH <= 0) {
+			if(MiniDisplay.HEALTH <= 0) {
 				menuTo = 0;
-				hud.setGoldEarned(hud.getScore() / 100);
-				stats.gold += hud.getGoldEarned();
+				miniDis.setGoldEarned(miniDis.getScore() / 100);
+				stats.gold += miniDis.getGoldEarned();
 				gameState = STATES.MinigameOver;
 				miniHandler.clearBattleField();
 				player.setX(player.getX() + 10);
@@ -416,34 +379,29 @@ public class Game extends Canvas implements Runnable{
 		}	
 		
 		if(gameState == STATES.ToShop) {
-			Transition.toShop(g2d);
+			transition.toShop(g2d);
 		}
 		else if(gameState == STATES.Shop) {
-			//bgTileManager.render(g2d);
 			g2d.drawImage(bgrd_img, 0, 0, WIDTH, HEIGHT, null);
 			shop.render(g2d);
 		}
 		else if(gameState == STATES.TowerUp) {
-			//bgTileManager.render(g2d);
 			g2d.drawImage(bgrd_img, 0, 0, WIDTH, HEIGHT, null);
 			towerUp.render(g2d);
 		}
 		else if(gameState == STATES.WallUp) {
-			//bgTileManager.render(g2d);
 			g2d.drawImage(bgrd_img, 0, 0, WIDTH, HEIGHT, null);
 			wallUp.render(g2d);
 		}
 		else if(gameState == STATES.CitizneUp) {
-			//bgTileManager.render(g2d);
 			g2d.drawImage(bgrd_img, 0, 0, WIDTH, HEIGHT, null);
 			citizenUp.render(g2d);
 		}
 		else if(gameState == STATES.ToBattle) {
-			Transition.toBattle(g2d);
+			transition.toBattle(g2d);
 		}
 		else if(gameState == STATES.Battle) {
 			g2d.drawImage(dragonBattle_img, 0, 0, WIDTH, HEIGHT, null);
-			//bgTileManager.render(g2d);
 			battleHandler.render(g2d);
 			battle.render(g2d);	
 		}
@@ -473,12 +431,11 @@ public class Game extends Canvas implements Runnable{
 			}
 		}
 		else if(gameState == STATES.GameOver) {
-			bgTileManager.render(g2d);
+			g2d.drawImage(dragonBattle_img, 0, 0, WIDTH, HEIGHT, null);
 			gameOver.render(g2d);
 		}
 		else if(gameState == STATES.Menu) {
 			g2d.drawImage(mainmenu_img, 0, 0, WIDTH, HEIGHT, null);
-			//bgTileManager.render(g2d);
 			if(fromGameOver) {
 				loadMap(map);
 				fromGameOver = false;
@@ -486,30 +443,27 @@ public class Game extends Canvas implements Runnable{
 			menu.render(g2d);
 		}
 		else if(gameState == STATES.ToMain) {
-			Transition.toMain(g2d);
+			transition.toMain(g2d);
 		}
 		else if(gameState == STATES.ToMiniGame) {
-			Transition.toMiniGame(g2d);
+			transition.toMiniGame(g2d);
 		}
 		else if(gameState == STATES.Minigame || gameState == STATES.MinigameOver) {
-			//bgTileManager.render(g2d);
 			g2d.drawImage(battlemap_img, 0, 0, WIDTH, HEIGHT, null);
-			hud.render(g);
+			miniDis.render(g2d);
 			if(gameState == STATES.Minigame) miniHandler.render(g2d);
 			if(gameState == STATES.MinigameOver) {
 				gameOver.render(g2d);
 			}
 		}
 		else if(gameState == STATES.ToStatus) {
-			Transition.toStatus(g2d);
+			transition.toStatus(g2d);
 		}
 		else if(gameState == STATES.Status) {
-			//bgTileManager.render(g2d);
 			g2d.drawImage(bgrd_img, 0, 0, WIDTH, HEIGHT, null);
 			statusC.render(g2d);
 		}
 		else if(gameState == STATES.Info || gameState == STATES.GeneralInfo || gameState == STATES.MiniGameInfo) {
-			//bgTileManager.render(g2d);
 			g2d.drawImage(staticpage_img, 0, 0, WIDTH, HEIGHT, null);
 			info.render(g2d);
 		}
@@ -539,7 +493,7 @@ public class Game extends Canvas implements Runnable{
 				int blue = (pixel) & 0xff;
 				
 				if(red == 150 && green == 75 && blue == 0) {
-					player = new Player(xx*32, yy*32, ID.Player, handler, css, eGen, loader, this, stats);
+					player = new Player(xx*32, yy*32, ID.Player, handler, css, eGen, this, stats);
 					handler.addObject(player);	
 				}
 				
@@ -570,7 +524,7 @@ public class Game extends Canvas implements Runnable{
 				}
 				
 				else if(red == 255 && green == 255 && blue == 0) {
-					handler.addObject(new Wall(xx*32, yy*32, ID.Wall, handler, this, drawss));
+					handler.addObject(new Wall(xx*32, yy*32, ID.Wall, drawss));
 				}	
 				
 				else if(red == 144 && green == 238) {

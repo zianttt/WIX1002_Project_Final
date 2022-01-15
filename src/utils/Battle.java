@@ -26,7 +26,6 @@ public class Battle {
 	
 	private Stats stats;
 	
-	
 	Random r = new Random();
 	
 	// battlefield
@@ -133,7 +132,7 @@ public class Battle {
 	public void render(Graphics2D g2d) {
 		
 		// set font
-		g2d.setColor(new Color(255, 255, 255));
+		g2d.setColor(new Color(255, 50, 50));
 		g2d.setFont(fontManager.getMaruMonica());
 		curFont = g2d.getFont();
 		newFont = curFont.deriveFont(Font.BOLD, 25F);
@@ -141,18 +140,20 @@ public class Battle {
 		
 		if(Game.gameState == STATES.Battle) {
 			// dragon stats
-			g2d.drawString("Drogon", 10, 200);
-			g2d.drawString("Level: " + Dragon.level, 10, 230);
-			g2d.drawString("Health Point: " + (int)Dragon.hp, 10, 260);
-			g2d.drawString("Attack Point: " + (int)Dragon.atk, 10, 290);
-			g2d.drawString("Critical Chance: " + (int)Dragon.critical + "%", 10, 320);
-			g2d.drawString("Accuracy: " + (int)Dragon.acc + "%", 10, 350);
+			g2d.drawString("Drogon", Game.WIDTH - 250, Game.HEIGHT-250);
+			g2d.drawString("Level: " + Dragon.level, Game.WIDTH - 250, Game.HEIGHT-220);
+			g2d.drawString("Health Point: " + (int)Dragon.hp, Game.WIDTH - 250, Game.HEIGHT-190);
+			g2d.drawString("Attack Point: " + (int)Dragon.atk, Game.WIDTH - 250, Game.HEIGHT-160);
+			g2d.drawString("Critical Chance: " + (int)Dragon.critical + "%", Game.WIDTH - 250, Game.HEIGHT-130);
+			g2d.drawString("Accuracy: " + (int)Dragon.acc + "%", Game.WIDTH - 250, Game.HEIGHT-100);
 			
-			// player stats
-			g2d.drawString("Wall's HealthPoint: " + (int)Wall.wallHp, Game.WIDTH - 250, Game.HEIGHT - 100);
+			// player stats  
+			g2d.setColor(new Color(149, 53, 83));
+			g2d.drawString("Wall's HealthPoint: " + (int)Wall.wallHp, 10, 200);
 			
 			if(infoTimer >= 0 && outputMsg.length() != 0) {
-				g2d.drawString(outputMsg, Game.WIDTH - 300, Game.HEIGHT/2);
+				g2d.setColor(new Color(255, 180, 54));
+				g2d.drawString(outputMsg, 100, Game.HEIGHT/2 + 40);
 				infoTimer--;
 			}
 			else {

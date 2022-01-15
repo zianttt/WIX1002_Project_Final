@@ -3,23 +3,21 @@ package utils;
 import java.util.Random;
 
 import main.Game;
-import objects.BasicEnemy;
+import objects.Enemy;
 import objects.FastEnemy;
-import objects.SmartEnemy;
+import objects.TrackEnemy;
 
 public class Spawner {
 	
 	private Handler handler;
-	private HUD hud;
-	private Game game;
+	private MiniDisplay miniDis;
 	private Random r;
 	
 	private int scoreKeep = 0;
 	
-	public Spawner(Handler handler, HUD hud, Game game) {
+	public Spawner(Handler handler, MiniDisplay miniDis) {
 		this.handler = handler;
-		this.hud = hud;
-		this.game = game;
+		this.miniDis = miniDis;
 	}
 	
 	public void tick() {
@@ -28,22 +26,22 @@ public class Spawner {
 		if(scoreKeep >= 100) {
 			r = new Random();
 			scoreKeep = 0;
-			hud.setLevel(hud.getLevel() + 1);
+			miniDis.setLevel(miniDis.getLevel() + 1);
 			
-				if(hud.getLevel() == 2) {
-					handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, null, handler));
-				}else if(hud.getLevel() == 3) {
-					handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, null, handler));
-				}else if(hud.getLevel() == 4) {
+				if(miniDis.getLevel() == 2) {
+					handler.addObject(new Enemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, null, handler));
+				}else if(miniDis.getLevel() == 3) {
+					handler.addObject(new Enemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, null, handler));
+				}else if(miniDis.getLevel() == 4) {
 					handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, null, handler));
-				}else if(hud.getLevel() == 5) {
-					handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.SmartEnemy, null, handler));
-				}else if(hud.getLevel() == 6) {
+				}else if(miniDis.getLevel() == 5) {
+					handler.addObject(new TrackEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.SmartEnemy, null, handler));
+				}else if(miniDis.getLevel() == 6) {
 					handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, null, handler));
-				}else if(hud.getLevel() == 7) {
+				}else if(miniDis.getLevel() == 7) {
 					handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, null, handler));
-				}else if(hud.getLevel() == 8) {
-					handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.SmartEnemy, null, handler));
+				}else if(miniDis.getLevel() == 8) {
+					handler.addObject(new TrackEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.SmartEnemy, null, handler));
 				}
 				else {
 					handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, null, handler));

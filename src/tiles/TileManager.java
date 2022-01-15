@@ -19,22 +19,15 @@ public class TileManager {
 	private Tile[] tiles;
 	private int mapTileNum[][];
 	
-	private int choiceBG;
-	
 	////
-	private BufferedImageLoader loader;
-	private BufferedImage scenes = null;
-	private SpriteSheet sss;
 	private BufferedImage sceneDraw = null;
 	private SpriteSheet drawss;
 	private BufferedImage background = null;
 	private SpriteSheet fss;
 	////
 	
-	public TileManager(Game game, BufferedImageLoader loader, int choice) {
+	public TileManager(Game game, BufferedImageLoader loader) {
 		this.game = game;
-		this.loader = loader;
-		choiceBG = choice;
 		
 		tiles = new Tile[11];
 		mapTileNum = new int[game.maxWorldCol][game.maxWorldRow];
@@ -42,7 +35,6 @@ public class TileManager {
 		
 		
 		////
-		//sceneDraw = loader.loadImage("/pics/tileImg.png");
 		sceneDraw = loader.loadImage("/pics/bgTileImg.png");
 		drawss = new SpriteSheet(sceneDraw);
 		background = loader.loadImage("/pics/background.png");
@@ -50,12 +42,8 @@ public class TileManager {
 		////
 		
 		getTileImage();
-		if(choice == 1) {	
-			loadMap("/maps/map2.txt");
-		}
-		else if(choice == 2) {
-			loadMap("/maps/staticBG.txt");
-		}
+
+		loadMap("/maps/map2.txt");
 		
 	}
 
@@ -128,48 +116,26 @@ public class TileManager {
 			int col = 0;
 			int row = 0;
 			
-			if(choiceBG == 1) {
-				while(col < game.maxWorldCol && row < game.maxWorldRow) {
+			
+			while(col < game.maxWorldCol && row < game.maxWorldRow) {
 					
-					String line = reader.readLine();
+				String line = reader.readLine();
 					
-					while(col < game.maxWorldCol) {
+				while(col < game.maxWorldCol) {
 						
-						String[] nums = line.split(" ");
-						int num = Integer.parseInt(nums[col]);
+					String[] nums = line.split(" ");
+					int num = Integer.parseInt(nums[col]);
 						
-						mapTileNum[col][row] = num;
-						col++;
+					mapTileNum[col][row] = num;
+					col++;
 						
-					}
-					if(col == game.maxWorldCol) {
-						col = 0;
-						row++;
-					}
 				}
-			}
-			if(choiceBG == 2) {
-				while(col < game.staticCol && row < game.staticRow) {
-					
-					String line = reader.readLine();
-					
-					while(col < game.staticCol) {
-						
-						String[] nums = line.split(" ");
-						int num = Integer.parseInt(nums[col]);
-						
-						mapTileNum[col][row] = num;
-						col++;
-						
-					}
-					if(col == game.staticCol) {
-						col = 0;
-						row++;
-					}
+				if(col == game.maxWorldCol) {
+					col = 0;
+					row++;
 				}
 			}
 			
-
 			reader.close();
 		} 
 		catch (FileNotFoundException e) {
@@ -187,40 +153,21 @@ public class TileManager {
 		int xx = 0;
 		int yy = 0;
 		
-		if(choiceBG == 1) {
-			while(col < game.maxWorldCol && row < game.maxWorldRow) {
+
+		while(col < game.maxWorldCol && row < game.maxWorldRow) {
 				
-				int tileNum = mapTileNum[row][col];
+			int tileNum = mapTileNum[row][col];
 				
 				
-				g2d.drawImage(tiles[tileNum].image, xx, yy, game.tileSize, game.tileSize, null);
-				col++;
-				xx += game.tileSize;
+			g2d.drawImage(tiles[tileNum].image, xx, yy, game.tileSize, game.tileSize, null);
+			col++;
+			xx += game.tileSize;
 				
-				if(col == game.maxWorldCol) {
-					col = 0;
-					xx = 0;
-					row++;
-					yy += game.tileSize;
-				}
-			}
-		}
-		
-		else if(choiceBG == 2) {
-			while(col < game.staticCol && row < game.staticRow) {
-				
-				int tileNum = mapTileNum[col][row];			
-				
-				g2d.drawImage(tiles[tileNum].image, xx, yy, game.tileSize, game.tileSize, null);
-				col++;
-				xx += game.tileSize;
-				
-				if(col == game.staticCol) {
-					col = 0;
-					xx = 0;
-					row++;
-					yy += game.tileSize;
-				}
+			if(col == game.maxWorldCol) {
+				col = 0;
+				xx = 0;
+				row++;
+				yy += game.tileSize;
 			}
 		}
 	}
