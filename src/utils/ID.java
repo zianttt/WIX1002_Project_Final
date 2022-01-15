@@ -19,6 +19,7 @@ public enum ID {
 	WallDoor(),
 	MiniGameDoor(),
 	StatusDoor(),
+	InfoBoard(),
 	Block(); // for other objects that cannot be passed thru
 	
 }

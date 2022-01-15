@@ -22,7 +22,8 @@ public class Info extends MouseAdapter{
 										"3. Upgrade equipments in shop",
 										"4. Check status in citizen hall",
 										"5. Make a wish to the magic lamp...",
-										"6. Walk around and discover treasures!"
+										"6. Walk around and discover treasures!",
+										"7. Press ESC to pause game."
 										}; 
 	
 	private String[] minigameInfoText = {"1. Avoid the dragon's flames",
@@ -139,6 +140,7 @@ public class Info extends MouseAdapter{
 			g2d.drawString(generalInfoText[3], 345, 285);
 			g2d.drawString(generalInfoText[4], 345, 310);
 			g2d.drawString(generalInfoText[5], 345, 335);
+			g2d.drawString(generalInfoText[6], 345, 360);
 			
 		}
 		

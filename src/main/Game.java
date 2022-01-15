@@ -155,7 +155,7 @@ public class Game extends Canvas implements Runnable{
 		AudioPlayer.mainMusic.loop();
 		
 		tileManager = new TileManager(this, loader);
-		map = loader.loadImage("/maps/map72Ver4.png");
+		map = loader.loadImage("/maps/map72Ver8.png");
 		characters = loader.loadImage("/pics/character1.png");
 		css = new SpriteSheet(characters);
 		dragons = loader.loadImage("/pics/dragonss.png");
@@ -273,7 +273,7 @@ public class Game extends Canvas implements Runnable{
 		
 			if(gameState == STATES.ToMiniGame) {
 				menuTo = 1;
-				Player mini = new Player(WIDTH/2, HEIGHT/2, ID.MiniPlayer, miniHandler, css, eGen, this, stats);
+				Player mini = new Player(WIDTH/2, HEIGHT/2, ID.MiniPlayer, miniHandler, css, eGen, this, stats, textbox);
 				miniHandler.addObject(mini);
 				miniHandler.addObject(new Enemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, css, miniHandler));
 			}
@@ -368,7 +368,9 @@ public class Game extends Canvas implements Runnable{
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
-		if(gameState == STATES.Play || gameState == STATES.EventText || gameState == STATES.ChestText || gameState == STATES.Reminder) {
+		if(gameState == STATES.Play || gameState == STATES.EventText || 
+				gameState == STATES.ChestText || gameState == STATES.Reminder ||
+				gameState == STATES.InfoBoard) {
 			
 			g2d.translate(-camera.getX(), -camera.getY());
 
@@ -405,7 +407,8 @@ public class Game extends Canvas implements Runnable{
 			battleHandler.render(g2d);
 			battle.render(g2d);	
 		}
-		else if(gameState == STATES.EventText || gameState == STATES.ChestText || gameState == STATES.Reminder) {
+		else if(gameState == STATES.EventText || gameState == STATES.ChestText ||
+				gameState == STATES.Reminder || gameState == STATES.InfoBoard) {
 			textbox.render(g2d);
 			if(handler.isAction()) {
 				if(gameState == STATES.EventText) {
@@ -418,7 +421,7 @@ public class Game extends Canvas implements Runnable{
 					Player.direction = "down";
 				}
 				else if(gameState == STATES.Reminder) {
-					if(TextBox.reminder == 0) {
+					if(textbox.reminder == 0) {
 						player.setY(player.getY() - 10);
 						Player.direction = "up";
 					}else {
@@ -427,6 +430,36 @@ public class Game extends Canvas implements Runnable{
 					}
 					
 				}
+				else if(gameState == STATES.InfoBoard) {
+					switch(textbox.namesInd) {
+					case 0:
+						player.setY(player.getY() + 10);
+						Player.direction = "down";
+						break;
+						
+					case 1:
+						player.setY(player.getY() - 10);
+						Player.direction = "up";
+						break;
+					
+					case 2:
+						player.setX(player.getX() + 10);
+						Player.direction = "right";
+						break;
+					
+					case 3:
+						player.setX(player.getX() + 10);
+						Player.direction = "right";
+						break;
+					
+					case 4:
+						player.setY(player.getY() - 10);
+						Player.direction = "up";
+						break;
+						
+					}
+				}
+				
 				gameState = STATES.Play;
 			}
 		}
@@ -493,7 +526,7 @@ public class Game extends Canvas implements Runnable{
 				int blue = (pixel) & 0xff;
 				
 				if(red == 150 && green == 75 && blue == 0) {
-					player = new Player(xx*32, yy*32, ID.Player, handler, css, eGen, this, stats);
+					player = new Player(xx*32, yy*32, ID.Player, handler, css, eGen, this, stats, textbox);
 					handler.addObject(player);	
 				}
 				
@@ -558,6 +591,14 @@ public class Game extends Canvas implements Runnable{
 				
 				else if(red == 128 && green == 0 && blue == 128) {
 					handler.addObject(new Chest(xx*32, yy*32, ID.Chest, item_ss));
+				}
+				
+				else if(red == 150 && green == 50) {
+					if(blue == 80) handler.addObject(new InfoBoard(xx*32, yy*32, ID.InfoBoard, item_ss, 0));
+					else if(blue == 79) handler.addObject(new InfoBoard(xx*32, yy*32, ID.InfoBoard, item_ss, 1));
+					else if(blue == 78) handler.addObject(new InfoBoard(xx*32, yy*32, ID.InfoBoard, item_ss, 2));
+					else if(blue == 77) handler.addObject(new InfoBoard(xx*32, yy*32, ID.InfoBoard, item_ss, 3));
+					else if(blue == 76) handler.addObject(new InfoBoard(xx*32, yy*32, ID.InfoBoard, item_ss, 4));
 				}
 			}
 		}

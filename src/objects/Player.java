@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import main.Game;
 import staticpage.TextBox;
 import utils.AudioPlayer;
-import utils.BufferedImageLoader;
 import utils.Handler;
 import utils.ID;
 import utils.MiniDisplay;
@@ -23,18 +22,21 @@ public class Player extends GameObject{
 	private Game game;
 	private EventsGenerator eGen;
 	private Stats stats;
+	private TextBox textbox;
 	
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
 	public static String direction;
 	private int spriteCount = 0;
 	private int spriteNum = 1;
 	
-	public Player(int x, int y, ID id, Handler handler, SpriteSheet ss, EventsGenerator eGen, Game game, Stats stats) {
+	public Player(int x, int y, ID id, Handler handler, SpriteSheet ss, EventsGenerator eGen, Game game, Stats stats,
+					TextBox textbox) {
 		super(x, y, id, ss);
 		this.handler = handler;
 		this.eGen = eGen;
 		this.game = game;
 		this.stats = stats;
+		this.textbox = textbox;
 		
 		
 		down1 = ss.grabImage(77, 9, 36, 52);
@@ -162,7 +164,7 @@ public class Player extends GameObject{
 						y += velY * -1;
 						
 						if(stats.miniGameLimit == 0) {
-							TextBox.reminder = 1;
+							textbox.reminder = 1;
 							Game.gameState = STATES.Reminder;
 						}
 						else {
@@ -187,7 +189,7 @@ public class Player extends GameObject{
 						y += velY * -1;
 						
 						if(EventsGenerator.maxEvents > 0) {
-							TextBox.reminder = 0;
+							textbox.reminder = 0;
 							Game.gameState = STATES.Reminder;
 						}else {
 							Game.gameState = STATES.ToBattle;
@@ -217,14 +219,21 @@ public class Player extends GameObject{
 						Game.gameState = STATES.ChestText;
 					}
 				}
+				
+				if(temp.getId() == ID.InfoBoard) {
+					if(getBounds().intersects(temp.getBounds())) {
+						x += velX * -1;
+						y += velY * -1;
+						textbox.namesInd = temp.getType();
+						Game.gameState = STATES.InfoBoard;
+					}
+				}
 			}	
 		}
 	}
 
 	@Override
 	public void render(Graphics2D g2d) {
-		//g2d.setColor(new Color(150, 75, 0));
-		//g2d.fillRect(x, y, 32, 32);
 		
 		BufferedImage image = null;
 		
@@ -268,7 +277,7 @@ public class Player extends GameObject{
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, 32, 50);
+		return new Rectangle(x, y+8, 32, 45);
 	}
 
 }

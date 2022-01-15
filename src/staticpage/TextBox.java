@@ -28,13 +28,23 @@ public class TextBox {
 	private String[] reminderTexts = {"Make 2 wishes to the magic lamp before battle...",
 										"It's time to fight the dragon!"};
 	
+	private String[] infoTexts = {"Emotional(100) - Decrease Tower AttackPoint by 1",
+									"Nervous(100) - Decrease Tower Accuracy by 5",
+									"Lazy(100) - Decrease Wall HP by 100",
+									"Berserk(100) - Increase Tower AttackPoint by 1",
+									"Diligent(100) - Increase Wall HP by 75",
+									"Fearless(100) - Increase Tower Critical Chance by 5"};
+	
+	private String[] names = {"Shop", "Status Hall", "Minigame", "Magic Lamp", "Town door"};
+	public int namesInd = 0;
+ 	
 	private String tempText;
 	
 	private BufferedImageLoader loader;
 	private static BufferedImage[] meme_img = new BufferedImage[10];
 	private int memeNum = 0;
 	public final int meme_size = 10;
-	public static int reminder = 0; 
+	public int reminder = 0; 
 
 	public TextBox(FontManager fontManager, BufferedImageLoader loader) {
 		this.fontManager = fontManager;
@@ -60,7 +70,7 @@ public class TextBox {
 	public void render(Graphics2D g2d) {
 		
 		
-		if(Game.gameState == STATES.EventText || Game.gameState == STATES.Reminder) {
+		if(Game.gameState == STATES.EventText || Game.gameState == STATES.Reminder || Game.gameState == STATES.InfoBoard) {
 			
 			// set font
 			g2d.setColor(new Color(0, 0, 0, 220));
@@ -83,14 +93,19 @@ public class TextBox {
 				else {
 					tempText = getEventText(EventsGenerator.eventTextSelect);
 				}
-				g2d.drawString(tempText, Game.WIDTH/2 - 175, 115);
+				g2d.drawString(tempText, Game.WIDTH/2 - 185, 115);
 			}
-			else {
+			else if(Game.gameState == STATES.Reminder){
 				g2d.drawString(reminderTexts[reminder], Game.WIDTH/2 - 185, 115);
 			}
-
-		
 			
+			
+			else if(Game.gameState == STATES.InfoBoard) {
+				g2d.setColor(new Color(180, 50, 135));
+				g2d.drawString(names[namesInd], Game.WIDTH/2 - 185, 115);
+			}
+		
+			g2d.setColor(new Color(255, 255, 255));
 			g2d.drawString("Press space to go back", Game.WIDTH/2 - 185, 155);
 		}
 		
@@ -103,7 +118,9 @@ public class TextBox {
 			g2d.drawRoundRect(Game.WIDTH/2 - 252, 32, 500, 300, 35, 35);
 			
 			g2d.drawImage(meme_img[memeNum], Game.WIDTH/2 - 150, 29, 300, 306, null);
-		}		
+		}	
+		
+		
 	}
 
 	private String getEventText(int index) {

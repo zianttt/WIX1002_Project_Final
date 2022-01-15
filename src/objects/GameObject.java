@@ -13,9 +13,8 @@ public abstract class GameObject {
 	protected float velX = 0, velY = 0;
 	protected ID id;
 	protected SpriteSheet ss;
+	protected int type;
 
-	
-	
 	public GameObject(int x, int y, ID id, SpriteSheet ss) {
 		this.x = x;
 		this.y = y;
@@ -68,4 +67,9 @@ public abstract class GameObject {
 	public void setId(ID id) {
 		this.id = id;
 	}	
+	
+	public int getType() {
+		return type;
+	}
+
 }

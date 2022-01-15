@@ -12,6 +12,7 @@ public enum STATES {
 	ToStatus(),
 	Status(),
 	Info(),
+	InfoBoard(),
 	GeneralInfo(),
 	MiniGameInfo(),
 	Battle(),
