@@ -11,7 +11,7 @@ public class Handler {
 	
 	public LinkedList<GameObject> object = new LinkedList<GameObject>();
 	
-	private boolean up = false, down = false, left = false, right = false, action = false;
+	private boolean up = false, down = false, left = false, right = false, action = false, test = false;;
 	
 	public void tick() {
 		
@@ -88,6 +88,15 @@ public class Handler {
 	
 	public void setAction(boolean action) {
 		this.action = action;
+	}
+
+
+	public boolean isTest() {
+		return test;
+	}
+	
+	public void setTest(boolean test) {
+		this.test = test;
 	}
 	
 }

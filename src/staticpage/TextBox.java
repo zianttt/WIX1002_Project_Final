@@ -103,20 +103,24 @@ public class TextBox {
 				else {
 					tempText = getEventText(EventsGenerator.eventTextSelect);
 				}
-				g2d.drawString(tempText, Game.WIDTH/2 - 185, 115);
+				g2d.drawString(tempText, Game.WIDTH/2 - 200, 115);
 			}
 			else if(Game.gameState == STATES.Reminder){
-				g2d.drawString(reminderTexts[reminder], Game.WIDTH/2 - 185, 115);
+				g2d.drawString(reminderTexts[reminder], Game.WIDTH/2 - 200, 115);
 			}
 			
 			
 			else if(Game.gameState == STATES.InfoBoard) {
 				g2d.setColor(new Color(180, 50, 135));
-				g2d.drawString(names[namesInd], Game.WIDTH/2 - 185, 115);
+				newFont = curFont.deriveFont(Font.BOLD, 35F);
+				g2d.setFont(newFont);
+				g2d.drawString(names[namesInd], Game.WIDTH/2 - 200, 115);
 			}
-		
+			
+			newFont = curFont.deriveFont(Font.BOLD, 22F);
+			g2d.setFont(newFont);
 			g2d.setColor(new Color(255, 255, 255));
-			g2d.drawString("Press space to go back", Game.WIDTH/2 - 185, 155);
+			g2d.drawString("Press space to go back", Game.WIDTH/2 - 200, 155);
 		}
 		
 		if(Game.gameState == STATES.ChestText) {

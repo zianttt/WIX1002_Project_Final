@@ -242,6 +242,8 @@ public class Game extends Canvas implements Runnable{
 			
 			if(menuTo == 2) {
 				gameState = STATES.ToBattle;
+				AudioPlayer.mainMusic.stop();
+				AudioPlayer.battleMusic.loop();
 			}
 			
 			for(int i=0; i < handler.object.size(); i++) {
@@ -250,6 +252,11 @@ public class Game extends Canvas implements Runnable{
 				}
 			}	
 			handler.tick();	
+			
+			if(handler.isTest()) {
+				player.setX(710);
+				player.setY(710);
+			}
 			
 			if(gameState == STATES.ToBattle) {
 

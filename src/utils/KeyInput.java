@@ -35,7 +35,8 @@ public class KeyInput extends KeyAdapter{
 				
 				if(tempObject.getId() == ID.Player){
 					if(key == KeyEvent.VK_ENTER) {
-						Game.paused = !Game.paused;
+						//Game.paused = !Game.paused;
+						handler.setTest(!handler.isTest());
 					}
 					
 					if(key == KeyEvent.VK_ESCAPE) {
