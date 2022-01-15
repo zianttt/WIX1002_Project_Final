@@ -44,7 +44,7 @@ public class Menu extends MouseAdapter {
 			// Play
 			if(mx >= Game.WIDTH/2-80 && mx <= Game.WIDTH/2 + 20) {
 				if(my >= 377 && my <= 457) {
-					if(Game.menuTo == 0) {
+					if(Game.menuTo == 0 || Game.menuTo == 2) {
 						Game.gameState = STATES.Play;
 					}
 					else if(Game.menuTo == 1) {

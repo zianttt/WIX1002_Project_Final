@@ -53,6 +53,7 @@ public class Stats {
 		cur_tax = taxs[temp];
 		gold += cur_tax;
 		EventsGenerator.maxEvents = 2;
+		Game.menuTo = 2;
 	}
 	
 	public void tick() {

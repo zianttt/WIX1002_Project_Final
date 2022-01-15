@@ -40,9 +40,10 @@ public class TextBox {
 									"The dragon levels up after each battle and \nready to fight until you killed it",
 									"Tax will be collected randomly at the start\nof each season"
 									};
+	private int infoTextSize = 11;
 	private int infoInd = 0;
 	public int chestType = 0;
-	private int infoTextSize = 11;
+	
 	
 	private String[] names = {"Shop", "Status Hall", "Minigame", "Magic Lamp", "Town door"};
 	public int namesInd = 0;

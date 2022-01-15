@@ -113,7 +113,7 @@ public class Game extends Canvas implements Runnable{
 	public static int win = 2;
 	public static boolean fromGameOver = false;
 	public static boolean menuToggle = false;
-	public static int menuTo = 0;
+	public static int menuTo = 2;
 	
 	public Game() {
 		
@@ -240,13 +240,16 @@ public class Game extends Canvas implements Runnable{
 		// main game 
 		if(gameState == STATES.Play) {	
 			
+			if(menuTo == 2) {
+				gameState = STATES.ToBattle;
+			}
+			
 			for(int i=0; i < handler.object.size(); i++) {
 				if(handler.object.get(i).getId() == ID.Player) {
 					camera.tick(handler.object.get(i));
 				}
 			}	
 			handler.tick();	
-			
 			
 			if(gameState == STATES.ToBattle) {
 

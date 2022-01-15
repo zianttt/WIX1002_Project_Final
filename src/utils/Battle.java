@@ -114,8 +114,14 @@ public class Battle {
 					timer3 = 600;
 					round++;
 					if(round >= 1) {
+						if(Game.menuTo == 2) {
+							stats.reset();
+							Game.menuTo = 0;
+						}
+						else {
+							stats.newSeason();
+						}
 						dragon.levelUp();
-						stats.newSeason();
 						Game.gameState = STATES.ToMain;
 						AudioPlayer.battleMusic.stop();
 						AudioPlayer.mainMusic.loop();
