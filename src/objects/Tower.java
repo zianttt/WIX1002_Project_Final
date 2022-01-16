@@ -11,7 +11,7 @@ import utils.SpriteSheet;
 public class Tower extends SameBehaviour{
 	
 	// tower stats
-	private static float towerAtk = 10;
+	private static float towerAtk = 5;
 	private static float towerCritical = 10;
 	private static float towerAcc = 80;
 	private static boolean tempDecrease = false;
