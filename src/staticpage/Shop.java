@@ -11,14 +11,16 @@ import utils.AudioPlayer;
 import utils.FontManager;
 import utils.STATES;
 
-
+// Main page for shop
 public class Shop extends MouseAdapter{
 	
-	private int color;
-	private boolean revert = true;
-
+	// Displays
 	Font curFont, newFont;
 	private FontManager fontManager;
+	private int color;
+	private boolean revert = true;
+	
+	// Game state logic
 	private boolean backToMain = false;
 	
 	

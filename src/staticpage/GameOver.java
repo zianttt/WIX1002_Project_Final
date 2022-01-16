@@ -11,13 +11,16 @@ import utils.Handler;
 import utils.MiniDisplay;
 import utils.STATES;
 
+// Game over page when the wall HP is down to 0 during the fight with dragon
 public class GameOver {
 	
+	// Helper 
 	private Handler handler;
-	private MiniDisplay miniDis;
-	Font curFont, newFont;
-	private FontManager fontManager;
 	
+	// Displays
+	private MiniDisplay miniDis;
+	private Font curFont, newFont;
+	private FontManager fontManager;
 	private static String[] gameOverTexts = {"You lost...", "You won!"};
 	
 	public GameOver(Handler handler, MiniDisplay miniDis, FontManager fontManager) {

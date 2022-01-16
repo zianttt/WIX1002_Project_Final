@@ -12,35 +12,33 @@ import objects.Tower;
 import objects.Wall;
 import objects.WallAtk;
 
+// A class that handles logics in dragon battle
 public class Battle {
-	
-	Font curFont, newFont;
-	
-	private Game game;
+		
+	// helper classes
 	private Handler battleHandler;
 	private Dragon dragon;
 	private Wall wall;
 	private SpriteSheet ss;
 	private Tower[] tower;
 	private FontManager fontManager;
-	
 	private Stats stats;
 	
-	Random r = new Random();
-	
-	// battlefield
+	// battle logics settings
 	public static int timer1 = 80;
 	public static int timer2 = 50;
 	public static int timer3 = 600;
 	public static int round = 0;
-	
 	private int spawn;
 	private boolean dragonPlaying = false;
 	private int infoTimer = 250;
-	private String outputMsg;
 	
-	public Battle(Game game, Handler battleHandler, SpriteSheet ss, Dragon dragon, Wall wall, Tower[] tower, FontManager fontManager, Stats stats) {
-		this.game = game;
+	// others
+	private String outputMsg;
+	private Font curFont, newFont;
+	private Random r = new Random();
+	
+	public Battle(Handler battleHandler, SpriteSheet ss, Dragon dragon, Wall wall, Tower[] tower, FontManager fontManager, Stats stats) {
 		this.battleHandler = battleHandler;
 		this.ss = ss;
 		this.dragon = dragon;
@@ -129,9 +127,7 @@ public class Battle {
 				}
 				timer3--;
 			}
-		}
-		
-		
+		}	
 	}
 	
 	
@@ -157,6 +153,7 @@ public class Battle {
 			g2d.setColor(new Color(149, 53, 83));
 			g2d.drawString("Wall's HealthPoint: " + (int)Wall.wallHp, 10, 200);
 			
+			// dragon and player attack messages
 			if(infoTimer >= 0 && outputMsg.length() != 0) {
 				g2d.setColor(new Color(255, 180, 54));
 				g2d.drawString(outputMsg, 100, Game.HEIGHT/2 + 40);
@@ -165,11 +162,9 @@ public class Battle {
 			else {
 				infoTimer = 250;
 				outputMsg = "";
-			}
-			
+			}		
 		}
-	}
-	
+	}	
 }
 
 

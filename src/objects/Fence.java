@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import utils.ID;
 import utils.SpriteSheet;
 
-public class Fence extends GameObject{
+public class Fence extends SameBehaviour{
 	
 	private BufferedImage fence_img;
 

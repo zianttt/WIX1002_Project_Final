@@ -13,18 +13,20 @@ import utils.FontManager;
 import utils.STATES;
 import utils.Stats;
 
-
+// Handles upgrade system for citizens
 public class WallUpgrade extends MouseAdapter{
 	
+	private FontManager fontManager;
+	private Stats stats;
+	
+	// Displays
+	Font curFont, newFont;
 	private int color;
 	private boolean revert = true;
 	
-	Font curFont, newFont;
-	private FontManager fontManager;
+	// prevent multiple clicks 
 	private boolean freeze = true;
-	
-	private Stats stats;
-	
+
 	
 	public WallUpgrade(FontManager fontManager, Stats stats) {
 		this.fontManager = fontManager;
@@ -45,9 +47,9 @@ public class WallUpgrade extends MouseAdapter{
 					AudioPlayer.clickSound.play();
 				}
 				
-				
+				// trigger each functionality when the mouse clicks on certain area
 				if(stats.gold >= 100) {
-					// box 1
+					// HP
 					if(mx >= Game.WIDTH/2-102 && mx <= Game.WIDTH/2 + 68) {
 						if(my >= 100 && my <= 190) {
 							Wall.wallHp += 75;
@@ -55,7 +57,7 @@ public class WallUpgrade extends MouseAdapter{
 						}
 					}
 					
-					//box 2
+					// block percentage
 					if(mx >= Game.WIDTH/2-102 && mx <= Game.WIDTH/2 + 68) {
 						if(my >= 200 && my <= 290) {
 							if(Wall.wallBlock+5 <= 50) {
@@ -97,15 +99,15 @@ public class WallUpgrade extends MouseAdapter{
 		newFont = curFont.deriveFont(Font.BOLD, 55F);
 		g2d.setFont(newFont);
 		
-		
-		
+		// title	
 		g2d.drawString("Wall Upgrade", Game.WIDTH/2-155, 50);
 		
-		
+		// reset font
 		newFont = curFont.deriveFont(Font.BOLD, 17F);
 		g2d.setFont(newFont);
 		g2d.setColor(Color.white);
 		
+		// cost
 		g2d.drawString("Cost: " + 100 + "G", 447, 180);
 		g2d.drawString("Cost: " + 100 + "G", 447, 280);
 		
@@ -113,17 +115,17 @@ public class WallUpgrade extends MouseAdapter{
 		g2d.setFont(newFont);
 		g2d.setColor(new Color(155, 155, 240));
 		
-		//box 1
+		// HP 
 		g2d.drawString("Health Point +75%", 417, 130);
 		g2d.drawString("Current: " +(int) Wall.wallHp, 434, 155);
 		g2d.drawRoundRect(Game.WIDTH/2-102, 100, 170, 90, 25, 25);
 		
-		//box 2
+		// block percentage
 		g2d.drawString("Block Chance +5%", 415, 230);
 		g2d.drawString("Current: " + (int)Wall.wallBlock, 439, 255);
 		g2d.drawRoundRect(Game.WIDTH/2-102, 200, 170, 90, 25, 25);
 		
-		//back
+		// back
 		g2d.setColor(Color.white);
 		g2d.drawString("Back", 464, 482);
 		g2d.drawRoundRect(435, 450, 100, 50, 15, 15);

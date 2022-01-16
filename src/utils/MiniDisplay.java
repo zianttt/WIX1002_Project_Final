@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 
 import main.Game;
 
+// Display stats in minigame (Minigame copy of Stats class)
 public class MiniDisplay {
 	
 	Font curFont, newFont;

@@ -13,14 +13,13 @@ import utils.FontManager;
 import utils.STATES;
 import utils.Stats;
 
-
+// Handles tower upgrade system
 public class TowerUpgrade extends MouseAdapter{
 	
-	Font curFont, newFont;
 	private FontManager fontManager;
-	
 	private Stats stats;
 	
+	Font curFont, newFont;
 	private int color;
 	private boolean revert = true;
 	
@@ -127,17 +126,17 @@ public class TowerUpgrade extends MouseAdapter{
 		g2d.setFont(newFont);
 		g2d.setColor(new Color(0, 0, 0));
 		
-		//box 1
+		// attack
 		g2d.drawString("Attack Point +1", 424, 130);
 		g2d.drawString("Current: " + (int)Tower.towerAtk, 438, 155);
 		g2d.drawRoundRect(Game.WIDTH/2-102, 100, 170, 90, 30, 30);
 		
-		//box 2
+		// critical chance
 		g2d.drawString("Critical Chance +5%", 410, 230);
 		g2d.drawString("Current: " + (int)Tower.towerCritical, 438, 255);
 		g2d.drawRoundRect(Game.WIDTH/2-102, 200, 170, 90, 30, 30);
 				
-		//box 3
+		// accuracy
 		g2d.drawString("Accuracy +4%", 428, 330);
 		g2d.drawString("Current: " + (int)Tower.towerAcc, 438, 355);
 		g2d.drawRoundRect(Game.WIDTH/2-102, 300, 170, 90, 30, 30);

@@ -12,22 +12,23 @@ import utils.BufferedImageLoader;
 import utils.FontManager;
 import utils.STATES;
 
+// Handles the pop up dialouge box 
 public class TextBox {
 	
-	Font curFont, newFont;
-	private FontManager fontManager;
-	
+	// Events generator
 	private String[] eventTexts = {"Reinforcement : Tower ATK + 1", "Visitors : Gold + 100", "Festival : Berserk Diligent Fearless + 50",
 	"Drought : Wall HP - 50", "Outing : Berserk Diligent Fearless + 50", "Heatstroke : Emo Nervous Lazy + 50",
 	"Rainy : Tower Acc - 20", "Flood : Wall Hp - 50", "Harvest : Gold + 100",
 	"Blizzard : Wall Hp - 50", "Alavanche : Emo Nervous Lazy + 50", "Hunger : Tower Acc - 20", "Tour Group Visit : Gold + 100"};
 
- 	
+ 	// Error messages
 	private String[] errorTexts = {"Maximum amount of events exceeded..."};
 	
+	// Reminder texts
 	private String[] reminderTexts = {"Make 2 wishes to the magic lamp before battle...",
 										"It's time to fight the dragon!"};
 	
+	// Tips texts (from chest)
 	private String[] infoTexts = {"Emotional - Decrease Tower AttackPoint by 1\nwhen reaches 100",
 									"Nervous - Decrease Tower Accuracy by 5\nwhen reaches 100",
 									"Lazy - Decrease Wall HP by 100\nwhen reaches 100",
@@ -40,28 +41,34 @@ public class TextBox {
 									"The dragon levels up after each battle and \nready to fight until you killed it",
 									"Tax will be collected randomly at the start\nof each season"
 									};
+	// For retrieving the texts
 	private int infoTextSize = 11;
 	private int infoInd = 0;
-	public int chestType = 0;
+	// 0 : meme chest, 1 : tips chest
+	public int chestType = 0; 
 	
-	
+	// Road signs
 	private String[] names = {"Shop", "Status Hall", "Minigame", "Magic Lamp", "Town door"};
 	public int namesInd = 0;
- 	
-	private String tempText;
 	
+	// Memes loading
 	private BufferedImageLoader loader;
 	private static BufferedImage[] meme_img = new BufferedImage[10];
 	private int memeNum = 0;
 	private final int meme_size = 10;
 	public int reminder = 0; 
+	
+	// others
+	private String tempText;
+	Font curFont, newFont;
+	private FontManager fontManager;
+	
 
 	public TextBox(FontManager fontManager, BufferedImageLoader loader) {
 		this.fontManager = fontManager;
 		this.loader = loader;
 		
-		loadMemes();
-		
+		loadMemes();	
 	}
 	
 	private void loadMemes() {
@@ -103,7 +110,7 @@ public class TextBox {
 				else {
 					tempText = getEventText(EventsGenerator.eventTextSelect);
 				}
-				g2d.drawString(tempText, Game.WIDTH/2 - 200, 115);
+				g2d.drawString(tempText, Game.WIDTH/2 - 200, 100);
 			}
 			else if(Game.gameState == STATES.Reminder){
 				g2d.drawString(reminderTexts[reminder], Game.WIDTH/2 - 200, 115);

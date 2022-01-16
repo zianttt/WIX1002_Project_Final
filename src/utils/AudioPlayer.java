@@ -7,8 +7,10 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
+// A class to load and play sound effects
 public class AudioPlayer {
 	
+	// Map interface (function like dictionary)
 	public static Map<String, Music> mainMap = new HashMap<String, Music>();
 	public static Map<String, Music> battleMap = new HashMap<String, Music>();
 	public static Map<String, Sound> clickMap = new HashMap<String, Sound>();

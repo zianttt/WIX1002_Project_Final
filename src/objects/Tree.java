@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import utils.ID;
 import utils.SpriteSheet;
 
-public class Tree extends GameObject{
+public class Tree extends SameBehaviour{
 	
 	private BufferedImage tree_img;
 

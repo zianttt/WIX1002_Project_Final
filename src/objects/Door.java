@@ -2,12 +2,11 @@ package objects;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.Color;
 
 import utils.ID;
 import utils.SpriteSheet;
 
-public class Door extends GameObject{
+public class Door extends SameBehaviour{
 
 	public Door(int x, int y, ID id, SpriteSheet ss) {
 		super(x, y, id, ss);

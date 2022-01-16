@@ -4,8 +4,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import main.Game;
-import objects.GameObject;
+import objects.SameBehaviour;
 
+// Handles key functionality
 public class KeyInput extends KeyAdapter{
 	
 	private Handler handler;
@@ -25,7 +26,7 @@ public class KeyInput extends KeyAdapter{
 	
 		for(int i=0; i < handler.object.size(); i++) {
 			
-			GameObject tempObject = handler.object.get(i);
+			SameBehaviour tempObject = handler.object.get(i);
 			
 			if(tempObject.getId() == ID.Player || tempObject.getId() == ID.MiniPlayer) {
 				if(key == KeyEvent.VK_W) handler.setUp(true);
@@ -57,7 +58,7 @@ public class KeyInput extends KeyAdapter{
 		
 		for(int i=0; i < handler.object.size(); i++) {
 			
-			GameObject tempObject = handler.object.get(i);
+			SameBehaviour tempObject = handler.object.get(i);
 			
 			if(tempObject.getId() == ID.Player || tempObject.getId() == ID.MiniPlayer) {
 				if(key == KeyEvent.VK_W) handler.setUp(false);

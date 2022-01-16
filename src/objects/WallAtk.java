@@ -13,7 +13,7 @@ import utils.SpriteSheet;
 import java.awt.Color;
 
 
-public class WallAtk extends GameObject {
+public class WallAtk extends SameBehaviour {
 	
 	private Handler battleHandler;
 	Random r = new Random();

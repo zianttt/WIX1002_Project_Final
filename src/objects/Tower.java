@@ -5,28 +5,26 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 import java.awt.Rectangle;
 
-import utils.Handler;
 import utils.ID;
 import utils.SpriteSheet;
 
-public class Tower extends GameObject{
+public class Tower extends SameBehaviour{
 	
-	private Handler handler;
-	Random r = new Random();
-	
-	// tower
+	// tower stats
 	public static float towerAtk = 10;
 	public static float towerCritical = 10;
 	public static float towerAcc = 80;
 	public static boolean tempDecrease = false;
 	
+	// for attack calculation use
 	private float tempAtk = 0;
+	private Random r = new Random();
 	
+	// display
 	private BufferedImage tower_img;
 
-	public Tower(int x, int y, ID id, SpriteSheet tss, Handler handler) {
+	public Tower(int x, int y, ID id, SpriteSheet tss) {
 		super(x, y, id, tss);
-		this.handler = handler;
 		
 		tower_img = tss.grabImage(32, 0, 32, 64);
 	}
@@ -37,7 +35,7 @@ public class Tower extends GameObject{
 		if(r.nextInt(100) < towerAcc) {
 			//critical or not
 			if(r.nextInt(100) < towerCritical) {
-				System.out.println("Tower critical!");
+				//System.out.println("Tower critical!");
 				tempAtk = towerAtk * (float)1.5;
 				msg = "Tower critical attack: " + (int)tempAtk;
 			}
@@ -45,11 +43,12 @@ public class Tower extends GameObject{
 			msg = "Tower attacks: " + (int)tempAtk;
 		}
 		else {
-			System.out.println("Tower fails to attack");
+			//System.out.println("Tower fails to attack");
 			msg = "Tower missed the target!";
 			tempAtk = 0;
 		}
-		System.out.println("Tower attacks: " + (int)tempAtk);
+		//System.out.println("Tower attacks: " + (int)tempAtk);
+		// deduct dragon hp if successfully attacked
 		Dragon.hp -= tempAtk;
 		return msg;
 	}

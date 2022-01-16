@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import utils.ID;
 import utils.SpriteSheet;
 
-public class InfoBoard extends GameObject{
+public class InfoBoard extends SameBehaviour{
 
 	public InfoBoard(int x, int y, ID id, SpriteSheet ss, int type) {
 		super(x, y, id, ss);

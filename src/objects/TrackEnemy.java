@@ -9,13 +9,13 @@ import utils.SpriteSheet;
 
 import java.awt.Color;
 
-public class TrackEnemy extends GameObject {
+public class TrackEnemy extends SameBehaviour {
 	
 	private int color;
 	private boolean revert = true;
 	
 	private Handler handler;
-	private GameObject player;
+	private SameBehaviour player;
 	
 	public TrackEnemy(int x, int y, ID id, SpriteSheet ss, Handler handler) {
 		super(x, y, id, ss);		

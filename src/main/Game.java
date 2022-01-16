@@ -20,24 +20,14 @@ public class Game extends Canvas implements Runnable{
 	 */
 	private static final long serialVersionUID = -1538943766877881729L;
 	
-	// window settings
-	public final int tileSize  = 32;
-	public final int maxCol = 25;
-	public final int maxRow = 16;
-	public int width = maxCol * tileSize;
-	public int height = maxRow * tileSize;
 	
-	// static screen 
-	public final int staticCol = 32;
-	public final int staticRow = 18;
-	
-	// world
-	public final int maxWorldCol = 72;
-	public final int maxWorldRow = 72;
-	public final int worldWidth = maxWorldCol * tileSize;
-	public final int worldHeight = maxWorldRow * tileSize;
+	// game loop
+	private boolean running = false;
+	private Thread thread;
+	private final double FPS = 60;
 	
 	// helper objects
+	private Camera camera;
 	private Handler handler;
 	private Handler battleHandler;
 	private Handler miniHandler;
@@ -48,19 +38,7 @@ public class Game extends Canvas implements Runnable{
 	private Stats stats;
 	private Battle battle;
 	
-	
-	// graphics
-	TileManager tileManager;
-	public FontManager fontManager;
-	
-	
-	// game loop
-	private boolean running = false;
-	private Thread thread;
-	
-	
-	// pages
-	private Camera camera;
+	// static pages
 	private Shop shop;
 	private Menu menu;
 	private Info info;
@@ -72,15 +50,29 @@ public class Game extends Canvas implements Runnable{
 	private TextBox textbox;
 	private Transition transition;
 	
-	BufferedImageLoader loader2;
+	// window settings
+	public final int tileSize  = 32;
+
+	// map size
+	public final int maxWorldCol = 72;
+	public final int maxWorldRow = 72;
+	
+	// static screen 
+	public static final int WIDTH = 1000;
+	public static final int HEIGHT = 563;
+	public final int staticCol = 32;
+	public final int staticRow = 18;
+	
+
+	
+	// Graphics
 	BufferedImageLoader loader;
 	
+	// sprite sheets
 	private BufferedImage characters = null;
 	private SpriteSheet css;
 	private BufferedImage dragons = null;
 	private SpriteSheet dragonss;
-	//private BufferedImage scenes = null;
-	//private SpriteSheet sss;
 	private BufferedImage sceneDraw = null;
 	private SpriteSheet drawss;
 	private BufferedImage buildings = null;
@@ -88,43 +80,45 @@ public class Game extends Canvas implements Runnable{
 	private BufferedImage items = null;
 	private SpriteSheet item_ss; 
 
-	
-	// background sprites
+	// background images
 	private BufferedImage bgrd_img = null;
 	private BufferedImage mainmenu_img = null;
 	private BufferedImage battlemap_img = null;
 	private BufferedImage staticpage_img = null;
 	private BufferedImage dragonBattle_img = null;
 
-	
-	
-	//
+	// main map
 	private BufferedImage map = null;
-	// 
 	
-	public static int WIDTH = 1000, HEIGHT = 563;
-	private double FPS = 60;
+	// background tiles manager
+	TileManager tileManager;
+	public FontManager fontManager;
 	
-	Random r = new Random();
-	public static boolean paused = false; 
+	
+	// game (major) logic settings
 	public static STATES gameState = STATES.Menu;
-	public static STATES previousState = null;
-	//public static boolean justInOut = false;
+	// 0 : call menu from main map, 1 : call menu from minigame, 2 : in menu at game start
+	// 2 is used to trigger the first attack of dragon
+	public static int menuTo = 2; 
+	public static boolean paused = false; 
 	public static int win = 2;
 	public static boolean fromGameOver = false;
-	public static boolean menuToggle = false;
-	public static int menuTo = 2;
 	
+
+	// others
+	private Random r = new Random();
+	
+	
+	// Game class constructor
 	public Game() {
 		
 		new Window("Till The End", WIDTH, HEIGHT, this);
 		
+		// instantiate functioning classes
 		loader = new BufferedImageLoader();
-		
 		handler = new Handler();
 		battleHandler = new Handler();
 		miniHandler = new Handler();
-		
 		fontManager = new FontManager();
 		transition = new Transition(fontManager);
 		miniDis = new MiniDisplay(fontManager);
@@ -140,7 +134,8 @@ public class Game extends Canvas implements Runnable{
 		towerUp = new TowerUpgrade(fontManager, stats);
 		wallUp = new WallUpgrade(fontManager, stats);
 		citizenUp = new CitizenUpgrade(fontManager, stats);
-
+		
+		// enable keynoard and mouse function in certain pages
 		this.addKeyListener(new KeyInput(handler));
 		this.addKeyListener(new KeyInput(miniHandler));
 		this.addMouseListener(shop);
@@ -151,17 +146,17 @@ public class Game extends Canvas implements Runnable{
 		this.addMouseListener(info);
 		this.addMouseListener(statusC);
 		
+		// load music and start playing main map music
 		AudioPlayer.load();
 		AudioPlayer.mainMusic.loop();
 		
+		// graphics
 		tileManager = new TileManager(this, loader);
 		map = loader.loadImage("/maps/map72Ver9.png");
 		characters = loader.loadImage("/pics/character1.png");
 		css = new SpriteSheet(characters);
 		dragons = loader.loadImage("/pics/dragonss.png");
-		dragonss = new SpriteSheet(dragons);
-		//scenes = loader.loadImage("/pics/scenes.png");
-		//sss = new SpriteSheet(scenes);	
+		dragonss = new SpriteSheet(dragons);	
 		sceneDraw = loader.loadImage("/pics/bgTileImg.png");
 		drawss = new SpriteSheet(sceneDraw);	
 		buildings = loader.loadImage("/pics/buildings.png");
@@ -169,7 +164,7 @@ public class Game extends Canvas implements Runnable{
 		items = loader.loadImage("/pics/items.png");
 		item_ss = new SpriteSheet(items);
 		
-
+		// background images
 		bgrd_img = loader.loadImage("/pics/test1.jpg");
 		mainmenu_img = loader.loadImage("/pics/mainmenu.png");
 		battlemap_img = loader.loadImage("/pics/battleMap.png");
@@ -177,21 +172,19 @@ public class Game extends Canvas implements Runnable{
 		dragonBattle_img = loader.loadImage("/pics/dragonBattle.png");
 		loadMap(map);
 		
-		stats.reset();
-		
-		
+		// start game thread
 		start();
 		
 	}
 	
-	
+	// start game thread
 	private void start() {
 		running = true;
 		thread = new Thread(this);
 		thread.start();
 	}
 	
-	
+	// stop game thread
 	private void stop() {
 		running = false;
 		try {
@@ -201,10 +194,12 @@ public class Game extends Canvas implements Runnable{
 		}
 	}
 	
+	// main game loop
 	@Override
 	public void run() {
 		
-		this.requestFocus(); // no need to press mouse to use keyboard
+		// no need to press mouse to use keyboard
+		this.requestFocus(); 
 		
 		// delta time game loop 
 		long lastTime = System.nanoTime();
@@ -230,11 +225,12 @@ public class Game extends Canvas implements Runnable{
 			}
 		}
 		
+		// if game not running (quit) stop the thread
 		stop();
 			
 	}
 	
-	
+	// handle game logics (update 60 times a second)
 	public void tick() {
 		
 		// main game 
@@ -270,20 +266,20 @@ public class Game extends Canvas implements Runnable{
 				
 				Tower[] towers = new Tower[5];
 				for(int xx=94, ind=0; xx < WIDTH; xx+=192, ind++) {
-					Tower t = new Tower(xx, 32, ID.Block, item_ss, battleHandler);
+					Tower t = new Tower(xx, 32, ID.Block, item_ss);
 					towers[ind] = t;
 					battleHandler.addObject(t);
 				}
 				
-				Dragon dragon = new Dragon((Game.WIDTH/2)-85, Game.HEIGHT + 100, ID.Dragon, dragonss, battleHandler, wall, loader);
+				Dragon dragon = new Dragon((Game.WIDTH/2)-85, Game.HEIGHT + 100, ID.Dragon, dragonss, wall, loader);
 				battleHandler.addObject(dragon);
-				battle = new Battle(this, battleHandler, drawss, dragon, wall, towers, fontManager, stats);
+				battle = new Battle(battleHandler, drawss, dragon, wall, towers, fontManager, stats);
 				battle.reset();
 			}
 		
 			if(gameState == STATES.ToMiniGame) {
 				menuTo = 1;
-				Player mini = new Player(WIDTH/2, HEIGHT/2, ID.MiniPlayer, miniHandler, css, eGen, this, stats, textbox);
+				Player mini = new Player(WIDTH/2, HEIGHT/2, ID.MiniPlayer, miniHandler, css, eGen, stats, textbox);
 				miniHandler.addObject(mini);
 				miniHandler.addObject(new Enemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, css, miniHandler));
 			}
@@ -364,6 +360,7 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	
+	// handle game graphics (update 60 times a second)
 	public void render() {
 		
 		BufferStrategy bs = this.getBufferStrategy();
@@ -530,7 +527,8 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	
-	void loadMap(BufferedImage image) {
+	// load main map and instantiate game objects based on the map's rgb values
+	private void loadMap(BufferedImage image) {
 		int w = image.getWidth();
 		int h = image.getHeight();
 		
@@ -542,7 +540,7 @@ public class Game extends Canvas implements Runnable{
 				int blue = (pixel) & 0xff;
 				
 				if(red == 150 && green == 75 && blue == 0) {
-					player = new Player(xx*32, yy*32, ID.Player, handler, css, eGen, this, stats, textbox);
+					player = new Player(xx*32, yy*32, ID.Player, handler, css, eGen, stats, textbox);
 					handler.addObject(player);	
 				}
 				
@@ -560,7 +558,7 @@ public class Game extends Canvas implements Runnable{
 				}	
 				
 				else if(red == 0 && green == 0 && blue == 255) {
-					handler.addObject(new Tower(xx*32, yy*32, ID.Block, item_ss, handler));
+					handler.addObject(new Tower(xx*32, yy*32, ID.Block, item_ss));
 				}
 				
 				
@@ -638,7 +636,7 @@ public class Game extends Canvas implements Runnable{
 
 	}
 	
-	
+	// main method to start the game
 	public static void main(String[] args) {
 		new Game();
 	}

@@ -1,5 +1,6 @@
 package utils;
 
+// Define all the game states
 public enum STATES {
 	
 	Minigame(),
@@ -16,7 +17,6 @@ public enum STATES {
 	GeneralInfo(),
 	MiniGameInfo(),
 	Battle(),
-	Hall(),
 	Paused(),
 	GameOver(),
 	MinigameOver(),

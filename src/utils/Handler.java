@@ -1,15 +1,15 @@
 package utils;
 
+import java.awt.Graphics2D;
 import java.util.LinkedList;
 
-import objects.GameObject;
-
-import java.awt.Graphics2D;
+import objects.SameBehaviour;
 
 // A class to handle all game objects
 public class Handler {
 	
-	public LinkedList<GameObject> object = new LinkedList<GameObject>();
+	// Create linkedlist to store all the game objects
+	public LinkedList<SameBehaviour> object = new LinkedList<SameBehaviour>();
 	
 	private boolean up = false, down = false, left = false, right = false, action = false, test = false;;
 	
@@ -17,7 +17,7 @@ public class Handler {
 		
 		for(int i=0; i < object.size(); i++) {
 			
-			GameObject temp = object.get(i);
+			SameBehaviour temp = object.get(i);
 			temp.tick();
 			
 		}
@@ -28,19 +28,19 @@ public class Handler {
 		
 		for(int i=0; i < object.size(); i++) {
 			
-			GameObject temp = object.get(i);
+			SameBehaviour temp = object.get(i);
 			temp.render(g2d);
 			
 		}
 	}
 	
 	
-	public void addObject(GameObject gameObject) {
+	public void addObject(SameBehaviour gameObject) {
 		object.add(gameObject);
 	}
 	
 	
-	public void removeObject(GameObject gameObject) {
+	public void removeObject(SameBehaviour gameObject) {
 		object.remove(gameObject);
 	}
 	

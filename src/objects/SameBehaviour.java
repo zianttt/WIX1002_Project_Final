@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import utils.ID;
 import utils.SpriteSheet;
 
-public abstract class GameObject {
+public abstract class SameBehaviour {
 	
 	protected int x, y;
 
@@ -15,7 +15,7 @@ public abstract class GameObject {
 	protected SpriteSheet ss;
 	protected int type;
 
-	public GameObject(int x, int y, ID id, SpriteSheet ss) {
+	public SameBehaviour(int x, int y, ID id, SpriteSheet ss) {
 		this.x = x;
 		this.y = y;
 		this.id = id;

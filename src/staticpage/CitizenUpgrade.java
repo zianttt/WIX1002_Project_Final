@@ -13,16 +13,19 @@ import utils.FontManager;
 import utils.STATES;
 import utils.Stats;
 
-
+// Handles upgrade of citizens
 public class CitizenUpgrade extends MouseAdapter{
 	
+	// Helper
+	private Stats stats;
+	
+	// Displays
+	private FontManager fontManager;
+	private Font curFont, newFont;
 	private int color;
 	private boolean revert = true;
 	
-	private Stats stats;
-	
-	private FontManager fontManager;
-	private Font curFont, newFont;
+	// Prevent multiple clicks
 	private boolean freeze = true;
 	
 	

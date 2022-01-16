@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import utils.ID;
 import utils.SpriteSheet;
 
-public class Mountain extends GameObject{
+public class Mountain extends SameBehaviour{
 	
 	private BufferedImage mountain_img;
 

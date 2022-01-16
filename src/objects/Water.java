@@ -9,7 +9,7 @@ import utils.SpriteSheet;
 
 
 
-public class Water extends GameObject{
+public class Water extends SameBehaviour{
 	
 	private BufferedImage water_img;
 

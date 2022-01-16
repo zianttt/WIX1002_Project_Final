@@ -9,7 +9,7 @@ import utils.Handler;
 import utils.ID;
 import utils.SpriteSheet;
 
-public class Flame extends GameObject {
+public class Flame extends SameBehaviour {
 	
 	private Handler battleHandler;
 	Random r = new Random();

@@ -1,12 +1,15 @@
 package utils;
 
+// Define ID for game objects to compare
 public enum ID {
 	
+	// Minigames
 	MiniPlayer(),
 	BasicEnemy(),
 	FastEnemy(),
 	SmartEnemy(),
 	
+	// Main
 	Player(),
 	Citizen(),
 	Dragon(),

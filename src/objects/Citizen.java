@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import utils.ID;
 import utils.SpriteSheet;
 
-public class Citizen extends GameObject{
+public class Citizen extends SameBehaviour{
 	
 	// citizens
 	public static int emo = 10;

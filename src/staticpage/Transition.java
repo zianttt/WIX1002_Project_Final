@@ -8,16 +8,15 @@ import main.Game;
 import utils.FontManager;
 import utils.STATES;
 
+// Handles displays of transition from 1 state to another
 public class Transition {
 	
 	private Font curFont, newFont;
 	private FontManager fontManager;
-	
 	private int color;
 	private boolean revert = true;
-	
-	private static int timer = 450;
-	private static int fontColor = 0;
+	private int timer = 450;
+	private int fontColor = 0;
 	
 	public Transition(FontManager fontManager) {
 		this.fontManager = fontManager;

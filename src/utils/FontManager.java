@@ -5,6 +5,7 @@ import java.awt.FontFormatException;
 import java.io.IOException;
 import java.io.InputStream;
 
+// Handles custom font 
 public class FontManager {
 	
 	Font maruMonica;

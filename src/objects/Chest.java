@@ -8,7 +8,7 @@ import java.util.Random;
 import utils.ID;
 import utils.SpriteSheet;
 
-public class Chest extends GameObject{
+public class Chest extends SameBehaviour{
 	
 	Random r = new Random();
 	

@@ -9,7 +9,7 @@ import utils.Handler;
 import utils.ID;
 import utils.SpriteSheet;
 
-public class FastEnemy extends GameObject {
+public class FastEnemy extends SameBehaviour {
 	
 	private int color;
 	private boolean revert = true;

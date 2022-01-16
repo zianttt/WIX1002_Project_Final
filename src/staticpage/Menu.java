@@ -11,13 +11,15 @@ import utils.AudioPlayer;
 import utils.FontManager;
 import utils.STATES;
 
+// Menu page
 public class Menu extends MouseAdapter {
 	
+	// Displays
+	Font curFont, newFont;
+	private FontManager fontManager;
 	private int color;
 	private boolean revert = true;
 	
-	Font curFont, newFont;
-	private FontManager fontManager;
 	
 	public Menu(FontManager fontManager) {
 		this.fontManager = fontManager;
@@ -41,12 +43,14 @@ public class Menu extends MouseAdapter {
 				}
 			}
 			
-			// Play
+			// Play button
 			if(mx >= Game.WIDTH/2-80 && mx <= Game.WIDTH/2 + 20) {
 				if(my >= 377 && my <= 457) {
+					// calling menu from main map or game start
 					if(Game.menuTo == 0 || Game.menuTo == 2) {
 						Game.gameState = STATES.Play;
 					}
+					// when calling menu from minigame
 					else if(Game.menuTo == 1) {
 						Game.gameState = STATES.Minigame;
 					}

@@ -15,26 +15,25 @@ import utils.SpriteSheet;
 import utils.Stats;
 
 
-public class Player extends GameObject{
+public class Player extends SameBehaviour{
 	
+	// Helpers
 	private Handler handler;
-	
-	private Game game;
 	private EventsGenerator eGen;
 	private Stats stats;
 	private TextBox textbox;
 	
+	// Displays
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
 	public static String direction;
 	private int spriteCount = 0;
 	private int spriteNum = 1;
 	
-	public Player(int x, int y, ID id, Handler handler, SpriteSheet ss, EventsGenerator eGen, Game game, Stats stats,
+	public Player(int x, int y, ID id, Handler handler, SpriteSheet ss, EventsGenerator eGen, Stats stats,
 					TextBox textbox) {
 		super(x, y, id, ss);
 		this.handler = handler;
 		this.eGen = eGen;
-		this.game = game;
 		this.stats = stats;
 		this.textbox = textbox;
 		
@@ -94,14 +93,6 @@ public class Player extends GameObject{
 			if(handler.isLeft()) {
 				direction = "left";
 				velX = -5;
-				/*
-				if(Game.justInOut) {
-					freeze--;
-					if(freeze < 0) {
-						Game.justInOut = false;
-					}
-				}
-				*/
 			}
 			else if(!handler.isRight()) velX = 0;
 			
@@ -126,10 +117,13 @@ public class Player extends GameObject{
 		}	
 	}
 	
+	// check collision between player and other objects
+	// used to avoid player passing through obstacles
+	// used to trigger change of game states 
 	private void collision() {
 		for(int i=0; i < handler.object.size(); i++) {
 			
-			GameObject temp = handler.object.get(i);
+			SameBehaviour temp = handler.object.get(i);
 			
 			if(Game.gameState == STATES.Minigame) {
 				if (temp.getId() == ID.BasicEnemy || temp.getId() == ID.FastEnemy || temp.getId() == ID.SmartEnemy) {

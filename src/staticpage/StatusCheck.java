@@ -14,14 +14,18 @@ import utils.AudioPlayer;
 import utils.FontManager;
 import utils.STATES;
 
+// Handles the display of status check hall
 public class StatusCheck extends MouseAdapter{
 	
+	// Displays
+	Font curFont, newFont;
+	private FontManager fontManager;
 	private int color;
 	private boolean revert = true;
 	
-	Font curFont, newFont;
-	private FontManager fontManager;
+	// Game state logic
 	private boolean backToMain = false;
+	
 	
 	public StatusCheck(FontManager fontManager) {
 		this.fontManager = fontManager;
@@ -84,8 +88,7 @@ public class StatusCheck extends MouseAdapter{
 		g2d.setFont(newFont);
 		
 		
-		//box 1
-		
+		// display player related status
 		g2d.drawString("Tower Critical Chance: " + (int)Tower.towerCritical, 150, 110);	
 		g2d.drawString("Tower Attack Point: " + (int)Tower.towerAtk, 150, 150);
 		g2d.drawString("Tower Accuracy: " + (int)Tower.towerAcc, 150, 190);	
@@ -93,8 +96,7 @@ public class StatusCheck extends MouseAdapter{
 		g2d.drawString("Wall Block Chance: " + (int)Wall.wallBlock, 150, 270);	
 		
 		
-		//box 4
-		
+		// citizens status
 		g2d.drawString("Emotional: " + Citizen.berserk, 530, 110);
 		g2d.drawString("Nervous: " + Citizen.nervous, 530, 150);
 		g2d.drawString("Lazy: " + Citizen.lazy, 530, 190);

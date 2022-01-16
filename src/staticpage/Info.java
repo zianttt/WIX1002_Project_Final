@@ -11,12 +11,16 @@ import utils.AudioPlayer;
 import utils.FontManager;
 import utils.STATES;
 
+// Main menu info page
 public class Info extends MouseAdapter{
 	
+	// Displays
+	Font curFont, newFont;
+	private FontManager fontManager;
 	private int color;
 	private boolean revert = true;
 	
-	
+	// General info
 	private String[] generalInfoText = {"1. W S A D to move UP DOWN LEFT RIGHT",
 										"2. Fight the dragon!",
 										"3. Upgrade equipments in shop",
@@ -26,12 +30,11 @@ public class Info extends MouseAdapter{
 										"7. Press ESC to pause game."
 										}; 
 	
+	// Minigame info
 	private String[] minigameInfoText = {"1. Avoid the dragon's flames",
 										 "2. Survive longer to earn more golds",
 										 };
 	
-	Font curFont, newFont;
-	private FontManager fontManager;
 	
 	public Info(FontManager fontManager) {
 		this.fontManager = fontManager;

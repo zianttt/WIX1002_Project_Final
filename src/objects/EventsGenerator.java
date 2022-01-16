@@ -9,7 +9,7 @@ import utils.ID;
 import utils.SpriteSheet;
 import utils.Stats;
 
-public class EventsGenerator extends GameObject{
+public class EventsGenerator extends SameBehaviour{
 	
 	Random r = new Random();
 	

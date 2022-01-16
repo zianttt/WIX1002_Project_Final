@@ -11,14 +11,10 @@ import java.util.Random;
 import main.Game;
 import objects.EventsGenerator;
 
-
+// Handles all the status
 public class Stats {
 	
-	private FontManager fontManager;
-	Font curFont, newFont;
-	Random r = new Random();
-	
-	// game
+	// main game
 	public int gold = 10000000;
 	public int[] taxs = {200, 250, 300, 350, 400};
 	private int cur_tax = 0;
@@ -27,10 +23,16 @@ public class Stats {
 	public String[] seasons = {"Spring", "Summer", "Autumn", "Winter"};
 	public int miniGameLimit = 2;
 	
+	// others
+	private FontManager fontManager;
+	Font curFont, newFont;
+	Random r = new Random();
+	
 	public Stats(FontManager fontManager) {
 		this.fontManager = fontManager;	
 	}
 	
+	// update status when entering new season
 	public void newSeason() {
 		if(cur_season < 3) cur_season++;
 		else {
@@ -44,6 +46,7 @@ public class Stats {
 		EventsGenerator.maxEvents = 2;
 	}
 	
+	// set default status when game is first started or restarted after game over
 	public void reset() {
 		gold = 10000000;
 		year = 1;

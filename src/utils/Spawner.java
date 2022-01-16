@@ -7,13 +7,14 @@ import objects.Enemy;
 import objects.FastEnemy;
 import objects.TrackEnemy;
 
+// Handles the spawninig system in minigame
 public class Spawner {
 	
 	private Handler handler;
 	private MiniDisplay miniDis;
-	private Random r;
+	private Random r = new Random();;
 	
-	private int scoreKeep = 0;
+	private int scoreKeeper = 0;
 	
 	public Spawner(Handler handler, MiniDisplay miniDis) {
 		this.handler = handler;
@@ -21,11 +22,10 @@ public class Spawner {
 	}
 	
 	public void tick() {
-		scoreKeep++;
+		scoreKeeper++;
 		
-		if(scoreKeep >= 100) {
-			r = new Random();
-			scoreKeep = 0;
+		if(scoreKeeper >= 100) {
+			scoreKeeper = 0;
 			miniDis.setLevel(miniDis.getLevel() + 1);
 			
 				if(miniDis.getLevel() == 2) {
@@ -45,9 +45,7 @@ public class Spawner {
 				}
 				else {
 					handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, null, handler));
-				}	
-				
+				}			
 		}
 	}
-
 }

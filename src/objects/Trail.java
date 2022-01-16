@@ -1,9 +1,9 @@
 package objects;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import utils.Handler;
 import utils.ID;
@@ -11,7 +11,7 @@ import utils.SpriteSheet;
 
 
 
-public class Trail extends GameObject {
+public class Trail extends SameBehaviour {
 	
 	private float alpha = 1;
 	private float life; // 0.001 < life < 0.1

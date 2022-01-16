@@ -9,7 +9,7 @@ import utils.ID;
 import utils.SpriteSheet;
 import main.Game;
 
-public class Enemy extends GameObject {
+public class Enemy extends SameBehaviour {
 	
 	private int color;
 	private boolean revert = true;

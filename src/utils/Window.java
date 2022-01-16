@@ -7,6 +7,7 @@ import main.Game;
 
 import java.awt.Dimension;
 
+// Creates game screen
 public class Window extends Canvas{	
 
 	/**

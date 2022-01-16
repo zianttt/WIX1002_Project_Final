@@ -2,7 +2,7 @@ package utils;
 
 import java.awt.image.BufferedImage;
 
-//crop image
+// Provides funtionality to crop sprite sheets 
 public class SpriteSheet {
 	
 	private BufferedImage image;
@@ -11,8 +11,8 @@ public class SpriteSheet {
 		this.image = image;
 	}
 	
-	public BufferedImage grabImage(int xxx, int yyy, int width, int height) {
-		return image.getSubimage(xxx, yyy, width, height); // row 2 will equal to 32 (the height of image) etc 
+	public BufferedImage grabImage(int xx, int yy, int width, int height) {
+		return image.getSubimage(xx, yy, width, height); 
 	}
 	
 }
