@@ -158,7 +158,7 @@ public class Player extends SameBehaviour{
 						y += velY * -1;
 						
 						if(stats.getMiniGameLimit() == 0) {
-							textbox.reminder = 1;
+							textbox.setReminder(1);
 							Game.gameState = STATES.Reminder;
 						}
 						else {
@@ -183,7 +183,7 @@ public class Player extends SameBehaviour{
 						y += velY * -1;
 						
 						if(EventsGenerator.maxEvents > 0) {
-							textbox.reminder = 0;
+							textbox.setReminder(0);
 							Game.gameState = STATES.Reminder;
 						}else {
 							Game.gameState = STATES.ToBattle;
@@ -210,7 +210,7 @@ public class Player extends SameBehaviour{
 					if(getBounds().intersects(temp.getBounds())) {
 						x += velX * -1;
 						y += velY * -1;
-						textbox.chestType = temp.getType();
+						textbox.setChestType(temp.getType());
 						Game.gameState = STATES.ChestText;
 					}
 				}

@@ -423,17 +423,17 @@ public class Game extends Canvas implements Runnable{
 					Player.direction = "right";
 				}
 				else if(gameState == STATES.ChestText) {
-					if(textbox.chestType == 0) {
+					if(textbox.getChestType() == 0) {
 						textbox.setMemeNum((textbox.getMemeNum()+1) % textbox.getMeme_size());
 					}
-					else if(textbox.chestType == 1) {
+					else if(textbox.getChestType() == 1) {
 						textbox.setInfoInd((textbox.getInfoInd()+1) % textbox.getInfoTextSize());
 					}
 					player.setY(player.getY() + 5);
 					Player.direction = "down";
 				}
 				else if(gameState == STATES.Reminder) {
-					if(textbox.reminder == 0) {
+					if(textbox.getReminder() == 0) {
 						player.setY(player.getY() - 10);
 						Player.direction = "up";
 					}else {

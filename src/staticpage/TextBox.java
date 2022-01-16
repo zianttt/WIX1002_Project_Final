@@ -45,7 +45,7 @@ public class TextBox {
 	private int infoTextSize = 11;
 	private int infoInd = 0;
 	// 0 : meme chest, 1 : tips chest
-	public int chestType = 0; 
+	private int chestType = 0; 
 	
 	// Road signs
 	private String[] names = {"Shop", "Status Hall", "Minigame", "Magic Lamp", "Town door"};
@@ -56,7 +56,7 @@ public class TextBox {
 	private static BufferedImage[] meme_img = new BufferedImage[10];
 	private int memeNum = 0;
 	private final int meme_size = 10;
-	public int reminder = 0; 
+	private int reminder = 0; 
 	
 	// others
 	private String tempText;
@@ -191,6 +191,23 @@ public class TextBox {
 	public int getInfoTextSize() {
 		return infoTextSize;
 	}
+
+	public int getChestType() {
+		return chestType;
+	}
+
+	public void setChestType(int chestType) {
+		this.chestType = chestType;
+	}
+
+	public int getReminder() {
+		return reminder;
+	}
+
+	public void setReminder(int reminder) {
+		this.reminder = reminder;
+	}
+	
 	
 	
 }
