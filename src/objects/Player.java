@@ -200,7 +200,6 @@ public class Player extends SameBehaviour{
 						y += velY * -1;
 						if(EventsGenerator.getMaxEvents() > 0) {
 							eGen.generateEvent(stats.getSeasons()[stats.getCur_season()]);
-							EventsGenerator.setMaxEvents(EventsGenerator.getMaxEvents()-1);
 						}else {
 							eGen.generateEventError();				
 						}
