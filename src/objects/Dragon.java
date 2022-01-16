@@ -50,7 +50,12 @@ public class Dragon extends SameBehaviour {
 		maxHp+=15;
 		hp = maxHp;
 		atk++;
-		critical+=2;
+		if(critical+2 <= 50) {
+			critical+=2;
+		}
+		else {
+			critical=50;
+		}
 	}
 	
 	// return attack message to be diplayed by the battle class

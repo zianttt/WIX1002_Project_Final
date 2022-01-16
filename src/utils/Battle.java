@@ -153,6 +153,7 @@ public class Battle {
 			// player stats  
 			g2d.setColor(new Color(149, 53, 83));
 			g2d.drawString("Wall's HealthPoint: " + (int)Wall.getWallHp(), 10, 200);
+			g2d.drawString("Round: " + (round+1), 10, 235);
 			
 			// dragon and player attack messages
 			if(infoTimer >= 0 && outputMsg.length() != 0) {

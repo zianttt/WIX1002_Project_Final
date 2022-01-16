@@ -182,7 +182,7 @@ public class Player extends SameBehaviour{
 						x += velX * -1;
 						y += velY * -1;
 						
-						if(EventsGenerator.maxEvents > 0) {
+						if(EventsGenerator.getMaxEvents() > 0) {
 							textbox.setReminder(0);
 							Game.gameState = STATES.Reminder;
 						}else {
@@ -198,8 +198,9 @@ public class Player extends SameBehaviour{
 						Game.gameState = STATES.EventText;
 						x += velX * -1;
 						y += velY * -1;
-						if(EventsGenerator.maxEvents > 0) {
+						if(EventsGenerator.getMaxEvents() > 0) {
 							eGen.generateEvent(stats.getSeasons()[stats.getCur_season()]);
+							EventsGenerator.setMaxEvents(EventsGenerator.getMaxEvents()-1);
 						}else {
 							eGen.generateEventError();				
 						}

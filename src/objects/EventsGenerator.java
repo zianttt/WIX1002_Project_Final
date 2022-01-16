@@ -13,7 +13,7 @@ public class EventsGenerator extends SameBehaviour{
 	
 	Random r = new Random();
 	
-	public static int maxEvents = 2;
+	private static int maxEvents = 2;
 	private int eventNum;
 	public static int eventTextSelect;
 	public static boolean eventError = false;
@@ -70,7 +70,7 @@ public class EventsGenerator extends SameBehaviour{
 		}
 		
 		Citizen.statusCheck();
-		maxEvents--;
+		setMaxEvents(getMaxEvents() - 1);
 	}
 	
 	// Spring
@@ -169,6 +169,14 @@ public class EventsGenerator extends SameBehaviour{
 	@Override
 	public Rectangle getBounds() {	
 		return new Rectangle(x, y, 48, 48);
+	}
+
+	public static int getMaxEvents() {
+		return maxEvents;
+	}
+
+	public static void setMaxEvents(int maxEvents) {
+		EventsGenerator.maxEvents = maxEvents;
 	}
 
 }

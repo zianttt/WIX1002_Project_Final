@@ -40,7 +40,7 @@ public class Stats {
 		cur_tax = taxs[temp];
 		gold+=cur_tax;
 		setMiniGameLimit(2);
-		EventsGenerator.maxEvents = 2;
+		EventsGenerator.setMaxEvents(2);
 	}
 	
 	// set default status when game is first started or restarted after game over
@@ -52,7 +52,7 @@ public class Stats {
 		int temp = r.nextInt(4);
 		cur_tax = taxs[temp];
 		gold += cur_tax;
-		EventsGenerator.maxEvents = 2;
+		EventsGenerator.setMaxEvents(2);
 		Game.menuTo = 2;
 	}
 	
