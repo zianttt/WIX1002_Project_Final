@@ -117,7 +117,6 @@ public class Battle {
 							Game.menuTo = 0;
 						}
 						else {
-							System.out.println("New season");
 							stats.newSeason();
 						}
 						tower[0].newSeason(); // check if tempDecrease is active. If so, add back 20 accuracy points

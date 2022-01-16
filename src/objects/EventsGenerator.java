@@ -85,9 +85,9 @@ public class EventsGenerator extends SameBehaviour{
 	}
 
 	private void festival() {
-		Citizen.berserk += 50;
-		Citizen.diligent += 50;
-		Citizen.fearless += 50;
+		Citizen.setBerserk(Citizen.getBerserk() + 50);
+		Citizen.setDiligent(Citizen.getDiligent() + 50);
+		Citizen.setFearless(Citizen.getFearless() + 50);
 		System.out.println("Berserk Diligent Fearless + 50");
 	}
 	
@@ -99,16 +99,16 @@ public class EventsGenerator extends SameBehaviour{
 	}
 	
 	private void outing() {
-		Citizen.berserk += 50;
-		Citizen.diligent += 50;
-		Citizen.fearless += 50;
+		Citizen.setBerserk(Citizen.getBerserk() + 50);
+		Citizen.setDiligent(Citizen.getDiligent() + 50);
+		Citizen.setFearless(Citizen.getFearless() + 50);
 		System.out.println("Berserk Diligent Fearless + 50");
 	}
 	
 	private void heatstroke() {
-		Citizen.emo += 50;
-		Citizen.nervous += 50;
-		Citizen.lazy += 50;
+		Citizen.setEmo(Citizen.getEmo() + 50);
+		Citizen.setNervous(Citizen.getNervous() + 50);
+		Citizen.setLazy(Citizen.getLazy() + 50);
 		System.out.println("Emo Nervous Lazy + 50");
 	}
 	
@@ -138,9 +138,9 @@ public class EventsGenerator extends SameBehaviour{
 	}
 	
 	private void avalanche() {
-		Citizen.emo += 50;
-		Citizen.nervous += 50;
-		Citizen.lazy += 50;
+		Citizen.setEmo(Citizen.getEmo() + 50);
+		Citizen.setNervous(Citizen.getNervous() + 50);
+		Citizen.setLazy(Citizen.getLazy() + 50);
 		System.out.println("Emo Nervous Lazy + 50");
 	}
 	

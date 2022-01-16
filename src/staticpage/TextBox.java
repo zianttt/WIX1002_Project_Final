@@ -104,7 +104,7 @@ public class TextBox {
 			g2d.setColor(Color.white);
 			
 			if(Game.gameState == STATES.EventText) {
-				if(EventsGenerator.eventError) {
+				if(EventsGenerator.isEventError()) {
 					tempText = errorTexts[0];
 				}
 				else {

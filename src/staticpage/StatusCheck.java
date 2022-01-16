@@ -97,12 +97,12 @@ public class StatusCheck extends MouseAdapter{
 		
 		
 		// citizens status
-		g2d.drawString("Emotional: " + Citizen.emo, 530, 110);
-		g2d.drawString("Nervous: " + Citizen.nervous, 530, 150);
-		g2d.drawString("Lazy: " + Citizen.lazy, 530, 190);
-		g2d.drawString("Berserk: " + Citizen.berserk, 530, 230);
-		g2d.drawString("Diligent: " + Citizen.diligent, 530, 270);
-		g2d.drawString("Fearless: " + Citizen.fearless, 530, 310);
+		g2d.drawString("Emotional: " + Citizen.getEmo(), 530, 110);
+		g2d.drawString("Nervous: " + Citizen.getNervous(), 530, 150);
+		g2d.drawString("Lazy: " + Citizen.getLazy(), 530, 190);
+		g2d.drawString("Berserk: " + Citizen.getBerserk(), 530, 230);
+		g2d.drawString("Diligent: " + Citizen.getDiligent(), 530, 270);
+		g2d.drawString("Fearless: " + Citizen.getFearless(), 530, 310);
 		
 		
 		//back

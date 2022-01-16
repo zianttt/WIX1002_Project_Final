@@ -88,7 +88,7 @@ public class WallUpgrade extends MouseAdapter{
 	
 	public void render(Graphics2D g2d) {
 		
-		if(freeze >= 60) {
+		if(freeze >= 0) {
 			freeze--;
 		}
 		
