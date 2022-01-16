@@ -37,7 +37,7 @@ public class Player extends SameBehaviour{
 		this.stats = stats;
 		this.textbox = textbox;
 		
-		
+		/*
 		down1 = ss.grabImage(77, 9, 36, 52);
 		down2 = ss.grabImage(206, 9, 36, 52);
 		left1 = ss.grabImage(82, 76, 36, 52);
@@ -46,16 +46,16 @@ public class Player extends SameBehaviour{
 		right2 = ss.grabImage(206, 138, 36, 52);
 		up1 = ss.grabImage(77, 204, 36, 52);
 		up2 = ss.grabImage(207, 204, 36, 52);
-		/*
-		down1 = loader.loadImage("/down_1.png");
-		down2 = loader.loadImage("/down_2.png");
-		left1 = loader.loadImage("/left_1.png");
-		left2 = loader.loadImage("/left_2.png");
-		right1 = loader.loadImage("/right_1.png");
-		right2 = loader.loadImage("/right_2.png");
-		up1 = loader.loadImage("/up_1.png");
-		up2 = loader.loadImage("/up_2.png");
 		*/
+		down1 = ss.grabImage(0, 0, 64, 64);
+		down2 = ss.grabImage(0, 64, 64, 64);
+		left1 = ss.grabImage(64, 0, 64, 64);
+		left2 = ss.grabImage(64, 64, 64, 64);
+		right1 = ss.grabImage(128, 0, 64, 64);
+		right2 = ss.grabImage(128, 64, 64, 64);
+		up1 = ss.grabImage(0, 128, 64, 64);
+		up2 = ss.grabImage(64, 128, 64, 64);
+
 		
 		direction = "down";
 		
@@ -266,13 +266,14 @@ public class Player extends SameBehaviour{
 			}
 			break;
 		}
-
-		g2d.drawImage(image, x, y, 36, 52, null);
+		g2d.drawImage(image, x, y, 48, 46, null);
+		//g2d.drawImage(image, x, y, 36, 52, null);
 	}
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x, y+8, 32, 45);
+		return new Rectangle(x+10, y+5, 33, 36);
+		//return new Rectangle(x, y+8, 32, 45);
 	}
 
 }

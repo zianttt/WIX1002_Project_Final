@@ -71,6 +71,8 @@ public class Game extends Canvas implements Runnable{
 	// sprite sheets
 	private BufferedImage characters = null;
 	private SpriteSheet css;
+	private BufferedImage characters01 = null;
+	private SpriteSheet css01;
 	private BufferedImage dragons = null;
 	private SpriteSheet dragonss;
 	private BufferedImage sceneDraw = null;
@@ -152,16 +154,18 @@ public class Game extends Canvas implements Runnable{
 		
 		// graphics
 		tileManager = new TileManager(this, loader);
-		map = loader.loadImage("/maps/map72Ver9.png");
-		characters = loader.loadImage("/pics/character1.png");
+		map = loader.loadImage("/maps/map72Ver11.png");
+		characters = loader.loadImage("/player1/character1.png");
 		css = new SpriteSheet(characters);
+		characters01 = loader.loadImage("/player1/player01.png");
+		css01 = new SpriteSheet(characters01);
 		dragons = loader.loadImage("/pics/dragonss.png");
 		dragonss = new SpriteSheet(dragons);	
 		sceneDraw = loader.loadImage("/pics/bgTileImg.png");
 		drawss = new SpriteSheet(sceneDraw);	
 		buildings = loader.loadImage("/pics/buildings.png");
 		bss = new SpriteSheet(buildings);
-		items = loader.loadImage("/pics/items.png");
+		items = loader.loadImage("/pics/item.png");
 		item_ss = new SpriteSheet(items);
 		
 		// background images
@@ -279,7 +283,8 @@ public class Game extends Canvas implements Runnable{
 		
 			if(gameState == STATES.ToMiniGame) {
 				menuTo = 1;
-				Player mini = new Player(WIDTH/2, HEIGHT/2, ID.MiniPlayer, miniHandler, css, eGen, stats, textbox);
+				Player mini = new Player(WIDTH/2, HEIGHT/2, ID.MiniPlayer, miniHandler, css01, eGen, stats, textbox);
+				//Player mini = new Player(WIDTH/2, HEIGHT/2, ID.MiniPlayer, miniHandler, css, eGen, stats, textbox);
 				miniHandler.addObject(mini);
 				miniHandler.addObject(new Enemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, css, miniHandler));
 			}
@@ -345,7 +350,7 @@ public class Game extends Canvas implements Runnable{
 			
 			if(MiniDisplay.HEALTH <= 0) {
 				menuTo = 0;
-				miniDis.setGoldEarned(miniDis.getScore() / 100);
+				miniDis.setGoldEarned((miniDis.getScore() / 100) * 3);
 				stats.setGold(stats.getGold()  + miniDis.getGoldEarned());
 				gameState = STATES.MinigameOver;
 				miniHandler.clearBattleField();
@@ -540,7 +545,8 @@ public class Game extends Canvas implements Runnable{
 				int blue = (pixel) & 0xff;
 				
 				if(red == 150 && green == 75 && blue == 0) {
-					player = new Player(xx*32, yy*32, ID.Player, handler, css, eGen, stats, textbox);
+					player = new Player(xx*32, yy*32, ID.Player, handler, css01, eGen, stats, textbox);
+					//player = new Player(xx*32, yy*32, ID.Player, handler, css, eGen, stats, textbox);
 					handler.addObject(player);	
 				}
 				
