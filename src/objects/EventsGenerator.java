@@ -33,7 +33,7 @@ public class EventsGenerator extends SameBehaviour{
 	public void generateEventError() {
 		eventError = true;
 	}
-	
+
 	public void generateEvent(String season) {
 		
 		// winter got 4 event choices
@@ -177,6 +177,14 @@ public class EventsGenerator extends SameBehaviour{
 
 	public static void setMaxEvents(int maxEvents) {
 		EventsGenerator.maxEvents = maxEvents;
+	}
+	
+	public static boolean isEventError() {
+		return eventError;
+	}
+
+	public static void setEventError(boolean eventError) {
+		EventsGenerator.eventError = eventError;
 	}
 
 }

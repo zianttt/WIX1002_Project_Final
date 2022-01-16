@@ -199,9 +199,11 @@ public class Player extends SameBehaviour{
 						x += velX * -1;
 						y += velY * -1;
 						if(EventsGenerator.getMaxEvents() > 0) {
+							System.out.println("Event happens");
 							eGen.generateEvent(stats.getSeasons()[stats.getCur_season()]);
 						}else {
-							eGen.generateEventError();				
+							System.out.println("No events left");
+							EventsGenerator.setEventError(true);				
 						}
 					}
 				}

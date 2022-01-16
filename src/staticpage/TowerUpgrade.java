@@ -23,7 +23,7 @@ public class TowerUpgrade extends MouseAdapter{
 	private int color;
 	private boolean revert = true;
 	
-	private boolean freeze = true;
+	private int freeze = 60;
 	
 	
 	public TowerUpgrade(FontManager fontManager, Stats stats) {
@@ -34,8 +34,7 @@ public class TowerUpgrade extends MouseAdapter{
 	
 	public void mousePressed(MouseEvent e) {
 		
-		if(freeze) freeze = false;
-		else {
+		if(freeze < 0) {
 			if(Game.gameState == STATES.TowerUp) {
 				
 				int mx = e.getX();
@@ -94,7 +93,7 @@ public class TowerUpgrade extends MouseAdapter{
 				// back
 				if(mx >= 435 && mx <= 535) {
 					if(my >= 450 && my <= 500) {
-						freeze = true;
+						freeze = 60;
 						Game.gameState = STATES.Shop;
 					}
 				}
@@ -104,6 +103,10 @@ public class TowerUpgrade extends MouseAdapter{
 	
 	
 	public void render(Graphics2D g2d) {
+		
+		if(freeze >= 0) {
+			freeze--;
+		}
 		
 		if(!revert) {
 			color--;

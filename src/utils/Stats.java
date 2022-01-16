@@ -41,6 +41,7 @@ public class Stats {
 		gold+=cur_tax;
 		setMiniGameLimit(2);
 		EventsGenerator.setMaxEvents(2);
+		EventsGenerator.setEventError(false);
 	}
 	
 	// set default status when game is first started or restarted after game over
