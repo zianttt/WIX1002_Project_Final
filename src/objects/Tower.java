@@ -11,10 +11,10 @@ import utils.SpriteSheet;
 public class Tower extends SameBehaviour{
 	
 	// tower stats
-	public static float towerAtk = 10;
-	public static float towerCritical = 10;
-	public static float towerAcc = 80;
-	public static boolean tempDecrease = false;
+	private static float towerAtk = 10;
+	private static float towerCritical = 10;
+	private static float towerAcc = 80;
+	private static boolean tempDecrease = false;
 	
 	// for attack calculation use
 	private float tempAtk = 0;
@@ -49,43 +49,29 @@ public class Tower extends SameBehaviour{
 		}
 		//System.out.println("Tower attacks: " + (int)tempAtk);
 		// deduct dragon hp if successfully attacked
-		Dragon.hp -= tempAtk;
+		Dragon.setHp(Dragon.getHp()-tempAtk);
+		if(tempDecrease) {
+			msg += " (accuracy affected by current event)";
+		}
 		return msg;
+	}
+	
+	public void newSeason() {
+		if(tempDecrease) {
+			towerAcc += 20;
+		}
 	}
 	
 	public void reset() {
 		towerAtk = 10;
 		towerCritical = 10;
 		towerAcc = 80;
-		tempDecrease = false;
+		setTempDecrease(false);
 	}
 	
 
 	@Override
 	public void tick() {
-		
-		/*
-		if(Game.gameState == STATES.Battle) {
-			Stats.timer1--;
-			
-			if(Stats.timer1 <= 0) Stats.timer2--;
-			if(Stats.timer2 <= 0) {
-				if(Stats.timer3 >= 0 && Stats.timer3 < 250) {
-					int spawn = r.nextInt(15);
-					if(spawn == 0) handler.addObject(new WallAtk(x+8, y-8, ID.Dragon, handler, ss));
-				}
-				else if(Stats.timer3 == -10) attack();
-				else if(Stats.timer3 < -200) {
-					Stats.timer3 = 600;
-					Stats.round++;
-					if(Stats.round >= 3) {
-						Game.gameState = STATES.Play;
-					}
-				}
-				Stats.timer3--;
-			}
-		}
-		*/
 	}
 
 	@Override
@@ -97,5 +83,38 @@ public class Tower extends SameBehaviour{
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, 48, 80);
 	}
+
+	public static boolean isTempDecrease() {
+		return tempDecrease;
+	}
+
+	public static void setTempDecrease(boolean tempDecrease) {
+		Tower.tempDecrease = tempDecrease;
+	}
+
+	public static float getTowerAtk() {
+		return towerAtk;
+	}
+
+	public static void setTowerAtk(float towerAtk) {
+		Tower.towerAtk = towerAtk;
+	}
+
+	public static float getTowerCritical() {
+		return towerCritical;
+	}
+
+	public static void setTowerCritical(float towerCritical) {
+		Tower.towerCritical = towerCritical;
+	}
+
+	public static float getTowerAcc() {
+		return towerAcc;
+	}
+
+	public static void setTowerAcc(float towerAcc) {
+		Tower.towerAcc = towerAcc;
+	}
+	
 
 }

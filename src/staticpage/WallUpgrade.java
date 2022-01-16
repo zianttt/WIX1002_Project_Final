@@ -48,21 +48,27 @@ public class WallUpgrade extends MouseAdapter{
 				}
 				
 				// trigger each functionality when the mouse clicks on certain area
-				if(stats.gold >= 100) {
+				if(stats.getGold() >= 100) {
 					// HP
 					if(mx >= Game.WIDTH/2-102 && mx <= Game.WIDTH/2 + 68) {
 						if(my >= 100 && my <= 190) {
-							Wall.wallHp += 75;
-							stats.gold -= 100;
+							Wall.setWallHp(Wall.getWallHp()+75);
+							stats.setGold(stats.getGold() - 100);
 						}
 					}
 					
 					// block percentage
 					if(mx >= Game.WIDTH/2-102 && mx <= Game.WIDTH/2 + 68) {
 						if(my >= 200 && my <= 290) {
-							if(Wall.wallBlock+5 <= 50) {
-								Wall.wallBlock += 5;
-								stats.gold -= 100;
+							float tempBlock = Wall.getWallBlock()+5;
+							if(tempBlock <= 54) {
+								if(tempBlock >= 50) {
+									Wall.setWallBlock(50);
+								}
+								else {
+									Wall.setWallBlock(tempBlock);
+								}
+								stats.setGold(stats.getGold() - 100);
 							}				
 						}
 					}		
@@ -117,12 +123,12 @@ public class WallUpgrade extends MouseAdapter{
 		
 		// HP 
 		g2d.drawString("Health Point +75%", 417, 130);
-		g2d.drawString("Current: " +(int) Wall.wallHp, 434, 155);
+		g2d.drawString("Current: " +(int) Wall.getWallHp(), 434, 155);
 		g2d.drawRoundRect(Game.WIDTH/2-102, 100, 170, 90, 25, 25);
 		
 		// block percentage
 		g2d.drawString("Block Chance +5%", 415, 230);
-		g2d.drawString("Current: " + (int)Wall.wallBlock, 439, 255);
+		g2d.drawString("Current: " + (int)Wall.getWallBlock(), 439, 255);
 		g2d.drawRoundRect(Game.WIDTH/2-102, 200, 170, 90, 25, 25);
 		
 		// back

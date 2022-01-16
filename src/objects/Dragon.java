@@ -13,8 +13,8 @@ import utils.SpriteSheet;
 public class Dragon extends SameBehaviour {
 	
 	// stats
-	public static int level = 1;
-	public static float maxHp = 100, hp = 100, atk = 7, critical = 20, acc = 80;
+	private static int level = 1;
+	private static float maxHp = 100, hp = 100, atk = 7, critical = 20, acc = 80;
 	
 	// sprites
 	private BufferedImage dragon1, dragon2, dragon3;
@@ -143,4 +143,27 @@ public class Dragon extends SameBehaviour {
 		return new Rectangle(x, y, 180, 180);
 	}
 
+	public static int getLevel() {
+		return level;
+	}
+
+	public static float getHp() {
+		return hp;
+	}
+
+	public static void setHp(float hp) {
+		Dragon.hp = hp;
+	}
+
+	public static float getAtk() {
+		return atk;
+	}
+
+	public static float getCritical() {
+		return critical;
+	}
+
+	public static float getAcc() {
+		return acc;
+	}
 }

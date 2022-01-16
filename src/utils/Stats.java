@@ -2,10 +2,7 @@ package utils;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics2D;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Random;
 
 import main.Game;
@@ -15,13 +12,13 @@ import objects.EventsGenerator;
 public class Stats {
 	
 	// main game
-	public int gold = 10000000;
-	public int[] taxs = {200, 250, 300, 350, 400};
+	private int gold = 10000000;
+	private int[] taxs = {200, 250, 300, 350, 400};
 	private int cur_tax = 0;
-	public int year = 1;
-	public int cur_season = 0;
-	public String[] seasons = {"Spring", "Summer", "Autumn", "Winter"};
-	public int miniGameLimit = 2;
+	private int year = 1;
+	private int cur_season = 0;
+	private String[] seasons = {"Spring", "Summer", "Autumn", "Winter"};
+	private int miniGameLimit = 2;
 	
 	// others
 	private FontManager fontManager;
@@ -42,7 +39,7 @@ public class Stats {
 		int temp = r.nextInt(4);
 		cur_tax = taxs[temp];
 		gold+=cur_tax;
-		miniGameLimit = 2;
+		setMiniGameLimit(2);
 		EventsGenerator.maxEvents = 2;
 	}
 	
@@ -51,7 +48,7 @@ public class Stats {
 		gold = 10000000;
 		year = 1;
 		cur_season = 0;
-		miniGameLimit = 2;
+		setMiniGameLimit(2);
 		int temp = r.nextInt(4);
 		cur_tax = taxs[temp];
 		gold += cur_tax;
@@ -78,8 +75,32 @@ public class Stats {
 	
 	}
 
-	
+	public int getMiniGameLimit() {
+		return miniGameLimit;
+	}
 
+	public void setMiniGameLimit(int miniGameLimit) {
+		this.miniGameLimit = miniGameLimit;
+	}
+
+	public int getCur_season() {
+		return cur_season;
+	}
+
+	public String[] getSeasons() {
+		return seasons;
+	}
+
+	public int getGold() {
+		return gold;
+	}
+
+	public void setGold(int gold) {
+		this.gold = gold;
+	}
+
+	
+	
 	
 	
 }

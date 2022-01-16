@@ -37,7 +37,7 @@ public class EventsGenerator extends SameBehaviour{
 	public void generateEvent(String season) {
 		
 		// winter got 4 event choices
-		if(stats.cur_season == 3) eventNum = r.nextInt(4);
+		if(stats.getCur_season() == 3) eventNum = r.nextInt(4);
 		else eventNum = r.nextInt(3);
 		
 		if(season.equals("Spring")) {
@@ -75,12 +75,12 @@ public class EventsGenerator extends SameBehaviour{
 	
 	// Spring
 	private void reinforcement() {
-		Tower.towerAtk += 1;
+		Tower.setTowerAtk(Tower.getTowerAtk()+1);
 		System.out.println("Tower ATK + 1");
 	}
 	
 	private void visitors() {
-		stats.gold += 100;
+		stats.setGold(stats.getGold() + 100);
 		System.out.println("Gold + 100");
 	}
 
@@ -94,7 +94,7 @@ public class EventsGenerator extends SameBehaviour{
 	
 	// Summer
 	private void drought() {
-		Wall.wallHp -= 50;
+		Wall.setWallHp(Wall.getWallHp()-50);
 		System.out.println("Wall HP - 50");
 	}
 	
@@ -115,25 +115,25 @@ public class EventsGenerator extends SameBehaviour{
 	
 	// Autumn
 	private void rainy() {
-		Tower.towerAcc -= 20;
-		Tower.tempDecrease = true;	
+		Tower.setTowerAcc(Tower.getTowerAcc()-20);
+		Tower.setTempDecrease(true);	
 		System.out.println("Tower Acc - 20");
 	}
 	
 	private void flood() {
-		Wall.wallHp -= 50;
+		Wall.setWallHp(Wall.getWallHp()-50);
 		System.out.println("Wall Hp - 50");
 	}
 	
 	private void harvest() {
-		stats.gold += 100;
+		stats.setGold(stats.getGold() + 100);
 		System.out.println("Gold + 100");
 	}
 	
 	
 	// Winter
 	private void blizzard() {
-		Wall.wallHp -= 50;
+		Wall.setWallHp(Wall.getWallHp()-50);
 		System.out.println("Wall Hp - 50");
 	}
 	
@@ -145,13 +145,13 @@ public class EventsGenerator extends SameBehaviour{
 	}
 	
 	private void hunger() {
-		Tower.towerAcc -= 20;
-		Tower.tempDecrease = true;
+		Tower.setTowerAcc(Tower.getTowerAcc()-20);
+		Tower.setTempDecrease(true);
 		System.out.println("Tower Acc - 20");
 	}
 	
 	private void tourGroup() {
-		stats.gold += 100;
+		stats.setGold(stats.getGold() + 100);
 		System.out.println("Gold + 100");
 	}
 

@@ -13,8 +13,8 @@ public class Wall extends SameBehaviour{
 	private Random r = new Random();
 	
 	// stats
-	public static float wallHp = 100;
-	public static float wallBlock = 10;
+	private static float wallHp = 100;
+	private static float wallBlock = 10;
 	
 	// displays
 	private BufferedImage wall_img;
@@ -62,4 +62,19 @@ public class Wall extends SameBehaviour{
 		return new Rectangle(x, y, 32, 32);
 	}
 
+	public static float getWallHp() {
+		return wallHp;
+	}
+
+	public static void setWallHp(float wallHp) {
+		Wall.wallHp = wallHp;
+	}
+
+	public static float getWallBlock() {
+		return wallBlock;
+	}
+
+	public static void setWallBlock(float wallBlock) {
+		Wall.wallBlock = wallBlock;
+	}
 }

@@ -157,13 +157,13 @@ public class Player extends SameBehaviour{
 						x += velX * -1;
 						y += velY * -1;
 						
-						if(stats.miniGameLimit == 0) {
+						if(stats.getMiniGameLimit() == 0) {
 							textbox.reminder = 1;
 							Game.gameState = STATES.Reminder;
 						}
 						else {
 							Game.gameState = STATES.ToMiniGame;
-							stats.miniGameLimit--;
+							stats.setMiniGameLimit(stats.getMiniGameLimit() - 1);
 						}		
 					}
 				}
@@ -199,7 +199,7 @@ public class Player extends SameBehaviour{
 						x += velX * -1;
 						y += velY * -1;
 						if(EventsGenerator.maxEvents > 0) {
-							eGen.generateEvent(stats.seasons[stats.cur_season]);
+							eGen.generateEvent(stats.getSeasons()[stats.getCur_season()]);
 						}else {
 							eGen.generateEventError();				
 						}

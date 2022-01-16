@@ -58,10 +58,10 @@ public class Battle {
 	}
 	
 	private void checkGameOver() {
-		if(Wall.wallHp <= 0 || Dragon.hp <= 0) {
+		if(Wall.getWallHp() <= 0 || Dragon.getHp() <= 0) {
 			
-			if(Wall.wallHp <= 0) Game.win = 0;
-			if(Dragon.hp <= 0) Game.win = 1;
+			if(Wall.getWallHp() <= 0) Game.win = 0;
+			if(Dragon.getHp() <= 0) Game.win = 1;
 			
 			tower[0].reset();
 			wall.reset();
@@ -119,6 +119,7 @@ public class Battle {
 						else {
 							stats.newSeason();
 						}
+						tower[0].newSeason(); // check if tempDecrease is active. If so, add back 20 accuracy points
 						dragon.levelUp();
 						Game.gameState = STATES.ToMain;
 						AudioPlayer.battleMusic.stop();
@@ -143,15 +144,15 @@ public class Battle {
 		if(Game.gameState == STATES.Battle) {
 			// dragon stats
 			g2d.drawString("Drogon", Game.WIDTH - 250, Game.HEIGHT-250);
-			g2d.drawString("Level: " + Dragon.level, Game.WIDTH - 250, Game.HEIGHT-220);
-			g2d.drawString("Health Point: " + (int)Dragon.hp, Game.WIDTH - 250, Game.HEIGHT-190);
-			g2d.drawString("Attack Point: " + (int)Dragon.atk, Game.WIDTH - 250, Game.HEIGHT-160);
-			g2d.drawString("Critical Chance: " + (int)Dragon.critical + "%", Game.WIDTH - 250, Game.HEIGHT-130);
-			g2d.drawString("Accuracy: " + (int)Dragon.acc + "%", Game.WIDTH - 250, Game.HEIGHT-100);
+			g2d.drawString("Level: " + Dragon.getLevel(), Game.WIDTH - 250, Game.HEIGHT-220);
+			g2d.drawString("Health Point: " + (int)Dragon.getHp(), Game.WIDTH - 250, Game.HEIGHT-190);
+			g2d.drawString("Attack Point: " + (int)Dragon.getAtk(), Game.WIDTH - 250, Game.HEIGHT-160);
+			g2d.drawString("Critical Chance: " + (int)Dragon.getCritical() + "%", Game.WIDTH - 250, Game.HEIGHT-130);
+			g2d.drawString("Accuracy: " + (int)Dragon.getAcc() + "%", Game.WIDTH - 250, Game.HEIGHT-100);
 			
 			// player stats  
 			g2d.setColor(new Color(149, 53, 83));
-			g2d.drawString("Wall's HealthPoint: " + (int)Wall.wallHp, 10, 200);
+			g2d.drawString("Wall's HealthPoint: " + (int)Wall.getWallHp(), 10, 200);
 			
 			// dragon and player attack messages
 			if(infoTimer >= 0 && outputMsg.length() != 0) {

@@ -48,13 +48,14 @@ public class CitizenUpgrade extends MouseAdapter{
 					AudioPlayer.clickSound.play();
 				}
 				
-				if(stats.gold >= 50) {
+				if(stats.getGold() >= 50) {
 					// box 1 emotional
 					if(mx >= 315 && mx <= 465) {
 						if(my >= 100 && my <= 190) {
 							if(Citizen.emo > 0) {
 								Citizen.emo -= 50;
-								stats.gold -= 50;
+								Citizen.statusCheck();
+								stats.setGold(stats.getGold() - 50);
 							}				
 						}
 					}
@@ -64,7 +65,8 @@ public class CitizenUpgrade extends MouseAdapter{
 						if(my >= 200 && my <= 290) {
 							if(Citizen.nervous > 0) {
 								Citizen.nervous -= 50;
-								stats.gold -= 50;	
+								Citizen.statusCheck();
+								stats.setGold(stats.getGold() - 50);
 							}
 						}
 					}
@@ -74,7 +76,8 @@ public class CitizenUpgrade extends MouseAdapter{
 						if(my >= 300 && my <= 390) {
 							if(Citizen.lazy > 0) {
 								Citizen.lazy -= 50;
-								stats.gold -= 50;
+								Citizen.statusCheck();
+								stats.setGold(stats.getGold() - 50);
 							}
 						}
 					}
@@ -85,7 +88,7 @@ public class CitizenUpgrade extends MouseAdapter{
 							if(Citizen.berserk < 100) {
 								Citizen.berserk += 50;
 								Citizen.statusCheck();
-								stats.gold -= 50;
+								stats.setGold(stats.getGold() - 50);
 							}
 						}
 					}
@@ -96,7 +99,7 @@ public class CitizenUpgrade extends MouseAdapter{
 							if(Citizen.diligent < 100) {
 								Citizen.diligent += 50;
 								Citizen.statusCheck();
-								stats.gold -= 50;		
+								stats.setGold(stats.getGold() - 50);
 							}
 						}
 					}
@@ -107,7 +110,7 @@ public class CitizenUpgrade extends MouseAdapter{
 							if(Citizen.fearless < 100) {
 								Citizen.fearless += 50;
 								Citizen.statusCheck();
-								stats.gold -= 50;
+								stats.setGold(stats.getGold() - 50);
 							}
 						}
 					}

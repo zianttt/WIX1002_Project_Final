@@ -48,25 +48,13 @@ public abstract class SameBehaviour {
 		return velX;
 	}
 
-	public void setVelX(float velX) {
-		this.velX = velX;
-	}
-
 	public float getVelY() {
 		return velY;
-	}
-
-	public void setVelY(float velY) {
-		this.velY = velY;
 	}
 
 	public ID getId() {
 		return id;
 	}
-
-	public void setId(ID id) {
-		this.id = id;
-	}	
 	
 	public int getType() {
 		return type;

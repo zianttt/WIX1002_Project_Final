@@ -346,7 +346,7 @@ public class Game extends Canvas implements Runnable{
 			if(MiniDisplay.HEALTH <= 0) {
 				menuTo = 0;
 				miniDis.setGoldEarned(miniDis.getScore() / 100);
-				stats.gold += miniDis.getGoldEarned();
+				stats.setGold(stats.getGold()  + miniDis.getGoldEarned());
 				gameState = STATES.MinigameOver;
 				miniHandler.clearBattleField();
 				player.setX(player.getX() + 10);

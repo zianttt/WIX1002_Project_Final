@@ -89,11 +89,11 @@ public class StatusCheck extends MouseAdapter{
 		
 		
 		// display player related status
-		g2d.drawString("Tower Critical Chance: " + (int)Tower.towerCritical, 150, 110);	
-		g2d.drawString("Tower Attack Point: " + (int)Tower.towerAtk, 150, 150);
-		g2d.drawString("Tower Accuracy: " + (int)Tower.towerAcc, 150, 190);	
-		g2d.drawString("Wall Health: " + (int)Wall.wallHp, 150, 230);	
-		g2d.drawString("Wall Block Chance: " + (int)Wall.wallBlock, 150, 270);	
+		g2d.drawString("Tower Critical Chance: " + (int)Tower.getTowerCritical(), 150, 110);	
+		g2d.drawString("Tower Attack Point: " + (int)Tower.getTowerAtk(), 150, 150);
+		g2d.drawString("Tower Accuracy: " + (int)Tower.getTowerAcc(), 150, 190);	
+		g2d.drawString("Wall Health: " + (int)Wall.getWallHp(), 150, 230);	
+		g2d.drawString("Wall Block Chance: " + (int)Wall.getWallBlock(), 150, 270);	
 		
 		
 		// citizens status

@@ -47,21 +47,27 @@ public class TowerUpgrade extends MouseAdapter{
 				
 				
 				
-				if(stats.gold >= 100) {
+				if(stats.getGold() >= 100) {
 					// attack point
 					if(mx >= Game.WIDTH/2-102 && mx <= Game.WIDTH/2 + 68) {
 						if(my >= 100 && my <= 190) {
-							Tower.towerAtk++;
-							stats.gold -= 100;
+							Tower.setTowerAtk(Tower.getTowerAtk()+1);
+							stats.setGold(stats.getGold() - 100);
 						}
 					}
 					
 					// critical chance (max 50%)
 					if(mx >= Game.WIDTH/2-102 && mx <= Game.WIDTH/2 + 68) {
 						if(my >= 200 && my <= 290) {
-							if(Tower.towerCritical+5 <= 50) {
-								Tower.towerCritical += 5;
-								stats.gold -= 100;
+							float tempCri = Tower.getTowerCritical()+5;
+							if(tempCri <= 54) {
+								if(tempCri >= 50) {
+									Tower.setTowerCritical(50);
+								}
+								else {
+									Tower.setTowerCritical(tempCri) ;
+								}
+								stats.setGold(stats.getGold() - 100);
 							}		
 						}
 					}
@@ -69,9 +75,15 @@ public class TowerUpgrade extends MouseAdapter{
 					// acccuracy (max 100%)
 					if(mx >= Game.WIDTH/2-102 && mx <= Game.WIDTH/2 + 68) {
 						if(my >= 300 && my <= 390) {
-							if(Tower.towerAcc+4 <= 100) {
-								Tower.towerAcc += 4;
-								stats.gold -= 100;
+							float tempACc = Tower.getTowerAcc() + 4;
+							if(tempACc <= 103) {
+								if(tempACc >= 100) {
+									Tower.setTowerAcc(100);
+								}
+								else {
+									Tower.setTowerAcc(tempACc);
+								}
+								stats.setGold(stats.getGold() - 100);
 							}
 						}
 					}
@@ -128,17 +140,17 @@ public class TowerUpgrade extends MouseAdapter{
 		
 		// attack
 		g2d.drawString("Attack Point +1", 424, 130);
-		g2d.drawString("Current: " + (int)Tower.towerAtk, 438, 155);
+		g2d.drawString("Current: " + (int)Tower.getTowerAtk(), 438, 155);
 		g2d.drawRoundRect(Game.WIDTH/2-102, 100, 170, 90, 30, 30);
 		
 		// critical chance
 		g2d.drawString("Critical Chance +5%", 410, 230);
-		g2d.drawString("Current: " + (int)Tower.towerCritical, 438, 255);
+		g2d.drawString("Current: " + (int)Tower.getTowerCritical(), 438, 255);
 		g2d.drawRoundRect(Game.WIDTH/2-102, 200, 170, 90, 30, 30);
 				
 		// accuracy
 		g2d.drawString("Accuracy +4%", 428, 330);
-		g2d.drawString("Current: " + (int)Tower.towerAcc, 438, 355);
+		g2d.drawString("Current: " + (int)Tower.getTowerAcc(), 438, 355);
 		g2d.drawRoundRect(Game.WIDTH/2-102, 300, 170, 90, 30, 30);
 		
 		//back
