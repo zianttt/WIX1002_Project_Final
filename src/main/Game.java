@@ -181,7 +181,7 @@ public class Game extends Canvas implements Runnable{
 		
 	}
 	
-	// start game thread
+	// create start game thread
 	private void start() {
 		running = true;
 		thread = new Thread(this);
@@ -522,7 +522,8 @@ public class Game extends Canvas implements Runnable{
 		// player status
 		if(gameState == STATES.Play || gameState == STATES.Shop || gameState == STATES.CitizneUp ||
 				gameState == STATES.TowerUp || gameState == STATES.WallUp || gameState == STATES.Status ||
-				gameState == STATES.ChestText) {
+				gameState == STATES.ChestText || gameState == STATES.Reminder || gameState == STATES.InfoBoard ||
+				gameState == STATES.EventText) {
 			stats.render(g2d);
 		}
 		

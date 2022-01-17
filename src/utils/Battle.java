@@ -111,7 +111,7 @@ public class Battle {
 				else if(timer3 < -200) {
 					timer3 = 600;
 					round++;
-					if(round >= 1) {
+					if(round >= 10) {
 						if(Game.menuTo == 2) {
 							stats.reset();
 							Game.menuTo = 0;

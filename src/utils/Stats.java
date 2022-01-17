@@ -12,7 +12,7 @@ import objects.EventsGenerator;
 public class Stats {
 	
 	// main game
-	private int gold = 10000000;
+	private int gold = 200;
 	private int[] taxs = {200, 250, 300, 350, 400};
 	private int cur_tax = 0;
 	private int year = 1;
@@ -46,7 +46,7 @@ public class Stats {
 	
 	// set default status when game is first started or restarted after game over
 	public void reset() {
-		gold = 10000000;
+		gold = 200;
 		year = 1;
 		cur_season = 0;
 		setMiniGameLimit(2);
