@@ -12,7 +12,7 @@ import utils.BufferedImageLoader;
 import utils.FontManager;
 import utils.STATES;
 
-// Handles the pop up dialouge box 
+// Handles the pop up dialogue box 
 public class TextBox {
 	
 	// Events generator

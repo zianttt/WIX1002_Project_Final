@@ -14,7 +14,7 @@ public class Spawner {
 	private MiniDisplay miniDis;
 	private Random r = new Random();;
 	
-	private int scoreKeeper = 0;
+	private int levelKeeper = 0;
 	
 	public Spawner(Handler handler, MiniDisplay miniDis) {
 		this.handler = handler;
@@ -22,10 +22,10 @@ public class Spawner {
 	}
 	
 	public void tick() {
-		scoreKeeper++;
+		levelKeeper++;
 		
-		if(scoreKeeper >= 100) {
-			scoreKeeper = 0;
+		if(levelKeeper >= 100) {
+			levelKeeper = 0;
 			miniDis.setLevel(miniDis.getLevel() + 1);
 			
 				if(miniDis.getLevel() == 2) {
